@@ -1,0 +1,125 @@
+﻿/* layout */
+.home {
+	position:fixed;
+	top:0%;
+	left:0%;
+	z-index:1;
+	width:100%;
+	height:100%;
+	margin:0;
+}
+
+.background {
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	z-index:2;
+	background:url(../img/home/bg.png) no-repeat center;
+	background-size: cover;
+}
+
+.home .gallery,
+.home .gallery .inside {
+	position:absolute;
+	top:0;
+	left:0;
+}
+
+.home .gallery {
+	width:100%;
+	height:100%;
+	overflow:hidden;
+}
+
+.home .gallery .inside {
+	z-index:1;
+}
+
+
+.home .item {
+	position:absolute;
+	top:0;
+	width:1000px;
+	height:400px;
+}
+
+.home .item div {
+	position:absolute;
+	left:0;
+	width:100%;
+	height:100%;
+}
+
+.home .item div img {
+	position:absolute;
+	top:0;
+	left:0%;
+	margin:0px;
+}
+
+.home .paths {
+
+	display: none !important;
+
+	position:absolute;
+	bottom:60px;
+	left:50%;
+	margin-left:-30px;
+	z-index:4;
+}
+
+.home .paths div {
+	position:absolute;
+	top:0;
+}
+
+.home .paths a {
+	background:#333;
+	display:block;
+	position:absolute;
+	left:0;
+	outline:none;
+}
+
+/*unlock block*/
+.unlock{
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	z-index: 2;
+}
+.btn-config:hover,.btn-config:focus{
+	color: #ffffff !important;
+}
+
+.btn-float{
+	float: right;
+	overflow: hidden;
+}
+
+.settingsForm{
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    padding: 0 35px;
+}
+.settingsForm label{
+	color: white;
+}
+
+.btnDone:before{
+	content: '\e6e0';
+	font-family: 'Scalia User Icons';
+	font-weight: normal;
+    float: left;
+    margin-left: -1.4em;
+    font-size: 82.6%;
+    vertical-align: middle;
+}
+
+.btn.btnDone {
+    margin-top: 15px;
+}
