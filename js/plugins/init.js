@@ -23,10 +23,14 @@ $(window).load(function(){
 
 
 function move(){
-	var ran1 = Math.floor(Math.random()*4);
-	var ran2 = Math.floor(Math.random()*2+1);
+	var ran1 = Math.floor(Math.random()*localStorage.columnCountImages); /*columns*/
+	var ran2 = Math.floor(Math.random()*localStorage.rowCountImages); /*rows*/
 
-	var t = $('.path'+ran1+' a:nth-child('+ran2+')'), row = t.attr('rel'), column = t.parent('div').attr('class').split('path')[1], 
+	// if numebr of images is odd, last path have only one child
+	if(localStorage.countImagesOdd==1 && ran1 ==localStorage.columnCountImages-1)
+		ran2 = 0;
+
+	var t = $('.path'+ran1+' a:nth-child('+(ran2+1)+')'), row = t.attr('rel'), column = t.parent('div').attr('class').split('path')[1], 
 		top = row*($(window).height()),
 		left = column*($(window).width());
 

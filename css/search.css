@@ -1,0 +1,377 @@
+body{
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+}
+nav{
+	height: 44px;
+	background-color: #58abb7;
+	/*background-image: url('../img/search/header.jpg');*/
+	/*background-size: cover;*/
+}
+section{
+	display: flex;
+	height: 100%;
+	overflow: hidden;
+	flex-direction: row;
+}
+aside{
+	position: relative;
+	width: 200px;
+	height: 100%;
+	overflow: auto;
+}
+main{
+	position: relative;
+	flex: 1;
+	padding: 10px 15px;
+}
+.results{
+	position: relative;
+}
+/*nav*/
+.appName{
+	float: left;
+	height: 90%;
+	font-family: 'Roboto Condensed';
+	font-weight: 100; 
+	font-size: 150%;
+	width: 150px;
+	padding: 6px 15px;
+}
+.right-options{
+	float: right;
+}
+.right-options li{
+	display: inline-block;
+	height: 100%;
+}
+.icon{
+	width: 44px;
+	text-align: center;
+	font-family: 'Scalia User Icons';
+	line-height: 44px;
+	font-size: 170%;
+}
+
+
+.btn-bottom{
+	position: fixed;
+	bottom: 0;
+}
+.itemName{    
+    border-width: 1px;
+    border-style: solid;
+}
+.items{
+	line-height: 30px;
+}
+.items .menu-item{
+	position: relative;
+	padding-left: 40px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	text-transform: lowercase;
+}
+.itemName,.menu-item{
+	display: block;
+  padding: 15px 30px 15px 15px;
+}
+.menu-item:before{
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 10px;
+    margin: auto;
+    width: 18px;
+    height: 18px;
+    z-index: 0;
+    border: 2px solid #58abb7;
+    border-radius: 2px;
+    transition: .2s;
+}
+.menu-item.selected:before{
+	top: 0;
+	bottom: 0;
+  right: 25px;
+  margin: auto;
+  width: 9px;
+  height: 20px;
+  border-top: 2px solid transparent;
+  border-left: 2px solid transparent;
+  border-right: 3px solid #58abb7;
+  border-bottom: 3px solid #58abb7;
+  transform: rotate(40deg);
+  transform-origin: 100% 100%;
+}
+.itemName:before{
+	content: '\e601';
+	font-size: 15px;
+    font-family: 'Scalia';
+    font-weight: normal;
+    padding-right: 10px;	
+}
+.itemName.expand:before{
+	content: '\e602';
+}
+.itemName + .items{
+	max-height: 0;
+	overflow: auto;
+	transition: max-height 0.35s;
+}
+.itemName.expand + .items{
+	max-height: 183px;
+	transition: max-height 0.2s;
+}
+
+.ancestor:nth-child(1){
+	animation-delay: 0s;
+}
+.ancestor:nth-child(2){
+	animation-delay: 0.05s;
+}
+.ancestor:nth-child(3){
+	animation-delay: 0.1s;
+}
+.ancestor:nth-child(4){
+	animation-delay: 0.15s;
+}
+.ancestor:nth-child(5){
+	animation-delay: 0.2s;
+}
+.ancestor:nth-child(6){
+	animation-delay: 0.25s;
+}
+.ancestor:nth-child(7){
+	animation-delay: 0.3s;
+}
+.ancestor:nth-child(8){
+	animation-delay: 0.35s;
+}
+
+.btn-filter{
+	position: absolute;
+	bottom: 0;
+}
+.btn-filter:before{
+	content: '\e6d8';
+	font-family: 'Scalia User Icons';
+	font-weight: normal;
+  float: left;
+  margin-left: -1.4em;
+  font-size: 82.6%;
+  vertical-align: middle;
+}
+
+
+/*logo area*/
+.notfound {
+	font-family: 'Roboto Condensed';
+	text-transform: uppercase;
+	font-size: 200%;
+  height: 80px;
+  line-height: 60px;
+}
+.area-logo {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.area-logo img{
+  width: 80%;
+  min-width: 200px;
+}
+/*filters*/
+.filters-marked{
+	height: 84px;
+	max-height: 84px;
+	overflow-y: auto;
+}
+.filters-marked .filter{
+	display: inline-block;
+	border-style: solid;
+	border-width: 1px;
+	margin-right: 15px;
+	margin-bottom: 10px;
+	padding-left: 5px;
+}
+.filter:before{
+	content: 'X';
+	font-family: 'Roboto Condensed';
+	font-weight: 300;
+  float: right;
+  margin-right: -15px;
+  font-size: 82.6%;
+  vertical-align: middle;
+}
+.filter.filter-1{
+	padding-right: 20px;
+	font-size: 100%;
+}
+.filter-1:before{
+	margin-top: 3px;
+	margin-right: -14px;
+}
+.filter.filter-2{
+	padding-right: 24px;
+	font-size: 125%;
+}
+.filter-2:before{
+	margin-top: 3px;
+	margin-right: -16px;
+}
+.filter.filter-3{
+	padding-right: 28px;
+	font-size: 150%;
+}
+.filter-3:before{
+	margin-top: 3px;
+	margin-right: -18px;
+}
+
+
+/*swiper container*/
+.swiper-container {
+  width: 100%;
+  height: 100%;
+}
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  flex-direction: column;
+}
+.swiper-pagination-bullet {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 4px !important;
+  margin: 0 3px !important;
+  text-align: center;
+  line-height: 32px;
+  font-size: 120%;
+  opacity: 1 !important;
+}
+
+/*product*/
+div[class^="row-product"]{
+	width: 100%;
+	display: inline-table;
+}
+.product{
+	width: 25%;
+}
+.product img{
+	width: 100%;
+}
+div[class^="product-"]{
+	display: inline-block;
+	width: 24.149999%;
+	position: relative;
+	margin: 4.5px;
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 4px;
+}
+div[class^="product-"]:first-child{
+	margin-left: 0;
+}
+div[class^="product-"]:last-child{
+	margin-right: 0;
+}
+.img-product{
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	height: 130px;
+}
+.img-product img{
+	width: 100%;
+	height: 100%;
+	overflow-x: hidden; 
+}
+.areaStyle{
+	text-align: center;
+}
+.areaStyle div{
+	display: inline-block;
+	font-weight: 100;
+}
+.price{
+	font-family: 'Roboto Condensed';
+	font-weight: 500;
+}
+
+
+/*sort*/
+.sort-area{
+	width: 100%;
+	height: 58px;
+}
+.float-right{
+	float: right;
+	margin: 5px 15px;
+}
+.float-right span{
+	font-family: 'Scalia User Icons';
+}
+.float-right label{
+	font-family: 'Source Sans Pro';
+	font-weight: 500;
+	padding-right: 5px;
+}
+.float-right .dropdown{
+	display: inline-table;
+}
+.dropdown .btn {
+  text-transform: inherit;
+	border-width: 1px;
+	border-style: solid; 
+  min-width: 160px;
+  padding: 10px 48px 10px 5px;
+}
+.dropdown-menu{
+	right: 0;
+	left: inherit;
+	margin-top: -1px;
+}
+.dropdown-menu li{
+	height: 44px;
+	line-height: 44px;
+	font-family: 'Roboto Condensed';
+	padding: 0 15px;
+}
+.dropdown .btn:before{
+	content: '';
+	position: absolute;
+	top: 1px;
+	right: 0;
+	width: 44px;
+	height: 98%;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+	background-color: #d2dae1;
+}
+.dropdown .btn:after{
+	content: '\e602';
+	position: absolute;
+	font-family: 'Scalia';
+	right: 13px;
+	color: #ffffff;
+}
+
+/*loader*/
+.loader{
+	border-color: #58abb7;
+}
+.segment {
+  background: #58abb7;
+}

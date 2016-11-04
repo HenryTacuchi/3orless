@@ -57,15 +57,22 @@ h1,h2,h3,h4{
 body,html{
 	height: 100%;
 }
-p,span,label{
+p,span,label,.ancestor,.dropdown-menu li{
 	font-size: 19px;
 }
-button,.btn{
+button,.btn,.menu-item{
 	font-size: 18px;
 }
 .container{
 	width: 100%;
 	height: 100%;
+}
+ul { 
+  margin: 0; 
+  padding: 0;}
+li{
+  list-style: none;
+  margin: 0;
 }
 .btn{
 	font-family: 'Roboto Condensed';
@@ -73,30 +80,39 @@ button,.btn{
 	padding: 10px 15px 10px 35px;
 	text-transform: uppercase;
 }
+.btn:active,.btn:focus{
+  box-shadow: none !important;
+  outline: none !important;
+}
+.btn-mini-img{
+  padding: 0px;
+}
 .btn-save:before{
-    content: '\e601';
-    font-family: 'Scalia';
-    font-weight: normal;
-    float: left;
-    margin-left: -1.4em;
-    font-size: 82.6%;
-    vertical-align: middle;
+  content: '\e601';
+  font-family: 'Scalia';
+  font-weight: normal;
+  float: left;
+  margin-left: -1.4em;
+  font-size: 82.6%;
+  vertical-align: middle;
 }
 .btn-finish:before{
 	content: '\e6d8';
 	font-family: 'Scalia User Icons';
 	font-weight: normal;
-    float: left;
-    margin-left: -1.4em;
-    font-size: 82.6%;
-    vertical-align: middle;
+  float: left;
+  margin-left: -1.4em;
+  font-size: 82.6%;
+  vertical-align: middle;
 }
 .btn-img{
 	position: relative;
-    width: 128px;
-    height: 128px;
-    line-height: 124px; 
+  width: 86px;
+  height: 86px;
+  line-height: 82px; 
 	border-radius: 50%;
+  border-style: solid;
+  border-width: 2px;
 }
 .btn-img span{
 	position: absolute;
@@ -151,73 +167,116 @@ span.no-complete{
 
 /*/radio button*/
 input[type=radio]:checked, input[type=radio]:not(:checked) {
-    position: absolute;
-    left: -9999px;
-    visibility: hidden;
+  position: absolute;
+  left: -9999px;
+  visibility: hidden;
 }
 input[type=checkbox], input[type=radio] {
-    box-sizing: border-box;
-    padding: 0;
+  box-sizing: border-box;
+  padding: 0;
 }
 input[type=radio]:checked+label, input[type=radio]:not(:checked)+label {
-    position: relative;
-    height: 25px;
-    -webkit-transition: .28s ease;
-    transition: .28s ease;
+  position: relative;
+  height: 25px;
+  -webkit-transition: .28s ease;
+  transition: .28s ease;
 }
 input[type=radio]+label:after, input[type=radio]+label:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    margin: 4px;
-    width: 16px;
-    height: 16px;
-    z-index: 0;
-    -webkit-transition: .28s ease;
-    transition: .28s ease;
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 4px;
+  width: 16px;
+  height: 16px;
+  z-index: 0;
+  -webkit-transition: .28s ease;
+  transition: .28s ease;
 }
 input[type=checkbox]+label, input[type=radio]:checked+label, input[type=radio]:not(:checked)+label {
-    padding-left: 35px;
-    display: inline-block;
-    line-height: 25px;
-    -khtml-user-select: none;
-    cursor: pointer;
-    -webkit-user-select: none;
+  padding-left: 35px;
+  display: inline-block;
+  line-height: 25px;
+  -khtml-user-select: none;
+  cursor: pointer;
+  -webkit-user-select: none;
 }
 input[type=radio]:not(:checked)+label:before {
-    border-radius: 50%;
-    border: 2px solid #ffffff;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
 }
 input[type=radio]:checked+label:before {
-    border-radius: 50%;
-    border: 2px solid transparent;
+  border-radius: 50%;
+  border: 2px solid transparent;
 }
 input[type=radio]:checked+label:after {
-    border-radius: 50%;
-    border: 2px solid #ffffff;
-    background-color: #ffffff;
-    z-index: 0;
-    -webkit-transform: scale(1.02);
-    transform: scale(1.02);
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  background-color: #ffffff;
+  z-index: 0;
+  -webkit-transform: scale(1.02);
+  transform: scale(1.02);
 }
 
 /*alerts*/
+.msg-image{
+  float: left;
+}
+.msg-image span{
+  font-family: 'Scalia User Icons';
+  font-size: 32px;
+  text-align: center;
+}
+.borderc3{
+  margin: 10px;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px; 
+  line-height: 60px; 
+}
+
 .validations{	
-    margin: 0px;    
+  margin: 0px; 
+  padding: 25px; 
+  position: absolute;
+  z-index: 100;
+  top: 15px;  
+  left: 15px;
+  
 }
 .validations p{
-	font-size: 120%;
-	border-width: 2px;
-	border-style: solid;
-	padding: 5px 15px;
-    border-radius: 5px;
+	font-size: 120%;	
+}
+.msg-txt {
+  margin-left: 80px;
+  padding: 22px;
+  position: relative;
+  overflow: visible;
+  border-width: 1px;
+  border-style: solid;  
+  border-radius: 2px;
+}
+.msg-txt:after, .msg-txt:before{
+  content: '';
+  position: absolute;
+  top: 24px;
+  left: -25px;
+  border: 15px solid transparent;
+}
+.msg-txt:before {
+  border-right: 20px solid #ffffff;
+}
+.msg-txt:after {
+  top: 50%;
+  margin-top: -20px;
 }
 
-
+    
 
 /*Loader*/
-.loader {
+.loader,.loader-section {
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
   z-index: 9999;
@@ -231,7 +290,18 @@ input[type=radio]:checked+label:after {
   padding: 25px;
   border: 1px solid #ffffff;
 }
-
+.loader-results{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 9998;
+  background-color: #ffffff;
+  opacity: 0.9;  
+}
+.loader-results .loader-section{
+  border-color: #58abb7;
+}
 .segment-holder {
   position: relative;
   display: inline-block;
@@ -308,9 +378,11 @@ input[type=radio]:checked+label:after {
 
 .rotate-icon{
     animation: rotate-icon 2s ease infinite;
+    animation-delay: 2s;
 }
 
 @keyframes rotate-icon{
   0%{transform:rotate(0deg)}
   100%{transform:rotate(360deg)}
 }
+

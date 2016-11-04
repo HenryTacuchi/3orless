@@ -1,5 +1,8 @@
-.btn{
+.btn, .appName{
 	color: #ffffff;
+}
+.loader{
+
 }
 input{
 	color: #384554;
@@ -9,30 +12,133 @@ input{
 section{
 	background-color: #f1f5f8;
 }
+aside{
+	background-color: #ffffff;
+}
+main{
+	background-color: #ffffff;
+}
+nav{
+	color: #ffffff;
+}
 
+.btn:active,.btn:focus{
+	color: #f1f5f8;
+}
+.btn-refresh{
+	background-color: #58abb7;
+}
 .bg-color1{
 	background-color: #58abb7;
 }
-.color1{
+.color1,.filter{
 	color: #58abb7;
 }
 .bg-color2{
 	background-color: #ff7070;
 }
+.border-color2{
+	border: 2px solid #ff7070;
+}
 .color2{
 	color: #ff7070;
+}
+.color3{
+	color: #60afba;
+}
+.borderc3{
+	border-color: #60afba;
 }
 
 .danger{
 	border-color: #D55271;
+	color: #D55271;
 }
 .success{
-	border-color: #58abb7;
+	border-color: #60afba;
+	color: #60afba;
 }
-.info{
-	border-color: #ff9c70;
-}
-
 .no-complete{
 	color: #f00;
+}
+.msg-image,.sort-area{
+	background-color: #f1f5f8;
+}
+.msg-txt, .general-menu, .filter, div[class^="product-"]{
+	background-color: #ffffff;
+	border-color: #d6dadd;
+	box-shadow: 0 3px 0 0 rgba(98, 112, 128, 0.1);
+}
+
+.itemName{
+	background-color: #ffffff;
+	color: #58abb7;
+	border-right-color: #D2DAE1;
+	border-top-color: #D2DAE1;
+	border-left-color: #D2DAE1;
+	border-bottom-color: transparent;
+}
+.ancestor:last-child .itemName:not(.expand){
+	border-bottom-color: #D2DAE1;
+}
+.items .menu-item{
+	background-color: #f1f5f8;
+	border-bottom-color: #ffffff;
+	color: #4C5867;
+}
+.menu-item.selected:after{
+	background-color: transparent;
+	border-right-color: #4C5867;
+	border-bottom-color: #4C5867;
+}
+.items .menu-item:active{
+	color: #58ABB7;
+}
+
+
+.filter:before{
+	color: #ff7070;
+}
+.areaStyle div,.brand{
+	color: #627080;
+}
+.price{
+	color: #4c5867;
+}
+
+
+.float-right .dropdown .btn{
+	color: #4c5867;
+}
+.dropdown-menu li:active,.dropdown-menu li:focus{
+	background-color: #58ABB7;
+	color: #ffffff;
+}
+
+.float-right label,
+.float-right span{
+	color: #58abb7;
+}
+.dropdown .btn {
+	border-color: #d2dae1;
+	background-color: #ffffff;
+	box-shadow: inset 0 3px 0 0 rgba(98, 112, 128, 0.1);
+}
+.dropdown-menu{
+	border-color: #d2dae1;
+	box-shadow: 0 3px 0 0 rgba(98, 112, 128, 0.1);
+}
+
+.notfound{
+	color: #4c5867;
+}
+
+.swiper-pagination-bullet {
+  color: #418f9a;
+  background: #ffffff;
+  border: 1px solid #d2dae1;
+}
+.swiper-pagination-bullet-active {
+  color: #fff;
+  background: #ff7070;
 }

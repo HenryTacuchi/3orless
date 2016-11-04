@@ -1,12 +1,14 @@
 $(document).ready(function(){
 	 // localStorage.clear();
 	 // alert(localStorage.password);
+	// overall delay for disappearance of animations
 	var delay=2500;
 	// show settings stored
 	loadData();
 	// check if the user set the password to show or not the textbox old password
 	checkPassword();
 	
+	//save configuration of StoreNo and Server IP
 	$(".btnSave").click(function(){
 
 		$(".validations").addClass("hide");
@@ -16,8 +18,8 @@ $(document).ready(function(){
 		var checkIP = validateIP();
 		if(storeNo.length>0 && checkIP != -1){
 		    saveConfiguration(storeNo.trim(),serverId.trim());
-		    $(".settings-1").addClass("hide");
-		    $(".settings-2").removeClass("hide").addClass("show");
+		    $(".settings-1").removeClass('fadeInDown').addClass("fadeOutLeft");
+		    $(".settings-2").removeClass("hide").addClass("animated fadeInLeft");
 		}
 		else {
 			if (checkIP==-1){
@@ -41,8 +43,13 @@ $(document).ready(function(){
 				if($(".noStoreNo").hasClass("show"))
 					$(".noStoreNo").removeClass("show").addClass("hide");
 			}
-			if($(".txtMessage").hasClass("info")){
-				$(".txtMessage").removeClass("info").addClass("danger");
+			if($(".txtMessage").hasClass("success")){
+				$(".txtMessage").removeClass("success").addClass("danger");
+				$(".btn-mini-img").removeClass("success").addClass("danger").find('span').empty().html('&#xe645');
+			}
+			else{
+				$(".txtMessage").addClass("danger");
+				$(".btn-mini-img").addClass("danger").find('span').empty().html('&#xe645');
 			}
 			$(".validations").removeClass("hide").addClass("animated fadeInLeft");
 
@@ -79,6 +86,11 @@ $(document).ready(function(){
       		    else{
      			    if($(".txtMessage").hasClass("success")){
 						$(".txtMessage").removeClass("success").addClass("danger");
+						$(".btn-mini-img").removeClass("success").addClass("danger").find('span').empty().html('&#xe645');
+					}
+					else{
+						$(".txtMessage").addClass("danger");
+						$(".btn-mini-img").addClass("danger").find('span').empty().html('&#xe645');
 					}
 
 					$(".validations").removeClass("hide").addClass("animated fadeInLeft");
@@ -128,6 +140,11 @@ $(document).ready(function(){
 	      	else{
 	      		if($(".txtMessage").hasClass("success")){
 					$(".txtMessage").removeClass("success").addClass("danger");
+					$(".btn-mini-img").removeClass("success").addClass("danger").find('span').empty().html('&#xe645');
+				}
+				else{
+					$(".txtMessage").addClass("danger");
+					$(".btn-mini-img").addClass("danger").find('span').empty().html('&#xe645');
 				}
 	      		$(".validations").removeClass("hide").addClass("animated fadeInLeft");
 
@@ -190,6 +207,11 @@ $(document).ready(function(){
 			else{
 			    if($(".txtMessage").hasClass("success")){
 					$(".txtMessage").removeClass("success").addClass("danger");
+					$(".btn-mini-img").removeClass("success").addClass("danger").find('span').empty().html('&#xe645');
+				}
+				else{
+					$(".txtMessage").addClass("danger");
+					$(".btn-mini-img").addClass("danger").find('span').empty().html('&#xe645');
 				}
 
 				$(".validations").removeClass("hide").addClass("animated fadeInLeft");
@@ -240,13 +262,15 @@ $(document).ready(function(){
 	    localStorage.storeNo = storeNo;
 	    localStorage.serverId = serverId;
 	    if($(".validations").hasClass("hide")){
-				$(".validations").removeClass("hide").addClass("animated fadeInLeft");
-			}
-		if($(".txtMessage").hasClass("info")){
-			$(".txtMessage").removeClass("info").addClass("success");
+			$(".validations").removeClass("hide").addClass("animated fadeInLeft");
 		}
 		if($(".txtMessage").hasClass("danger")){
 			$(".txtMessage").removeClass("danger").addClass("success");
+			$(".btn-mini-img").removeClass("danger").addClass("success").find('span').empty().html('&#xe650');
+		}
+		else{
+			$(".txtMessage").addClass("success");
+			$(".btn-mini-img").addClass("success").find('span').empty().html('&#xe650');
 		}
 	    if (localStorage.current_lang == "es") { $(".txtMessage").text("Configuraci\u00f3n realizada exitosamente!"); } 
 	    else { $(".txtMessage").text("Configuration set up successfully!"); }
@@ -273,11 +297,13 @@ $(document).ready(function(){
 	    if($(".validations").hasClass("hide")){
 			$(".validations").removeClass("hide").addClass("animated fadeInLeft");
 		}
-		if($(".txtMessage").hasClass("info")){
-			$(".txtMessage").removeClass("info").addClass("success");
-		}
 		if($(".txtMessage").hasClass("danger")){
 			$(".txtMessage").removeClass("danger").addClass("success");
+			$(".btn-mini-img").removeClass("danger").addClass("success").find('span').empty().html('&#xe650');
+		}
+		else{
+			$(".txtMessage").addClass("success");
+			$(".btn-mini-img").addClass("success").find('span').empty().html('&#xe650');
 		}
 	    if (localStorage.current_lang == "es") { $(".txtMessage").text("Asignaci\u00f3n de contrase\u00f1a exitosa!"); } 
 	    else { $(".txtMessage").text("Password set up successfully!"); }
