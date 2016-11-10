@@ -1,1 +1,152 @@
-product-detail.html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>Detail</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="../js/plugins/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/plugins/bootstrap.min.js"></script>
+
+	<script type="text/javascript" src="../js/plugins/underscore.min.js"></script>
+	<script type="text/javascript" src="../js/plugins/sweetalert.min.js" ></script>
+	<script type="text/javascript" src="../js/scripts/product-detail.js"></script>
+	<script type="text/javascript" src="../js/scripts/scripts.js"></script>
+	
+
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link href="../css/sweetalert.css" rel="stylesheet">
+	<link href="../css/core-style.css" rel="stylesheet">
+	<link href="../css/colors.css" rel="stylesheet">
+	<link href="../css/animate.css" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="../css/product-detail.css">
+</head>
+<body>
+
+	<nav class="animated fadeIn">
+		<label class="appName">
+			3orless
+		</label>
+		<ul class="right-options">
+			<li><div class="icon btn-cart">&#xe613;<span class="item-count"></span></div></li>
+			<li><div class="icon btn-home">&#xe610;</div></li>
+		</ul>
+	</nav>
+
+	<section class="section-product-detail">
+		<!-- product details -->
+		<article class="productDetail">
+			<h3 class="lblProductDetail txtProductDetail">Product Detail</h3>
+			<div class="row">
+				<!-- <div class="col-xs-5 lblBrand">Brand</div><div class="col-xs-7 txtBrand"></div> -->
+				<div class="col-xs-12 txtBrand"></div>
+			</div>
+			<div class="row hide">
+				<div class="col-xs-7 txtStyleCode"></div>
+			</div>
+			<div class="row">
+				<div class="col-xs-5 lblStyle">Style</div><div class="col-xs-7 txtStyle"></div>
+			</div>
+			<div class="row hide">
+				<div class="col-xs-7 txtColorCode"></div>
+			</div>
+			<div class="row">
+				<div class="col-xs-5 lblPrice">Price</div><div class="col-xs-7"><div class="txtRetailPrice"></div>&nbsp;&nbsp;<del class="txtOriginalPrice"></del></div>
+			</div>
+			<div class="row">
+				<div class="col-xs-5 lblSize">Size</div>
+				<div class="col-xs-7 txtSize">
+					<div class="dropdown">
+						<div class="btn dropdown-toggle sort-dropdown" data-toggle="dropdown"></div>
+						<ul class="dropdown-menu listSize">
+						</ul>
+					</div>
+				</div>
+			</div>
+			 <script type="text/template" id="listItemTemplate">
+	               <li class="size-item"  data-value="<%=sizeCode%>"><%=ItemText%></li>
+	            </script>
+			<div class="row">
+				<div class="col-xs-6 lblOnHand">Units</div><div class="col-xs-6 txtOnHang">50</div>
+			</div>
+		</article>
+
+		<!-- main img result -->
+		<article class="mainImg">
+			<figure class="figureMainImg" >
+				<img src="" alt="Main Img" class="main-img" onerror="handleError(this)">				
+			</figure>
+		</article>	
+
+		<!-- views -->
+		<article>
+			<figure class="views">
+				<img src="" alt="viem Img" class="view view-1" onerror="handleError(this)">
+				<img src="" alt="viem Img" class="view view-2" onerror="handleError(this)">
+				<img src="" alt="viem Img" class="view view-3" onerror="handleError(this)">
+				<img src="" alt="viem Img" class="view view-4" onerror="handleError(this)">				
+			</figure>
+		</article>	
+	</section>
+
+	<section class="section-related-products">
+		<!-- related items -->
+		<div class="content-products">
+
+			<h3 class="text-center lblRelatedProduct">Related Product</h3>
+
+			<!-- <script type="text/template" id="productItemTemplate"> -->
+			<div class="related-products">		
+
+ 				<script type="text/template" id="productItemTemplate">
+	                <div class="product <%=Class%>">
+	            		<div class="img-product">
+	            			<img src="<%=path%>" onerror="handleError(this)">
+	            		</div>
+	            		<div class="brand" data-value="<%=brandCode%>"><%=brandName%></div>
+	            		<div class="areaStyle">
+	            			<div class="txtStyleName">Style:</div>
+	            			<div class="colorCode hide" data-value="<%=colorCode%>"></div>	            			
+	            			<div class="styleName" data-value="<%=styleCode%>"><%=styleName%></div>
+	            		</div>
+	            		<div class="areaPrice">
+	            			 <div class="price txtRetailPriceRelated ">$<%=price%></div> <del class="txtOriginalPriceRelated">$<%=productPrice%></del>           			
+	            		</div>	          		
+	            	</div>
+	            </script>
+			</div>
+		<!-- </script> -->
+
+		</div>
+
+	</section>
+
+
+	<footer>
+		<div class="options">
+			<button class="btn bg-color1 btn-back">Back</button>
+			<button class="btn bg-color1 btn-add-continue">Add and Continue</button>
+			<button class="btn bg-color1 btn-add-finish">Add and Finish</button>
+		</div>
+	</footer>
+
+	<!-- loading block -->
+	<div class="loader hide">
+		<div class="loader-principal">
+		  <div class="segment-holder">
+		    <div class="segment one"></div>
+		  </div>
+		  <div class="segment-holder">
+		    <div class="segment two"></div>
+		  </div>
+		  <div class="segment-holder">
+		    <div class="segment three"></div>
+		  </div>
+		  <div class="segment-holder">
+		    <div class="segment four"></div>
+		  </div>			
+		</div>
+	</div>
+	
+</body>
+</html>

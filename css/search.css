@@ -6,10 +6,9 @@ body{
 	align-items: stretch;
 }
 nav{
-	height: 44px;
+	height: 54px;
 	background-color: #58abb7;
-	/*background-image: url('../img/search/header.jpg');*/
-	/*background-size: cover;*/
+	z-index: 999;
 }
 section{
 	display: flex;
@@ -26,10 +25,15 @@ aside{
 main{
 	position: relative;
 	flex: 1;
-	padding: 10px 15px;
+	padding: 6px 15px;
+	display: flex;
+	flex-direction: column;
 }
 .results{
 	position: relative;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
 }
 /*nav*/
 .appName{
@@ -39,7 +43,7 @@ main{
 	font-weight: 100; 
 	font-size: 150%;
 	width: 150px;
-	padding: 6px 15px;
+	padding: 13px 15px;
 }
 .right-options{
 	float: right;
@@ -49,11 +53,36 @@ main{
 	height: 100%;
 }
 .icon{
-	width: 44px;
+	width: 54px;
 	text-align: center;
 	font-family: 'Scalia User Icons';
-	line-height: 44px;
+	line-height: 64px;
 	font-size: 170%;
+	position: relative;
+}
+.item-count{
+  position: absolute;
+  left: 58%;
+  width: 22px;
+  margin-left: -13px;
+  border-radius: 4px 4px 0 0;
+  top: 57%;
+  margin-top: -35px;
+  font-size: 54%;
+  text-align: center;
+  padding-bottom: 3px;
+  line-height: 13px;
+}
+.item-count:after{
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-width: 8px 11px;
+  border-style: solid;
+  border-color: transparent;
+  top: 16px;
+  left: 0;
 }
 
 
@@ -123,7 +152,7 @@ main{
 	transition: max-height 0.35s;
 }
 .itemName.expand + .items{
-	max-height: 183px;
+	max-height: 244px;
 	transition: max-height 0.2s;
 }
 
@@ -187,6 +216,7 @@ main{
   width: 80%;
   min-width: 200px;
 }
+
 /*filters*/
 .filters-marked{
 	height: 84px;
@@ -243,12 +273,13 @@ main{
 }
 .swiper-slide {
   text-align: center;
-  font-size: 18px;
+  font-size: 120%;
   background: #fff;
   display: flex;
+  flex-direction: row;
   justify-content: space-around;
   align-items: stretch;
-  flex-direction: column;
+  flex-wrap: wrap;
 }
 .swiper-pagination-bullet {
   width: 32px !important;
@@ -260,57 +291,89 @@ main{
   font-size: 120%;
   opacity: 1 !important;
 }
+.swiper-wrapper{
+	height: 90% !important;
+}
+.swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction{
+	bottom: 0px !important;
+}
+/* one item */
+div[class^="row-product"]:first-child:nth-last-child(1) {
+  align-items: flex-start;
+}
+
 
 /*product*/
 div[class^="row-product"]{
 	width: 100%;
-	display: inline-table;
-}
-.product{
-	width: 25%;
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
 }
 .product img{
 	width: 100%;
 }
-div[class^="product-"]{
+div[class^="product"]{
 	display: inline-block;
 	width: 24.149999%;
 	position: relative;
-	margin: 4.5px;
+	margin: 4px;
 	border-width: 1px;
 	border-style: solid;
 	border-radius: 4px;
 }
-div[class^="product-"]:first-child{
+div[class^="product"]:first-child{
 	margin-left: 0;
 }
-div[class^="product-"]:last-child{
+div[class^="product"]:last-child{
 	margin-right: 0;
 }
 .img-product{
 	width: 100%;
 	margin: 0;
 	padding: 0;
-	height: 130px;
+	height: 150px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  overflow: hidden;
 }
 .img-product img{
 	width: 100%;
 	height: 100%;
 	overflow-x: hidden; 
 }
-.areaStyle{
+.brand{
+	font-size: 125%;
+	padding-top: 15px;
+}
+.areaStyle, .areaPrice{
 	text-align: center;
 }
 .areaStyle div{
 	display: inline-block;
 	font-weight: 100;
 }
+.txtRetailPrice{
+	display: inline-block;
+}
 .price{
-	font-family: 'Roboto Condensed';
-	font-weight: 500;
+	font-family: 'Source Sans Pro';
+	font-weight: 300;	
+}
+.areaPrice{
+	padding-bottom: 15px;
 }
 
 
+/*clear filters*/
+.float-left{
+	float: left;
+	margin: 15px;
+}
+.btn-clear{
+	padding: 0 10px;
+	text-decoration: underline;
+}
 /*sort*/
 .sort-area{
 	width: 100%;

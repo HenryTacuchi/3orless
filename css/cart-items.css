@@ -1,0 +1,196 @@
+body{
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+}
+nav{
+	height: 54px;
+	background-color: #58abb7;
+	z-index: 999;
+}
+section{
+	display: flex;
+	width: 100%;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: stretch;
+	align-content: stretch;
+}
+article {
+  min-width: 480px;
+  max-width: 80%;
+  margin: 15px;
+}
+
+
+/*nav*/
+.appName{
+	float: left;
+	height: 90%;
+	font-family: 'Roboto Condensed';
+	font-weight: 100; 
+	font-size: 150%;
+	width: 150px;
+	padding: 13px 15px;
+}
+.right-options{
+	float: right;
+}
+.right-options li{
+	display: inline-block;
+	height: 100%;
+}
+.icon{
+	width: 54px;
+	text-align: center;
+	font-family: 'Scalia User Icons';
+	line-height: 64px;
+	font-size: 170%;
+	position: relative;
+}
+.item-count{
+  position: absolute;
+  left: 58%;
+  width: 22px;
+  margin-left: -13px;
+  border-radius: 4px 4px 0 0;
+  top: 57%;
+  margin-top: -35px;
+  font-size: 54%;
+  text-align: center;
+  padding-bottom: 3px;
+  line-height: 13px;
+}
+.item-count:after{
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-width: 8px 11px;
+  border-style: solid;
+  border-color: transparent;
+  top: 16px;
+  left: 0;
+}
+
+
+/*form*/
+.form-user h2{
+	font-weight: 100;
+}
+form{
+	padding: 15px;
+}
+.section-form-user{
+	flex-grow: 1;
+}
+.section-cart-items{
+	flex-grow: 5;
+}
+.form-control{
+	height: 44px;
+}
+
+
+/*cart items*/
+.cart-items{
+	display: flex;
+	flex-direction: column;
+	border-width: 1px;
+	border-style: solid;	
+	border-radius: 4px;
+	margin-top: 0;
+	margin-bottom: 15px;
+}
+.thead h3{
+	margin: 0;
+	padding: 10px 0;
+}
+.items{
+	overflow-y: auto;
+}
+.img-product {
+    margin: 5px;
+}
+.row.product{
+	display: flex;
+	margin-left: 0;
+	margin-right: 0;
+}
+.row.product:nth-child(odd),.row.product:nth-child(even){
+	border-top-width: 1px;
+	border-top-style: solid;
+}
+.img-product img{
+	width: 50%;
+}
+.brand{
+	font-size: 125%;
+}
+.areaStyle div{
+	padding-top: 15px;
+}
+.price{
+	font-family: 'Source Sans Pro';
+	font-weight: normal;	
+	font-size: 160%;
+}
+.center-text{
+	display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.product:nth-child(1){
+	animation-delay: 0s;
+}
+.product:nth-child(2){
+	animation-delay: 0.1s;
+}
+.product:nth-child(3){
+	animation-delay: 0.2s;
+}
+.product:nth-child(4){
+	animation-delay: 0.3s;
+}
+.product:nth-child(5){
+	animation-delay: 0.4s;
+}
+
+
+/*footer*/
+.options{
+	display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+.btn-back:before {
+  content: '\e614';
+  margin-left: -1em;
+  font-size: 100%;
+  padding-right: 10px;
+  font-family: 'Scalia User Icons';
+  display: block;
+  float: left;
+}
+.btn-clear-cart:before {
+  content: '\e615';
+  margin-left: -1em;
+  font-size: 100%;
+  padding-right: 10px;
+  font-family: 'Scalia User Icons';
+  display: block;
+  float: left;
+}
+.btn-done:before {
+  content: '\e744';
+  margin-left: -1em;
+  font-size: 100%;
+  padding-right: 10px;
+  font-family: 'Scalia User Icons';
+  display: block;
+  float: left;
+}

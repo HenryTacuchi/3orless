@@ -22,11 +22,7 @@ $(document).ready(function(){
 			$(this).addClass('selected');			
 		}
 
-		if($('.filters-marked').children().length>0){
-			$('.area-logo').hide();
-		}else{
-			$('.area-logo').show();
-		}
+		checkFiltersMarked();
 
 	});
 
@@ -36,8 +32,7 @@ $(document).ready(function(){
 			$('.sort-dropdown').removeClass('lowToHigh').addClass($(this).attr('class')).text($(this).text());
 		}else{
 			$('.sort-dropdown').removeClass('highToLow').addClass($(this).attr('class')).text($(this).text());
-		}
-		
+		}		
 	});
 
 
@@ -55,8 +50,6 @@ $(document).ready(function(){
 
 	});
 
-
-	  
 });
 
 function addFilter( element ){
@@ -72,4 +65,40 @@ function removeFilter(element){
     		$(this).remove();
     }
   });
+}
+
+function addProductCartItem(){
+	if(!existsProductCart($(".txtStyleCode").text(),$(".txtColorCode").text())){
+		var product = '{"Product":';
+	    localStorage.countProductCartItem++;   
+
+	    product += '{'+    
+	                    '"brandName": "' + $(".txtBrand").text() + '",' +
+	                    '"colorCode": "' + $(".txtColorCode").text() + '",' +
+	                    '"imageFile": "' + $(".main-img").attr("src").replace(/\\/g,"\\\\") + '",' +
+	                    '"price": "' + $(".txtRetailPrice").text() + '",' +
+	                    '"size": "' + $(".sort-dropdown").text() + '",' +
+	                    '"styleCode": "' + $(".txtStyleCode").text() + '",' +
+	                    '"styleName": "' + $(".txtStyle").text() + '"' +
+	                    '}}';             
+	    localStorage["cartItemProduct"+localStorage.countProductCartItem] = product; 
+	    return true;
+	}
+	else{
+		if (localStorage.current_lang == "es") 
+			swal("El producto ya ha sido agregado!");
+		else
+			swal("Product has been already added!");
+		return false;
+	}
+}
+
+function existsProductCart(searchStyleCode,searchColorCode){
+	for (var i = 1; i <= localStorage.countProductCartItem; i++) {
+		var productObject = JSON.parse(localStorage["cartItemProduct"+i]);
+		if(productObject.Product.styleCode == searchStyleCode 
+			&& productObject.Product.colorCode == searchColorCode)
+			return true;
+	}
+	return false;
 }

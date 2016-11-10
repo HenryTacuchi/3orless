@@ -60,6 +60,9 @@ body,html{
 p,span,label,.ancestor,.dropdown-menu li{
 	font-size: 19px;
 }
+del{
+  font-size: 17px;
+}
 button,.btn,.menu-item{
 	font-size: 18px;
 }
@@ -75,14 +78,24 @@ li{
   margin: 0;
 }
 .btn{
+  position: relative;
 	font-family: 'Roboto Condensed';
 	border-radius: 4px;
 	padding: 10px 15px 10px 35px;
 	text-transform: uppercase;
+  transition: all 0.1s;
 }
 .btn:active,.btn:focus{
   box-shadow: none !important;
   outline: none !important;
+}
+.btn:active:after,.btn:focus:after{
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
 }
 .btn-mini-img{
   padding: 0px;
@@ -123,6 +136,10 @@ li{
 	margin: auto;
 	font-size: 44px;
 	font-family: 'Scalia User Icons';
+}
+.btn-cart{
+    font-family: 'Scalia' !important;
+    font-weight: normal;
 }
 .form-group label{
 	margin-bottom: 0;
@@ -241,8 +258,8 @@ input[type=radio]:checked+label:after {
   margin: 0px; 
   padding: 25px; 
   position: absolute;
-  z-index: 100;
-  top: 15px;  
+  z-index: 999;
+  top: 29px;  
   left: 15px;
   
 }
@@ -276,7 +293,7 @@ input[type=radio]:checked+label:after {
     
 
 /*Loader*/
-.loader,.loader-section {
+.loader-principal,.loader-section {
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
   z-index: 9999;
@@ -290,12 +307,12 @@ input[type=radio]:checked+label:after {
   padding: 25px;
   border: 1px solid #ffffff;
 }
-.loader-results{
+.loader-results,.loader{
+  position: absolute;
   width: 100%;
   height: 100%;
-  position: absolute;
+  z-index: 998;
   top: 0;
-  z-index: 9998;
   background-color: #ffffff;
   opacity: 0.9;  
 }

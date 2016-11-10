@@ -3,6 +3,7 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<title>3orless</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<script type="text/javascript" src="../js/plugins/jquery.min.js"></script>
 	<script type="text/javascript" src="../js/plugins/bootstrap.min.js"></script>
 	<script type="text/javascript" src="../js/plugins/underscore.min.js"></script>		
@@ -14,6 +15,7 @@
 
 
 	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link href="../css/sweetalert.css" rel="stylesheet">
 	<link href="../css/core-style.css" rel="stylesheet">
 	
 	<link href="../css/animate.css" rel="stylesheet">
@@ -29,6 +31,7 @@
 			3orless
 		</label>
 		<ul class="right-options">
+			<li><div class="icon btn-cart">&#xe613;<span class="item-count"></span></div></li>
 			<li><div class="icon btn-home">&#xe610;</div></li>
 		</ul>
 	</nav>
@@ -63,7 +66,7 @@
 					</ul>
 				</li>
 				<li class="ancestor itemGender animated slideInLeft">
-					<div class="itemName txtGender">Class</div>
+					<div class="itemName txtGender">Type</div>
 					<ul class="items item-list-class">
 						<!-- <li class="menu-item">Running</li>
 						<li class="menu-item">Casual</li> -->
@@ -80,15 +83,15 @@
 
 		<main>
 
+			<!-- filters -->
+			<div class="filters-marked">
+				<!-- <div class="filter filter-1">nike</div> -->
+			</div>
+
 			<!-- logo by default : add hide when you found products-->
 			<div class="area-logo">
 					<div class="notfound animated flash hide">No results found</div>
 					<img src="" alt="logo Company" class="img-logo animated fadeInDown">
-			</div>
-
-			<!-- filters -->
-			<div class="filters-marked">
-				<!-- <div class="filter filter-1">nike</div> -->
 			</div>
 
 			<!-- results -->
@@ -96,7 +99,13 @@
 
 				<!-- sort products -->
 				<div class="sort-area hide">
-					<div class="float-right">
+
+					<div class="float-left">
+						<div class="clear-filters hide">
+							<button class="lblClearFilters btn btn-clear">Clear filters</button>
+						</div>
+					</div>
+					<div class="float-right hide">
 						<span>&#xe6f2</span>
 						<label class="txtPrice">Price </label>					
 						<div class="dropdown">
@@ -137,16 +146,18 @@
 	            </script>
 	            <!-- template for div img. Every div item has 2 div img	-->
 	            <script type="text/template" id="productItemTemplate">
-	                <div class="<%=Class%>">
+	                <div class="product <%=Class%>">
 	            		<div class="img-product">
 	            			<img src="<%=path%>" onerror="handleError(this)">
 	            		</div>
+	            		<div class="brand" data-value="<%=brandCode%>"><%=brandName%></div>
 	            		<div class="areaStyle">
 	            			<div class="txtStyleName">Style:</div>
 	            			<div class="styleName" data-value="<%=styleCode%>"><%=styleName%></div>
-	            		</div>
-	            		<div class="brand" data-value="<%=brandCode%>"><%=brandName%></div>
-	            		<div class="price">$.<%=price%></div>
+	            		</div>	            		
+	            		<div class="areaPrice">
+	            			 <div class="price txtRetailPrice">$<%=price%></div> <del class="txtOriginalPrice">$<%=originalPrice%></del>           			
+	            		</div>	  
 	            	</div>
 	            </script>
 		        <!-- Add Pagination -->
@@ -172,6 +183,7 @@
 				  </div>
 				</div>
     	</div>
+
 		</main>
 	</section>
 		
@@ -180,18 +192,20 @@
 
 	<!-- loading block -->
 	<div class="loader hide">
-	  <div class="segment-holder">
-	    <div class="segment one"></div>
-	  </div>
-	  <div class="segment-holder">
-	    <div class="segment two"></div>
-	  </div>
-	  <div class="segment-holder">
-	    <div class="segment three"></div>
-	  </div>
-	  <div class="segment-holder">
-	    <div class="segment four"></div>
-	  </div>
+		<div class="loader-principal">
+		  <div class="segment-holder">
+		    <div class="segment one"></div>
+		  </div>
+		  <div class="segment-holder">
+		    <div class="segment two"></div>
+		  </div>
+		  <div class="segment-holder">
+		    <div class="segment three"></div>
+		  </div>
+		  <div class="segment-holder">
+		    <div class="segment four"></div>
+		  </div>			
+		</div>
 	</div>
 
 
