@@ -17,7 +17,7 @@ body.stop-scrolling {
   z-index: 10000; }
 
 .sweet-alert {
-  background-color: white;
+  background-color: #f1f5f8;
   font-family: 'Source Sans Pro';
   width: 478px;
   padding: 17px;
@@ -45,13 +45,13 @@ body.stop-scrolling {
     font-weight: normal;
     text-transform: none;
     position: relative;
-    margin: 25px 0;
+    margin: 15px 0;
     padding: 0;
     line-height: 40px;
     display: block; }
   .sweet-alert p {
     color: #797979;
-    font-size: 16px;
+    font-size: 125%;
     text-align: center;
     font-weight: 300;
     position: relative;
@@ -179,8 +179,8 @@ body.stop-scrolling {
     font-weight: 400;
     -webkit-border-radius: 4px;
     border-radius: 5px;
-    padding: 10px 32px;
-    margin: 26px 5px 0 5px;
+    padding: 10px 15px 10px 35px;
+    margin: 20px 5px 0 5px;
     cursor: pointer; }
     .sweet-alert button:focus {
       outline: none;
@@ -219,7 +219,7 @@ body.stop-scrolling {
     -webkit-border-radius: 40px;
     border-radius: 40px;
     border-radius: 50%;
-    margin: 20px auto;
+    margin: 15px auto;
     padding: 0;
     position: relative;
     box-sizing: content-box; }
@@ -297,7 +297,7 @@ body.stop-scrolling {
         position: absolute;
         width: 60px;
         height: 120px;
-        background: white;
+        background: #f1f5f8;
         -webkit-transform: rotate(45deg);
         transform: rotate(45deg); }
       .sweet-alert .sa-icon.sa-success::before {
@@ -333,7 +333,7 @@ body.stop-scrolling {
       .sweet-alert .sa-icon.sa-success .sa-fix {
         width: 5px;
         height: 90px;
-        background-color: white;
+        background-color: #f1f5f8;
         position: absolute;
         left: 28px;
         top: 8px;
@@ -931,3 +931,15 @@ body.stop-scrolling {
     -moz-transform: translateY(145%);
     -o-transform: translateY(145%);
     transform: translateY(145%); } }
+
+
+
+.sweet-alert button:before{
+  content: '\e6e0';
+  font-family: 'Scalia User Icons';
+  font-weight: normal;
+  float: left;
+  margin-left: -1.4em;
+  font-size: 93.6%;
+  vertical-align: middle;
+}

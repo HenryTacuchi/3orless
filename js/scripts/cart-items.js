@@ -2,40 +2,103 @@
 var delay=2500;
 var removeAnimationFlipIn = false;
 $(document).ready(function(){
+	if(localStorage.currentFirstNameClient != undefined && localStorage.currentFirstNameClient != "")
+		$(".txtFirstName").val(localStorage.currentFirstNameClient);
+	if(localStorage.currentLastNameClient != undefined && localStorage.currentLastNameClient != "")
+		$(".txtLastName").val(localStorage.currentLastNameClient);
+	if(localStorage.currentEmailClient != undefined && localStorage.currentEmailClient != "")
+		$(".txtEmail").val(localStorage.currentEmailClient);
+
+	if(localStorage.existOldCartItem == 0){
+		$(".btn-recover").prop("disabled",true);
+	}
+	else{
+		$(".btn-recover").prop("disabled",false);	
+	}
+
+	$("input").focus(function(){
+		$(".section-cart-items").hide();
+	});
+
+	$("input").blur(function(){
+		$(".section-cart-items").show();
+	});
+
+	$(".txtEmail").emailautocomplete({
+        suggClass: "custom-classname", //default: "eac-sugg". your custom classname (optional)
+        domains: ["example.com"] //additional domains (optional)
+    });
+
 	$(".item-count").text(localStorage.countProductCartItem);
+	
 	getProductList();
 
 	$(".btn-back").click(function(){
+		localStorage.currentFirstNameClient = $(".txtFirstName").val();
+        localStorage.currentLastNameClient = $(".txtLastName").val();
+        localStorage.currentEmailClient = $(".txtEmail").val();
 		window.history.back();
 	});
 
 	//home button redirects to home screen
     $(".btn-home").click(function(){
+        localStorage.currentFirstNameClient = $(".txtFirstName").val();
+        localStorage.currentLastNameClient = $(".txtLastName").val();
+        localStorage.currentEmailClient = $(".txtEmail").val();
         window.location = "index.html";
     });
 
     //clear button redirects to home screen
     $(".btn-clear-cart").click(function(){
+    	localStorage.currentFirstNameClient = ""
+        localStorage.currentLastNameClient = "";
+        localStorage.currentEmailClient = "";
         //remove all products from cart item and redirect to search screen
         clearSearchPage();
         window.location = "search.html";
     });
 
+    //show products from last cart
+    $(".btn-recover").click(function(){
+    	$(".txtFirstName").val("");
+    	$(".txtLastName").val("");
+    	$(".txtEmail").val("");
+    	for (var i = 1; i <= localStorage.countProductLastCartItem ; i++) {
+    		localStorage["cartItemProduct"+i] = localStorage["lastCartItemProduct"+i];
+    	}
+    	if(localStorage.countProductCartItem > localStorage.countProductLastCartItem){
+			for (var i = localStorage.countProductLastCartItem*1 + 1; i <= localStorage.countProductCartItem ; i++) {				
+				localStorage.removeItem("lastCartItemProduct"+i);
+			}
+		}
+		localStorage.countProductCartItem = localStorage.countProductLastCartItem;
+		// window.location.reload();
+		$(".items").html("");
+		$(".item-count").text(localStorage.countProductCartItem);
+		getProductList();
+    });
+
     //done button redirects to home screen
     $(".btn-done").click(function(){
+    	localStorage.currentFirstNameClient = $(".txtFirstName").val();
+        localStorage.currentLastNameClient = $(".txtLastName").val();
+        localStorage.currentEmailClient = $(".txtEmail").val();
+    	$(".btn-done").prop("disabled",true);
     	if (localStorage.current_lang == "es") { $(".txtMessage").text("Por favor, verifique los campos e inténtelo nuevamente!"); }
     	else{$(".txtMessage").text("Validation errors occurred. Please confirm the fields and submit it again.!");}
 		$(".validations").addClass("hide");
 		$(".validations").removeClass("animated fadeOutLeft");
-    	var name = $(".txtName").val();
+    	var firstName = $(".txtFirstName").val();
+    	var lastName = $(".txtLastName").val();
     	var email = $(".txtEmail").val();
     	var checkEmail = validateEmail();
+    	var orderNumber = "";
 
     	//if name and email has correct format
-		if (name.length > 0 && checkEmail != -1 && localStorage.countProductCartItem > 0) { 
+		if (firstName.length > 0 && lastName.length > 0 && checkEmail != -1 && localStorage.countProductCartItem > 0) { 
 			$.ajax({
 		        type: "GET",
-		        url: "http://" + localStorage.serverId + "/WS3orlessFiles/S3orLess.svc/NPRODUCT/PostInfoCusto/" + name + "/" + email,
+		        url: "http://" + localStorage.serverId + "/WS3orlessFiles/S3orLess.svc/NPRODUCT/PostInfoCusto/" + firstName + "/" + lastName + "/" + email,
 		        async: false,
 		        contentType: "application/json",
 		        crossdomain: true,
@@ -54,10 +117,67 @@ $(document).ready(function(){
 		        }
 		    });
 
+		    $.ajax({
+		        type: "GET",
+		        url: "http://" + localStorage.serverId + "/WS3orlessFiles/S3orLess.svc/NPRODUCT/GetNumberOrder/" + localStorage.storeNo ,
+		        async: false,
+		        contentType: "application/json",
+		        crossdomain: true,
+		        beforeSend: function(){
+		        	showLoading(true);
+		        },
+		        complete: function(){
+		        	showLoading(false);
+		        },
+		        success: function (result) { 
+		            if(result != -1){
+		            	orderNumber = result;
+		            	localStorage.orderNumber = orderNumber;
+		            }
+
+		            else
+		            	orderNumber = "";
+		        },
+		        error: function (error) {
+	        	    orderNumber = "";	       	
+		        }
+		    });
+		    var messageorder = "";
+		    if(orderNumber != ""){
+		    	if(localStorage.current_lang == "es")
+		    		messageorder = "<b>N° Orden:"+orderNumber+"</b>\n";
+		    	else
+		    		messageorder = "<b>N° Order:"+orderNumber+"</b>\n";
+		    }
+			saveLastCartItem();
 	    	if (localStorage.current_lang == "es") 
-				swal("Mensaje!", "N° Orden:50\nGracias "+ name +",\nPor favor, espere que traigamos su orden.!", "success")
-			else
-				swal("Good job!", "N° Order:50\nThank you "+ name +",\nPlease wait, we are getting your order.!", "success")			
+	   			swal({
+				  title: "Confirmación de Orden",
+				  text: messageorder + "Gracias "+ firstName +",\nPor favor, espere que traigamos su orden.",
+				  type: "success",
+				  confirmButtonColor: "#DD6B55",
+				  confirmButtonText: "¡Ok, Genial!",
+				  closeOnConfirm: false
+				},
+				function(){
+				  	clearSearchPage();
+				  	window.location = "print.html"; 
+					//window.location = "search.html";
+				});
+			else				
+				swal({
+				  title: "Order Confirmation",
+				  text: messageorder + "Thank you "+ firstName +",\nPlease wait, we are getting your order.",
+				  type: "success",
+				  confirmButtonColor: "#DD6B55",
+				  confirmButtonText: "Ok, Cool!",
+				  closeOnConfirm: false
+				},
+				function(){
+				  	clearSearchPage();
+				  	window.location = "print.html"; 
+					//window.location = "search.html";
+				});
 		}    
 		//if name or email format is wrong 			
 	    else{
@@ -91,13 +211,23 @@ $(document).ready(function(){
 				if($(".noEmail").hasClass("show"))
 					$(".noEmail").removeClass("show").addClass("hide");
 			}
-			if (name.length==0){
-				$(".txtName").focus();
-				$(".noName").removeClass("hide").addClass("show");
-				if (localStorage.current_lang == "es") { $(".noName").text("Complete el campo requerido!"); }
+
+			if (lastName.length==0){
+				$(".txtLastName").focus();
+				$(".noLastName").removeClass("hide").addClass("show");
+				if (localStorage.current_lang == "es") { $(".noLastName").text("Complete el campo requerido!"); }
 			}else{
-				if($(".noName").hasClass("show"))
-					$(".noName").removeClass("show").addClass("hide");
+				if($(".noLastName").hasClass("show"))
+					$(".noLastName").removeClass("show").addClass("hide");
+			}
+
+			if (firstName.length==0){
+				$(".txtFirstName").focus();
+				$(".noFirstName").removeClass("hide").addClass("show");
+				if (localStorage.current_lang == "es") { $(".noFirstName").text("Complete el campo requerido!"); }
+			}else{
+				if($(".noFirstName").hasClass("show"))
+					$(".noFirstName").removeClass("show").addClass("hide");
 			}
 
 			if(localStorage.countProductCartItem == 0){
@@ -107,7 +237,9 @@ $(document).ready(function(){
 				    $(this).addClass("animated fadeOutLeft").dequeue();
 				});
 			}
+
 		}	
+		$(".btn-done").prop("disabled",false);
 
 
     });
@@ -135,11 +267,11 @@ $(document).ready(function(){
 			$(".items").empty(); 
 			$(".item-count").text(localStorage.countProductCartItem);
 			getProductList();}, 500);
-		
-		
-
     });
+
 });
+
+
 
 //check email format
 function validateEmail(){
@@ -170,6 +302,7 @@ function getProductList(){
             styleName: productObject.Product.styleName,
             colorCode: productObject.Product.colorCode,
             brandName: productObject.Product.brandName,
+            size: productObject.Product.size,
             price: productObject.Product.price
         });
         $(".items").append(html);
@@ -209,4 +342,28 @@ function showLoading(option){
 		else
 			$(".loader").addClass("hide");
 	}
+}
+
+//save a copy of last cart item
+function saveLastCartItem(){
+	//if not exists old cart item, just copy products from new cart item
+	if(localStorage.existOldCartItem == 0){
+		for (var i = 1; i <= localStorage.countProductCartItem; i++) {
+			localStorage["lastCartItemProduct"+i] = localStorage["cartItemProduct"+i];
+		}
+		localStorage.countProductLastCartItem = localStorage.countProductCartItem;
+	}
+	//copy new products and remove old product from cart item
+	else{
+		for (var i = 1; i <= localStorage.countProductCartItem; i++) {
+			localStorage["lastCartItemProduct"+i] = localStorage["cartItemProduct"+i];
+		}
+		if(localStorage.countProductLastCartItem > localStorage.countProductCartItem){
+			for (var i = localStorage.countProductCartItem*1 + 1; i <= localStorage.countProductLastCartItem ; i++) {				
+				localStorage.removeItem("lastCartItemProduct"+i);
+			}
+		}
+		localStorage.countProductLastCartItem = localStorage.countProductCartItem;
+	}
+	localStorage.existOldCartItem = 1;
 }

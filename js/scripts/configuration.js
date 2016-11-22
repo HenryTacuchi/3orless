@@ -3,6 +3,13 @@ var delay=2500;
 $(document).ready(function(){
 	// localStorage.clear();
 
+    // $(".emailUser").emailautocomplete({
+    //     suggClass: "custom-classname", 
+    //     domains: ["realcs.com"] 
+    // });
+
+	$(".storeNo").focus();
+
 	//check if exists images for home in server
 	if(localStorage.imageServerError == 1){
 		$(".serverId").focus();
@@ -48,6 +55,7 @@ $(document).ready(function(){
 		    saveConfiguration(storeNo.trim(),serverId.trim());
 		    $(".settings-1").removeClass('fadeInDown').addClass("fadeOutLeft");
 		    $(".settings-2").removeClass("hide").addClass("animated fadeInLeft");
+		    $(".emailUser").focus();
 		}
 		else {
 			if (checkIP==-1){
@@ -116,6 +124,7 @@ $(document).ready(function(){
      					savePassword(oldPass,emailUser);  
      				else
      					savePassword(newPass.trim(),emailUser);  
+     				localStorage.noSettings = 1;
      			}    
      			//if new password is not equal than confirm or email format is wrong 			
       		    else{
@@ -239,6 +248,7 @@ $(document).ready(function(){
 			
 			if (newPass == repPass && checkEmail != -1 && newPass.length >0) {
 			    savePassword(newPass.trim(),emailUser);
+			    localStorage.noSettings = 1;
 			}
 			else{
 			    if($(".txtMessage").hasClass("success")){
@@ -379,6 +389,7 @@ function loadData(){
 }
 
 //check email format
+
 function validateEmail(){
     var email=$(".emailUser").val();
     var errorDomain= (email.match(/.com/g) || []).length;

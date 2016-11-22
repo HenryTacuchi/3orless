@@ -3,14 +3,33 @@ $(document).ready(function(){
 	getLanguage();	
 	checkConfiguration();
 	showLoading(true);
-	if(localStorage.noSettings == 0){
-		getImagesFromServer();
+
+	// document.addEventListener("deviceready", onDeviceReady, false);
+	//     function onDeviceReady() {
+	//         document.addEventListener("backbutton", function (e) {
+	//             e.preventDefault();
+	//         }, false );
+	// }
+
+    function onDeviceReady() {
+        // Register the event listener
+        document.addEventListener("backbutton", onBackKeyDown, false);
+    }
+    
+	// if(localStorage.noSettings == 0){
+	// 	window.location = "config.html";
+	// }
+	if(localStorage.noImageFromServer == 0){
+		getImagesFromServer();	
+		localStorage.countProductCartItem = 0;
+		localStorage.existOldCartItem = 0;
 	}
+
 	LoadBackgroundImages();
 
 	//when click in home screen redirects to Search screen
 	$(".home").click(function(){
-		window.location = "search.html";
+		window.location.href = "search.html";
 	});
 
 	//show or hide form to redirect to configuration screen
@@ -18,13 +37,15 @@ $(document).ready(function(){
 		if($(".settingsForm").hasClass("hide")){
 			$('.emailPassConfig').val("");
 			$(".settingsForm").removeClass("hide").addClass("show animated bounceInUp");
-		}else
+		}else{
 			if($(".settingsForm").hasClass('show'))
 				$(".settingsForm").removeClass("show animated bounceInUp").addClass("animated bounceOutLeft");
 			else{				
 				$('.emailPassConfig').val("");
 				$(".settingsForm").removeClass("animated bounceOutLeft").addClass("show animated bounceInUp");
 			}
+		}
+		$(".emailPassConfig").focus();
 	});
 
 	//bring all background images and logo from server
@@ -99,9 +120,14 @@ $(document).ready(function(){
     //when pages is loaded clear items from local storage
     $(window).on("load", function() {
 		showLoading(false);
-		clearSearchPage();
+		// clearSearchPage();
 		localStorage.orderResults = "";		
     });
+
+    // adding animation to message
+    setTimeout(function(){ 
+    	$('.messageUser').removeClass('slideInDown').addClass('zoomOut');
+    }, 5000);
 });
 
 //remove all variables related to search page from local storage
@@ -134,6 +160,7 @@ function checkConfiguration(){
 	}else{
 		//redirect to configuration screen
 		localStorage.noSettings = 0;
+		localStorage.noImageFromServer = 0;
 		window.location = "config.html";
 	}
 }
@@ -212,7 +239,7 @@ function getImagesFromServer(){
                 });                    
 
             }
-            localStorage.noSettings = 1;
+			localStorage.noImageFromServer = 1;
             localStorage.countImages = countItem;
 
             //logo image

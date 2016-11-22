@@ -1,16 +1,25 @@
-.areaSave{
+.settings-1, .areaSave{
 	height: 162px;
 }
-.areaFinish{
-	height: 243px;
+.settings-2, .areaFinish{
+	height: 300px;
 }
 .iconConfig{
 	height: 162px;
-	padding: 17px 0;
+    padding: 38px 25px 38px 0;
 }
 .iconPass{
-	height: 243px;
-	padding: 57px 0;
+	height: 300px;
+	padding: 107px 25px 107px 0;
+}
+
+.settings-1, .settings-2{
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	margin: auto;
 }
 
 .settings-2{

@@ -21,68 +21,22 @@ section{
 }
 article {
   min-width: 480px;
-  max-width: 80%;
+  width: 80%;
   margin: 15px;
 }
 
 
-/*nav*/
-.appName{
-	float: left;
-	height: 90%;
-	font-family: 'Roboto Condensed';
-	font-weight: 100; 
-	font-size: 150%;
-	width: 150px;
-	padding: 13px 15px;
-}
-.right-options{
-	float: right;
-}
-.right-options li{
-	display: inline-block;
-	height: 100%;
-}
-.icon{
-	width: 54px;
-	text-align: center;
-	font-family: 'Scalia User Icons';
-	line-height: 64px;
-	font-size: 170%;
-	position: relative;
-}
-.item-count{
-  position: absolute;
-  left: 58%;
-  width: 22px;
-  margin-left: -13px;
-  border-radius: 4px 4px 0 0;
-  top: 57%;
-  margin-top: -35px;
-  font-size: 54%;
-  text-align: center;
-  padding-bottom: 3px;
-  line-height: 13px;
-}
-.item-count:after{
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-width: 8px 11px;
-  border-style: solid;
-  border-color: transparent;
-  top: 16px;
-  left: 0;
-}
-
-
 /*form*/
+.form-user{
+
+}
 .form-user h2{
 	font-weight: 100;
 }
 form{
 	padding: 15px;
+  max-width: 480px;
+  margin: 0 auto;
 }
 .section-form-user{
 	flex-grow: 1;
@@ -92,6 +46,9 @@ form{
 }
 .form-control{
 	height: 44px;
+}
+.form-inline .form-group{
+	margin-bottom: 15px;
 }
 
 
@@ -111,6 +68,7 @@ form{
 }
 .items{
 	overflow-y: auto;
+	height: 333px;
 }
 .img-product {
     margin: 5px;
@@ -168,7 +126,7 @@ form{
   justify-content: space-between;
 }
 .btn-back:before {
-  content: '\e614';
+  content: '\e702';
   margin-left: -1em;
   font-size: 100%;
   padding-right: 10px;
@@ -177,7 +135,7 @@ form{
   float: left;
 }
 .btn-clear-cart:before {
-  content: '\e615';
+  content: '\e777';
   margin-left: -1em;
   font-size: 100%;
   padding-right: 10px;
@@ -191,6 +149,15 @@ form{
   font-size: 100%;
   padding-right: 10px;
   font-family: 'Scalia User Icons';
+  display: block;
+  float: left;
+}
+.btn-recover:before {
+  content: '\e606';
+  margin-left: -1em;
+  font-size: 98%;
+  padding-right: 10px;
+  font-family: 'Scalia';
   display: block;
   float: left;
 }

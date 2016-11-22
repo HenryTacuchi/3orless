@@ -12,6 +12,14 @@ $(document).ready(function(){
 	});
 
 	$('.menu-item').click(function(){
+		// if($(".filters-marked").hasClass("hide"))
+		// 	$(".filters-marked").removeClass("hide").addClass("show");
+		// else
+		// 	$(".filters-marked").addClass("show");	
+		if($(".results").hasClass("hide"))
+			$(".results").removeClass("hide").addClass("show");
+		else
+			$(".results").addClass("show");		
 		// add or remove selected class when you click a filter from any category
 
 		if($(this).hasClass('selected')){
@@ -67,8 +75,10 @@ function removeFilter(element){
   });
 }
 
+//add product item to cart
 function addProductCartItem(){
-	if(!existsProductCart($(".txtStyleCode").text(),$(".txtColorCode").text())){
+	//validate if existst style, color and size
+	if(!existsProductCart($(".txtStyleCode").text(),$(".txtColorCode").text(),$(".size-dropdown").text())){
 		var product = '{"Product":';
 	    localStorage.countProductCartItem++;   
 
@@ -77,7 +87,7 @@ function addProductCartItem(){
 	                    '"colorCode": "' + $(".txtColorCode").text() + '",' +
 	                    '"imageFile": "' + $(".main-img").attr("src").replace(/\\/g,"\\\\") + '",' +
 	                    '"price": "' + $(".txtRetailPrice").text() + '",' +
-	                    '"size": "' + $(".sort-dropdown").text() + '",' +
+	                    '"size": "' + $(".size-dropdown").text() + '",' +
 	                    '"styleCode": "' + $(".txtStyleCode").text() + '",' +
 	                    '"styleName": "' + $(".txtStyle").text() + '"' +
 	                    '}}';             
@@ -86,18 +96,32 @@ function addProductCartItem(){
 	}
 	else{
 		if (localStorage.current_lang == "es") 
-			swal("El producto ya ha sido agregado!");
-		else
-			swal("Product has been already added!");
+			swal({
+				title: "Mensaje",
+				text:  "El producto ya ha sido agregado!",
+				type: "warning",
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "¡Ok, Gracias!"
+			});
+		else{
+			swal({
+				title: "Message",
+				text:  "Product has been already added!",
+				type: "warning",
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "Ok, Thanks!"
+			});
+		}
 		return false;
 	}
 }
 
-function existsProductCart(searchStyleCode,searchColorCode){
+//validate if a product has been added to cart
+function existsProductCart(searchStyleCode,searchColorCode,size){
 	for (var i = 1; i <= localStorage.countProductCartItem; i++) {
 		var productObject = JSON.parse(localStorage["cartItemProduct"+i]);
 		if(productObject.Product.styleCode == searchStyleCode 
-			&& productObject.Product.colorCode == searchColorCode)
+			&& productObject.Product.colorCode == searchColorCode && productObject.Product.size == size)
 			return true;
 	}
 	return false;

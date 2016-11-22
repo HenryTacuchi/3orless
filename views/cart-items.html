@@ -5,12 +5,15 @@
 	<title>Detail</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<script type="text/javascript" src="../js/plugins/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/plugins/jquery.email-autocomplete.min.js"></script>
 	<script type="text/javascript" src="../js/plugins/bootstrap.min.js"></script>
 
 	<script type="text/javascript" src="../js/plugins/underscore.min.js"></script>
 	<script type="text/javascript" src="../js/plugins/sweetalert.min.js" ></script>
 	<script type="text/javascript" src="../js/scripts/scripts.js"></script>
+	<script type="text/javascript" src="../js/plugins/jquery.email-autocomplete.min.js"></script>
 	<script type="text/javascript" src="../js/scripts/cart-items.js"></script>
+	<script type="text/javascript" src="../js/scripts/captions.js"></script>
 	
 
 	<link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -24,12 +27,16 @@
 <body>
 
 	<nav class="animated fadeIn">
-		<label class="appName">
-			3orless
-		</label>
+
+		<div class="left-options">
+			<div class="icon btn-home">&#xe610;</div>
+			<label class="appName">
+				3orless
+			</label>			
+		</div>
+		
 		<ul class="right-options">
 			<li><div class="icon btn-cart">&#xe613;<span class="item-count"></span></div></li>
-			<li><div class="icon btn-home">&#xe610;</div></li>
 		</ul>
 	</nav>
 
@@ -38,14 +45,21 @@
 		<article class="form-user">
 			<h2 class="text-center lblCompleteFields">Please complete the fields</h2>
 			<form >
+				<div class="form-inline row">
+					<div class="form-group user col-xs-12 col-md-6">
+						<label class="lblName">Firstname<span>*</span></label>		
+						<input type="text" value="" class="form-control txtFirstName">								
+						<span class="no-complete noFirstName hide">Please fill the required field</span>
+					</div>
+					<div class="form-group user col-xs-12 col-md-6">
+						<label class="lblLastName">Lastname<span>*</span></label>		
+						<input type="text" value="" class="form-control txtLastName">								
+						<span class="no-complete noLastName hide">Please fill the required field</span>
+					</div>
+				</div>					
 				<div class="form-group user">
-					<label class="lblName">Name<span>*</span></label>		
-					<input type="text" value="" class="form-control txtName">								
-					<span class="no-complete noName hide">Please fill the required field</span>
-				</div>
-				<div class="form-group user">
-					<label class="lblName">E-mail<span>*</span></label>		
-					<input type="mail" value="" class="form-control txtEmail">								
+					<label class="lblEmail">E-mail<span>*</span></label>		
+					<input type="email" value="" class="form-control txtEmail" placeholder="your@email.com">								
 					<span class="no-complete noEmail hide">Please fill the required field</span>
 				</div>
 			</form>
@@ -90,16 +104,17 @@
 			      			<img src="<%=path%>" alt="img">
 			      		</div>
 					</div>	
-		      		<div class="col-xs-4 center-text">
+		      		<div class="col-xs-6 center-text">
 		      			<div class="areaStyle">
 			      			<span class="txtStyleName">Style:</span><span class="styleName"><%=styleName%></span>
 			      		</div>
 			      		<div class="brand"><%=brandName%></div>
+			      		<div class="size"><%=size%></div>
 		      		</div>
-	    			<div class="col-xs-3  center-text">
-	    				<div class="price">$.<%=price%></div>
+	    			<div class="col-xs-2  center-text">
+	    				<div class="price"><%=price%></div>
 	    			</div>
-	  				<div class="col-xs-2  center-text">
+	  				<div class="col-xs-1  center-text">
 	  					<div class="icon btn-trash" data-style="<%=styleCode%>" data-color="<%=colorCode%>">&#xe615;</div>	
 	  				</div>
 				</div>
@@ -113,6 +128,7 @@
 		<div class="options">
 			<button class="btn bg-color1 btn-back">Back</button>
 			<button class="btn bg-color1 btn-clear-cart">Clear All</button>
+			<button class="btn bg-color1 btn-recover">Recover Cart</button>
 			<button class="btn bg-color1 btn-done">Done</button>
 		</div>
 	</footer>
@@ -151,4 +167,13 @@
 	</div>
 	
 </body>
+<script language='VBScript'>
+Sub Print()
+       OLECMDID_PRINT = 6
+       OLECMDEXECOPT_DONTPROMPTUSER = 2
+       OLECMDEXECOPT_PROMPTUSER = 1
+       call WB.ExecWB(OLECMDID_PRINT, OLECMDEXECOPT_DONTPROMPTUSER,1)
+End Sub
+document.write "<object ID='WB' WIDTH=0 HEIGHT=0 CLASSID='CLSID:8856F961-340A-11D0-A96B-00C04FD705A2'></object>"
+</script>
 </html>

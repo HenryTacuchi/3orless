@@ -86,7 +86,7 @@
 
 /*unlock block*/
 .unlock{
-	position: absolute;
+	position: fixed;
 	bottom: 0;
 	width: 100%;
 	z-index: 2;
@@ -108,7 +108,6 @@
 	z-index: 10;
 	top: 15px;
 	right: 15px;
-	opacity: 0.6;
 }
 
 .settingsForm{
@@ -134,4 +133,16 @@
 
 .btn.btnDone {
     margin-top: 15px;
+}
+
+.messageUser {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    margin: auto;
+    text-align: center;
+    width: 36%;
+    display: inline-block;
 }
