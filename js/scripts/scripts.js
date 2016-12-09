@@ -57,6 +57,7 @@ $(document).ready(function(){
 	  });
 
 	});
+	
 
 });
 
@@ -87,6 +88,7 @@ function addProductCartItem(){
 	                    '"colorCode": "' + $(".txtColorCode").text() + '",' +
 	                    '"imageFile": "' + $(".main-img").attr("src").replace(/\\/g,"\\\\") + '",' +
 	                    '"price": "' + $(".txtRetailPrice").text() + '",' +
+	                    '"originalPrice": "' + $(".txtOriginalPrice").text() + '",' +
 	                    '"size": "' + $(".size-dropdown").text() + '",' +
 	                    '"styleCode": "' + $(".txtStyleCode").text() + '",' +
 	                    '"styleName": "' + $(".txtStyle").text() + '"' +

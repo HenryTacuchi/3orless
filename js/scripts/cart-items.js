@@ -1,6 +1,130 @@
 // overall delay for disappearance of animations
 var delay=2500;
 var removeAnimationFlipIn = false;
+
+var page = '';
+var app = {
+    // Application Constructor
+    initialize: function() {
+        this.bindEvents();
+    },
+    // Bind Event Listeners
+    //
+    // Bind any events that are required on startup. Common events are:
+    // 'load', 'deviceready', 'offline', and 'online'.
+    bindEvents: function() {
+        document.addEventListener('deviceready', this.onDeviceReady, false);
+    },
+    // deviceready Event Handler
+    //
+    // The scope of 'this' is the event. In order to call the 'receivedEvent'
+    // function, we must explicitly call 'app.receivedEvent(...);'
+    onDeviceReady: function() {
+        app.receivedEvent('deviceready');
+
+    		//Wifi Printer        
+   //      if(cordova.platformId = 'android'){
+
+			// // cordova.plugins.printer.check(function (avail, count) {
+		 // //    	alert(avail ? 'Found ' + count + ' services' : 'No');
+			// // });
+			// var uri = "192.168.1.53";
+			// // cordova.plugins.printer.pick(function (uri) {
+			// //     // alert(uri ? uri : 'Canceled');
+			// //     cordova.plugins.printer.print(page, { printerId: uri });
+			// // });
+			// cordova.plugins.printer.print(page, {printerId: uri }, function (res) {
+			//     if(res){
+			//     	clearSearchPage();				  	
+			// 		window.location = "search.html";
+			//     }
+			//     else{
+			//     	alert('Canceled');
+			//     }			    
+			// });
+   //      }
+
+		   showLoading(true);
+		   BTPrinter.connect(function(data){
+			    console.log("Success Connect");
+			    console.log(data);
+				BTPrinter.printText(function(data){
+					console.log("Success PrintText");
+					console.log(data);
+					setTimeout(function(){
+						BTPrinter.disconnect(function(data){
+						    console.log("Success Disconnect");
+						    console.log(data);		
+							clearSearchPage();	
+							showLoading(false);			  	
+							window.location = "search.html";
+						},function(err){
+						    console.log("Error Disconnect");
+						    console.log(err);
+						    showLoading(false);
+						}, localStorage.printerName)
+					},3000); 	
+				},function(err){
+					console.log("Error printText");
+					console.log(err);
+					showLoading(false);
+				}, page);				
+			},function(err){
+			    console.log("Error Connect");
+			    console.log(err);
+			    if (localStorage.current_lang == "es") 
+			    	swal({
+					  title: "Confirmación de Impresión",
+					  text: "Se ha perdido la conexión con la impresora. Por favor, inténtelo de nuevo!",
+					  type: "warning",
+					  showCancelButton: true,
+					  confirmButtonColor: "#8fbf75",
+					  confirmButtonText: "Ok, reintentar!",
+					  cancelButtonColor: "#b9b9b9",
+					  cancelButtonText: "No, finalizar!",
+					  closeOnConfirm: false,
+					  closeOnCancel: false
+					},
+					function(isConfirm){
+					  if (isConfirm) {
+					    printTicket();
+					  } else {
+					    clearSearchPage();	
+						showLoading(false);			  	
+						window.location = "search.html";
+					  }
+					});
+				else				
+					swal({
+					  title: "Print confirm",
+					  text: "Printer conection is lost. Please, try again!",
+					  type: "warning",
+					  showCancelButton: true,
+					  confirmButtonColor: "#8fbf75",
+					  confirmButtonText: "Ok, retry!",
+					  cancelButtonColor: "#b9b9b9",
+					  cancelButtonText: "No, finish!",
+					  closeOnConfirm: false,
+					  closeOnCancel: false
+					},
+					function(isConfirm){
+					  if (isConfirm) {
+					    printTicket();
+					  } else {
+					    clearSearchPage();	
+						showLoading(false);			  	
+						window.location = "search.html";
+					  }
+					});
+			    showLoading(false);
+			}, localStorage.printerName)	 					 
+    },
+    // Update DOM on a Received Event
+    receivedEvent: function(id) {
+    }
+};
+
+
 $(document).ready(function(){
 	if(localStorage.currentFirstNameClient != undefined && localStorage.currentFirstNameClient != "")
 		$(".txtFirstName").val(localStorage.currentFirstNameClient);
@@ -60,9 +184,6 @@ $(document).ready(function(){
 
     //show products from last cart
     $(".btn-recover").click(function(){
-    	$(".txtFirstName").val("");
-    	$(".txtLastName").val("");
-    	$(".txtEmail").val("");
     	for (var i = 1; i <= localStorage.countProductLastCartItem ; i++) {
     		localStorage["cartItemProduct"+i] = localStorage["lastCartItemProduct"+i];
     	}
@@ -102,6 +223,7 @@ $(document).ready(function(){
 		        async: false,
 		        contentType: "application/json",
 		        crossdomain: true,
+		        timeout: 10000,
 		        beforeSend: function(){
 		        	showLoading(true);
 		        },
@@ -123,6 +245,7 @@ $(document).ready(function(){
 		        async: false,
 		        contentType: "application/json",
 		        crossdomain: true,
+		        timeout: 10000,
 		        beforeSend: function(){
 		        	showLoading(true);
 		        },
@@ -145,9 +268,9 @@ $(document).ready(function(){
 		    var messageorder = "";
 		    if(orderNumber != ""){
 		    	if(localStorage.current_lang == "es")
-		    		messageorder = "<b>N° Orden:"+orderNumber+"</b>\n";
+		    		messageorder = "N° Orden:"+orderNumber+"\n";
 		    	else
-		    		messageorder = "<b>N° Order:"+orderNumber+"</b>\n";
+		    		messageorder = "N° Order:"+orderNumber+"\n";
 		    }
 			saveLastCartItem();
 	    	if (localStorage.current_lang == "es") 
@@ -155,28 +278,26 @@ $(document).ready(function(){
 				  title: "Confirmación de Orden",
 				  text: messageorder + "Gracias "+ firstName +",\nPor favor, espere que traigamos su orden.",
 				  type: "success",
-				  confirmButtonColor: "#DD6B55",
-				  confirmButtonText: "¡Ok, Genial!",
+				  confirmButtonColor: "#8fbf75",
+				  confirmButtonText: "¡Ok, Genial!",				  
 				  closeOnConfirm: false
 				},
 				function(){
-				  	clearSearchPage();
-				  	window.location = "print.html"; 
-					//window.location = "search.html";
+					loadPrint();
+					printTicket();
 				});
 			else				
 				swal({
 				  title: "Order Confirmation",
 				  text: messageorder + "Thank you "+ firstName +",\nPlease wait, we are getting your order.",
 				  type: "success",
-				  confirmButtonColor: "#DD6B55",
-				  confirmButtonText: "Ok, Cool!",
+				  confirmButtonColor: "#8fbf75",
+				  confirmButtonText: "Ok, Cool!",				  
 				  closeOnConfirm: false
 				},
 				function(){
-				  	clearSearchPage();
-				  	window.location = "print.html"; 
-					//window.location = "search.html";
+				  	loadPrint();
+					printTicket();
 				});
 		}    
 		//if name or email format is wrong 			
@@ -241,7 +362,6 @@ $(document).ready(function(){
 		}	
 		$(".btn-done").prop("disabled",false);
 
-
     });
 
     $(document).on("click",".btn-trash",function(){
@@ -271,7 +391,84 @@ $(document).ready(function(){
 
 });
 
+// function loadPrintHTML(){
+// 	page = '<html '+
+// 				'<head>'+
+// 					'<meta http-equiv="content-type" content="text/html; charset=UTF-8">'+
+// 					'<title>Order</title>'+	
+// 				'</head>'+
+// 				'<body>'+
+// 					'<div class="headOrder">'+
+// 						// '<div class="logo"><img src="' +localStorage.logo+'" alt="logo" width=300  class="logo-company"></div>'+
+// 						'<div class="ordernumber">Order No: ' + localStorage.orderNumber+'</div>'+
+// 						'<div class="clientname">'+localStorage.currentFirstNameClient + " " + localStorage.currentLastNameClient+'</div>'+
+// 						'<div class="date">'+datetime+'</div>'+
+// 					'</div>'+
+// 					'<div class="cart-items">'+
+// 						'<h4 class="lblCart">Cart</h4>'+
+// 						'<ul class="list-items">';
 
+// 	var totalMont=0;
+//    	var totalRealMont =0;
+
+//    	for (var i = 1; i <= localStorage.countProductCartItem; i++) {
+// 		var productObject = JSON.parse(localStorage["cartItemProduct"+i]);
+		
+// 		var mont = Number(productObject.Product.price.substring(1));
+// 		var montOriginal = Number(productObject.Product.originalPrice.substring(1));
+// 		totalMont = totalMont + mont;
+// 		totalRealMont = totalRealMont + montOriginal;
+// 		var elementCartItem = '<li class="item  '+"item-" + (i)+'">'+
+// 									'<div class="brandName">'+productObject.Product.brandName+'</div>'+
+// 									'<div class="styleName">'+productObject.Product.styleName+'</div>'+
+// 									'<div class="color">'+productObject.Product.colorCode+'</div>'+
+// 									'<div class="size">'+productObject.Product.size+'</div>'+
+// 									'<div class="price">'+productObject.Product.price+'</div>'+
+// 								'</li>';
+// 		page = page + elementCartItem;
+// 	}			
+// 	page = page + 	'</ul>'+
+// 				'</div>'+
+// 				'<div class="footerOrder">'+
+// 					'<div class="total">'+totalMont.toFixed(2)+'</div>'+
+// 					'<div class="saving">'+(totalRealMont-totalMont).toFixed(2)+'</div>'+
+// 				'</div>';	
+// }
+
+function loadPrint(){
+	var currentdate = new Date(); 
+	var datetime = currentdate.getDate() + "/"
+	           + (currentdate.getMonth()+1)  + "/" 
+	           + currentdate.getFullYear() + " "  
+	           + currentdate.getHours() + ":"  
+	           + currentdate.getMinutes() + ":" 
+	           + currentdate.getSeconds();
+	page = "           NICEKICKS\n"+
+						'Order No: ' + localStorage.orderNumber+'\n'+
+						localStorage.currentFirstNameClient + " " + localStorage.currentLastNameClient+'\n'+
+						datetime+'\n\n'+
+						'Cart Items\n';
+
+	var totalMont=0;
+   	var totalRealMont =0;
+
+   	for (var i = 1; i <= localStorage.countProductCartItem; i++) {
+		var productObject = JSON.parse(localStorage["cartItemProduct"+i]);
+		
+		var mont = Number(productObject.Product.price.substring(1));
+		var montOriginal = Number(productObject.Product.originalPrice.substring(1));
+		totalMont = totalMont + mont;
+		totalRealMont = totalRealMont + montOriginal;
+		var elementCartItem = 	'- Brand: '+productObject.Product.brandName+'\n'+
+								'  Style: '+productObject.Product.styleName+'\n'+
+								'  Color: '+productObject.Product.colorCode+'\n'+
+								'  Size : '+productObject.Product.size+'\n'+
+								'  Price: '+productObject.Product.price+'\n\n';
+		page = page + elementCartItem;
+	}			
+	page = page +   'Total : '+totalMont.toFixed(2)+'\n'+
+					'Saving: '+(totalRealMont-totalMont).toFixed(2)+'\n\n\n\n\n';
+}
 
 //check email format
 function validateEmail(){
@@ -315,11 +512,19 @@ function clearSearchPage(){
 	localStorage.removeItem("listClassFilter");
 	localStorage.removeItem("listGenderFilter");
 	localStorage.removeItem("listSizeFilter");
+	localStorage.removeItem("listBrandFilterChecked");
+	localStorage.removeItem("listClassFilterChecked");
+	localStorage.removeItem("listGenderFilterChecked");
+	localStorage.removeItem("listSizeFilterChecked");
 	localStorage.removeItem("productList");
 	localStorage.removeItem("countProductFiltered");
 	localStorage.removeItem("indexProductSelected");
 	localStorage.removeItem("resultsProductColorCodeSelected");
 	localStorage.removeItem("resultsProductStyleCodeSelected");
+	localStorage.removeItem("currentFirstNameClient");
+	localStorage.removeItem("currentLastNameClient");
+	localStorage.removeItem("currentEmailClient");
+
 	for (var i = 1; i <= localStorage.countProductCartItem; i++) {
 		localStorage.removeItem("cartItemProduct" + (i));
 	}
@@ -367,3 +572,26 @@ function saveLastCartItem(){
 	}
 	localStorage.existOldCartItem = 1;
 }
+
+function printTicket(){
+	$.ajax({
+        type: "GET",
+        url: "http://" + localStorage.serverId + "/WS3orlessFiles/S3orLess.svc/NPRODUCT/Test",
+        // async: false,
+        contentType: "application/json",
+        crossdomain: true,
+        timeout: 10000,
+        beforeSend: function(){
+        	showLoading(true);
+        },
+        complete: function(){
+        	// showLoading(false);
+        },
+        success: function (result) { 
+            app.initialize()
+        },
+        error: function (error) {    	
+        }
+    });
+}
+

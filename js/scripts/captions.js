@@ -9,16 +9,17 @@ $(document).ready(function(){
 		$(".btnDone").text("Listo");
 
 		//Configuration Page
-		$(".lblStoreNo").text("N° Tienda");
+		$(".lblStoreNo").html("N° Tienda<span>*</span>");
 		$(".storeNo").attr('placeholder',"Ingrese el número de tienda");
-		$(".lblServerId").text("IP del Servidor");
+		$(".lblServerId").html("IP del Servidor<span>*</span>");
 		$(".serverId").attr('placeholder',"Ingrese la IP del servidor");
+		$(".lblPrinter").html("Impresora<span>*</span>");
 		$(".btn-save").text("Guardar");
-		$(".lblEmail").text("Correo Electrónico");
+		$(".lblEmail").html("Correo Electrónico<span>*</span>");
 		$(".emailUser").attr('placeholder',"contacto@email.com");
-		$(".lblOldPassword").text("Contraseña anterior");
-		$(".lblPassword").text("Nueva Contraseña");
-		$(".lblConfirmPassword").text("Confirmar Contraseña");
+		$(".lblOldPassword").html("Contraseña anterior<span>*</span>");
+		$(".lblPassword").html("Nueva Contraseña<span>*</span>");
+		$(".lblConfirmPassword").html("Confirmar Contraseña<span>*</span>");
 		$(".btn-finish").text("Finalizar");
 
 		//Search page
@@ -55,8 +56,8 @@ $(document).ready(function(){
 
 		//Cart Item Page
 		$(".lblCompleteFields").text("Por favor, complete los campos");
-		$(".lblName").text("Nombres");
-		$(".lblLastName").text("Apellidos");
+		$(".lblName").html("Nombres<span>*</span>");
+		$(".lblLastName").html("Apellidos<span>*</span>");
 		$(".lblCartItems").text("Productos agregados");
 		$(".btn-clear-cart").text("Limpiar Todo");
 		$(".btn-recover").text("Recuperar Carrito");

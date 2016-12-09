@@ -4,6 +4,9 @@
 .loader{
 
 }
+.segment{
+	background: #58abb7;
+}
 input{
 	color: #384554;
 	border: 1px solid #d2dae1;
@@ -228,4 +231,8 @@ del{
 }
 .views{
 	border-right-color: #D2DAE1;
+}
+
+.dropdown .btn {
+    color: #333;
 }

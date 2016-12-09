@@ -1,5 +1,110 @@
 // overall delay for disappearance of animations
 var delay=2500;
+// var printerConnection = false;
+var loadCboPrinters = {
+    // Application Constructor
+    initialize: function() {
+        this.bindEvents();
+    },
+    // Bind Event Listeners
+    //
+    // Bind any events that are required on startup. Common events are:
+    // 'load', 'deviceready', 'offline', and 'online'.
+    bindEvents: function() {
+        document.addEventListener('deviceready', this.onDeviceReady, false);
+    },
+    // deviceready Event Handler
+    //
+    // The scope of 'this' is the event. In order to call the 'receivedEvent'
+    // function, we must explicitly call 'loadCboPrinters.receivedEvent(...);'
+    onDeviceReady: function() {
+        loadCboPrinters.receivedEvent('deviceready');
+
+    		//Wifi Printer        
+   //      if(cordova.platformId = 'android'){
+
+			// // cordova.plugins.printer.check(function (avail, count) {
+		 // //    	alert(avail ? 'Found ' + count + ' services' : 'No');
+			// // });
+			// var uri = "192.168.1.53";
+			// // cordova.plugins.printer.pick(function (uri) {
+			// //     // alert(uri ? uri : 'Canceled');
+			// //     cordova.plugins.printer.print(page, { printerId: uri });
+			// // });
+			// cordova.plugins.printer.print(page, {printerId: uri }, function (res) {
+			//     if(res){
+			//     	clearSearchPage();				  	
+			// 		window.location = "search.html";
+			//     }
+			//     else{
+			//     	alert('Canceled');
+			//     }			    
+			// });
+   //      }
+
+   			//Bluetooth Printer
+		   BTPrinter.list(function(data){
+		        console.log("Success");
+		        console.log(data); //list of printer in data array
+		        
+				if(data.length>0){
+					if(localStorage.printerName == undefined || localStorage.printerName ==''){
+						$(".printer-dropdown").text(data[0]);					
+						localStorage.printerName = data[0];
+					}					
+				    for (var i=0; i<data.length; i++) {
+						var template = _.template($("#listPrinterTemplate").html());
+					    var html = template({
+					       printerName:data[i]
+					    });
+					    $(".listPrinter").append(html);
+					}
+				}
+		    },function(err){
+		        console.log("Error");
+		        console.log(err);
+		    })	 					 
+    },
+    // Update DOM on a Received Event
+    receivedEvent: function(id) {
+    }
+};
+
+// var checkPrinterConnection = {
+//     // Application Constructor
+//     initialize: function() {
+//         this.bindEvents();
+//     },
+//     // Bind Event Listeners
+//     //
+//     // Bind any events that are required on startup. Common events are:
+//     // 'load', 'deviceready', 'offline', and 'online'.
+//     bindEvents: function() {
+//         document.addEventListener('deviceready', this.onDeviceReady, false);
+//     },
+//     // deviceready Event Handler
+//     //
+//     // The scope of 'this' is the event. In order to call the 'receivedEvent'
+//     // function, we must explicitly call 'loadCboPrinters.receivedEvent(...);'
+//     onDeviceReady: function() {
+//         checkPrinterConnection.receivedEvent('deviceready');
+
+//    			//Bluetooth Printer
+// 		   	BTPrinter.connect(function(data){
+// 			    console.log("Success");
+// 			    console.log(data);
+// 			    printerConnection = true;
+// 			},function(err){
+// 			    console.log("Error Connect");
+// 			    console.log(err)
+// 			    printerConnection = false;
+// 			}, localStorage.printerName)					 
+//     },
+//     // Update DOM on a Received Event
+//     receivedEvent: function(id) {
+//     }
+// };
+
 $(document).ready(function(){
 	// localStorage.clear();
 
@@ -9,6 +114,8 @@ $(document).ready(function(){
     // });
 
 	$(".storeNo").focus();
+	//fill dropdown with all available bluetooth printers
+	loadCboPrinters.initialize();
 
 	//check if exists images for home in server
 	if(localStorage.imageServerError == 1){
@@ -44,56 +151,109 @@ $(document).ready(function(){
 	checkPassword();
 	
 	//save configuration of StoreNo and Server IP
-	$(".btnSave").click(function(){
+	$(".btnSave").click(function(){	
+
 
 		$(".validations").addClass("hide");
 		$(".validations").removeClass("animated fadeOutLeft");
     	var storeNo= $(".storeNo").val();
 		var serverId = $(".serverId").val();
 		var checkIP = validateIP();
-		if(storeNo.length>0 && checkIP != -1){
-		    saveConfiguration(storeNo.trim(),serverId.trim());
-		    $(".settings-1").removeClass('fadeInDown').addClass("fadeOutLeft");
-		    $(".settings-2").removeClass("hide").addClass("animated fadeInLeft");
-		    $(".emailUser").focus();
-		}
-		else {
-			if (checkIP==-1){
-				$(".serverId").focus();
-				$(".noServerId").removeClass("hide").addClass("show");
 
-				if (serverId.length==0){
-					if (localStorage.current_lang == "es") { $(".noServerId").text("Complete el campo requerido!"); } 
-				}else{
-					if (localStorage.current_lang == "es") { $(".noServerId").text("El formato de IP del servidor es incorrecto!"); } 
-					else { $(".noServerId").text("Server IP format is wrong!"); }
+		// $.ajax({
+		// 	type: "GET",
+	 //        // url: "http://" + serverId + "/WS3orlessFiles/S3orLess.svc/NPRODUCT/Test",
+	 //        url: "http://" + serverId + "/WS3orlessFiles/S3orLess.svc/NPRODUCT/GetFilter/" + storeNo,
+	 //        // async: false,
+	 //        contentType: "application/json",
+	 //        crossdomain: true,
+	 //        timeout: 10000,
+	 //        beforeSend: function(){
+	 //            showLoading(true);
+	 //        },
+	 //        complete: function(){
+	 //            showLoading(false);
+	 //        },
+	 //        success:function(result){
+	 //        	checkPrinterConnection.initialize()
+	        	if(storeNo.length>0 && checkIP != -1){
+				    saveConfiguration(storeNo.trim(),serverId.trim());
+				    $(".settings-1").removeClass('fadeInDown').addClass("fadeOutLeft");
+				    $(".settings-2").removeClass("hide").addClass("animated fadeInLeft");
+				    $(".emailUser").focus();
 				}
-			}else{
-				if($(".noServerId").hasClass("show"))
-					$(".noServerId").removeClass("show").addClass("hide");
-			}
-			if (storeNo.length==0){
-				$(".storeNo").focus();
-				$(".noStoreNo").removeClass("hide").addClass("show");
-			}else{
-				if($(".noStoreNo").hasClass("show"))
-					$(".noStoreNo").removeClass("show").addClass("hide");
-			}
-			if($(".txtMessage").hasClass("success")){
-				$(".txtMessage").removeClass("success").addClass("danger");
-				$(".btn-mini-img").removeClass("success").addClass("danger").find('span').empty().html('&#xe645');
-			}
-			else{
-				$(".txtMessage").addClass("danger");
-				$(".btn-mini-img").addClass("danger").find('span').empty().html('&#xe645');
-			}
-			$(".validations").removeClass("hide").addClass("animated fadeInLeft");
+				else {
+					// if (printerConnection == false){
+					// 	$(".noPrinter").removeClass("hide").addClass("show");
+					// 	if (localStorage.current_lang == "es") { $(".noPrinter").text("No hay conexión con la impresora!"); } 
+					// }else{
+					// 	if($(".noPrinter").hasClass("show"))
+					// 		$(".noPrinter").removeClass("show").addClass("hide");
+					// }
+					if (checkIP==-1){
+						$(".serverId").focus();
+						$(".noServerId").removeClass("hide").addClass("show");
 
-			if (localStorage.current_lang == "es") { $(".txtMessage").text("Por favor, verifique los campos e inténtelo nuevamente!"); } 
-			$(".validations").delay(delay).queue(function(){
-			    $(this).addClass("animated fadeOutLeft").dequeue();
-			});
-		}
+						if (serverId.length==0){
+							if (localStorage.current_lang == "es") { $(".noServerId").text("Complete el campo requerido!"); } 
+						}else{
+							if (localStorage.current_lang == "es") { $(".noServerId").text("El formato de IP del servidor es incorrecto!"); } 
+							else { $(".noServerId").text("Server IP format is wrong!"); }
+						}
+					}else{
+						if($(".noServerId").hasClass("show"))
+							$(".noServerId").removeClass("show").addClass("hide");
+					}
+					if (storeNo.length==0){
+						$(".storeNo").focus();
+						$(".noStoreNo").removeClass("hide").addClass("show");
+						if (localStorage.current_lang == "es") { $(".noStoreNo").text("Complete el campo requerido!"); } 
+					}else{
+						if($(".noStoreNo").hasClass("show"))
+							$(".noStoreNo").removeClass("show").addClass("hide");
+					}
+					if($(".txtMessage").hasClass("success")){
+						$(".txtMessage").removeClass("success").addClass("danger");
+						$(".btn-mini-img").removeClass("success").addClass("danger").find('span').empty().html('&#xe645');
+					}
+					else{
+						$(".txtMessage").addClass("danger");
+						$(".btn-mini-img").addClass("danger").find('span').empty().html('&#xe645');
+					}
+					$(".validations").removeClass("hide").addClass("animated fadeInLeft");
+
+					if (localStorage.current_lang == "es") { $(".txtMessage").text("Por favor, verifique los campos e inténtelo nuevamente!"); } 
+					else { $(".txtMessage").text("Validation errors occurred. Please confirm the fields and submit it again!"); } 
+
+					$(".validations").delay(delay).queue(function(){
+					    $(this).addClass("animated fadeOutLeft").dequeue();
+					});
+				}
+    //     	},
+	   //      error:function(error) {
+	   //      	if($(".txtMessage").hasClass("success")){
+				// 	$(".txtMessage").removeClass("success").addClass("danger");
+				// 	$(".btn-mini-img").removeClass("success").addClass("danger").find('span').empty().html('&#xe645');
+				// }
+				// else{
+				// 	$(".txtMessage").addClass("danger");
+				// 	$(".btn-mini-img").addClass("danger").find('span').empty().html('&#xe645');
+				// }
+	   //          $(".validations").removeClass("hide").addClass("animated fadeInLeft");
+
+				// if (localStorage.current_lang == "es") { $(".txtMessage").text("No hay conexión con el servidor!"); } 
+				// else { $(".txtMessage").text("There is no server conection!"); } 
+				// $(".validations").delay(delay).queue(function(){
+				//     $(this).addClass("animated fadeOutLeft").dequeue();
+				// });
+	   //      }
+    //     });
+
+  // 			}
+		// ], function(err, results) {
+		//     // optional callback
+		// });
+		
     });
 
 	//Save email and password
@@ -140,6 +300,7 @@ $(document).ready(function(){
 					$(".validations").removeClass("hide").addClass("animated fadeInLeft");
 
 					if (localStorage.current_lang == "es") { $(".txtMessage").text("Por favor, verifique los campos e inténtelo nuevamente!"); }
+					else { $(".txtMessage").text("Validation errors occurred. Please confirm the fields and submit it again!"); } 
 					$(".validations").delay(delay).queue(function(){
 					    $(this).addClass("animated fadeOutLeft").dequeue();
 					});
@@ -194,6 +355,7 @@ $(document).ready(function(){
 	      		$(".validations").removeClass("hide").addClass("animated fadeInLeft");
 
 				if (localStorage.current_lang == "es") { $(".txtMessage").text("Por favor, verifique los campos e inténtelo nuevamente!"); }
+				else { $(".txtMessage").text("Validation errors occurred. Please confirm the fields and submit it again!"); } 
 				$(".validations").delay(delay).queue(function(){
 				    $(this).addClass("animated fadeOutLeft").dequeue();
 				});
@@ -263,6 +425,7 @@ $(document).ready(function(){
 				$(".validations").removeClass("hide").addClass("animated fadeInLeft");
 
 				if (localStorage.current_lang == "es") { $(".txtMessage").text("Por favor, verifique los campos e inténtelo nuevamente!"); } 
+				else { $(".txtMessage").text("Validation errors occurred. Please confirm the fields and submit it again!"); } 
 				$(".validations").delay(delay).queue(function(){
 				    $(this).addClass("animated fadeOutLeft").dequeue();
 				});
@@ -301,7 +464,19 @@ $(document).ready(function(){
 			}
 		}	
 
+		clearSearchPage();
 		
+    });
+
+    $(document).on("click",".printer-item",function(){
+    	$(".printer-dropdown").text($(this).text());
+        localStorage.printerName = $(this).text();        
+    });
+
+
+	//when page is loaded hide loaders
+    $(window).on("load", function() {
+       showLoading(false);
     });
 
 });
@@ -385,6 +560,7 @@ function loadData(){
         $(".serverId").val(localStorage.serverId);
         $(".emailUser").val(localStorage.emailUser);
         $(".oldPass").val(localStorage.password);
+        $(".printer-dropdown").text(localStorage.printerName);
     }
 }
 
@@ -413,3 +589,63 @@ function validateIP(){
     else{ return -1 }
   
 }
+
+//show or hide main loader
+function showLoading(option){
+    if(option){  
+        if($(".loader").hasClass("hide"))
+            $(".loader").removeClass("hide").addClass("show");
+        else
+            $(".loader").addClass("show");
+    }else{
+        if($(".loader").hasClass("show"))
+            $(".loader").removeClass("show").addClass("hide").delay(5000);
+        else
+            $(".loader").addClass("hide").delay(5000);
+    }
+}
+
+// var w;
+// function startWorker() {
+//     if (typeof(Worker) !== "undefined") {
+// 	    if(typeof(w) == "undefined") {
+//             w = new Worker("../js/scripts/printFunctions.js");
+//         }
+//         // w.onmessage = function(event) {
+//         //     printerConnection = event.data;
+//         // };
+//         // w.terminate();
+//         // w = undefined;
+//         // showLoading(false);
+// 	} else {
+// 	    alert("Sorry! No Web Worker support..");
+// 	}
+// }
+
+
+//remove all variables related to search page from local storage
+function clearSearchPage(){
+	localStorage.removeItem("listBrandFilter");
+	localStorage.removeItem("listClassFilter");
+	localStorage.removeItem("listGenderFilter");
+	localStorage.removeItem("listSizeFilter");
+	localStorage.removeItem("listBrandFilterChecked");
+	localStorage.removeItem("listClassFilterChecked");
+	localStorage.removeItem("listGenderFilterChecked");
+	localStorage.removeItem("listSizeFilterChecked");
+	localStorage.removeItem("productList");
+	localStorage.removeItem("countProductFiltered");
+	localStorage.removeItem("indexProductSelected");
+	localStorage.removeItem("resultsProductColorCodeSelected");
+	localStorage.removeItem("resultsProductStyleCodeSelected");
+
+	localStorage.removeItem("currentFirstNameClient");
+	localStorage.removeItem("currentLastNameClient");
+	localStorage.removeItem("currentEmailClient");
+
+	for (var i = 1; i <= localStorage.countProductCartItem; i++) {
+		localStorage.removeItem("cartItemProduct" + (i));
+	}
+	localStorage.countProductCartItem = 0;
+}
+

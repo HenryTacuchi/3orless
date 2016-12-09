@@ -247,6 +247,10 @@ main{
   align-items: stretch;
   flex-wrap: wrap;
 }
+.swiper-slide.swiper-slide-next,
+.swiper-slide.swiper-slide-prev{
+	/*opacity: 0;*/
+}
 .swiper-pagination-bullet {
   width: 32px !important;
   height: 32px !important;
@@ -273,6 +277,15 @@ div[class^="row-product"]{
 	flex-direction: row;
 	align-items: stretch;
 }
+.product{
+	/*all transition to take 1s */
+	transition:all 2s;
+	-webkit-transition:all 2s;
+
+	/*set card transform origin to 20% from x-axis and 80% from y-axis */
+	transform-origin: 20% 80%;
+	-webikit-transform-origin: 20% 80%;
+}
 .product img{
 	width: 100%;
 }
@@ -291,6 +304,94 @@ div[class^="product"]:first-child{
 div[class^="product"]:last-child{
 	margin-right: 0;
 }
+.row-product1 .product:nth-child(1){
+	height: 285px;
+	margin-left: 0px;
+	transform: scale(0.5,0.5);
+	animation-name: cards;
+  animation-duration: 0.75s;
+	animation-delay: 0s;
+}
+.row-product1 .product:nth-child(2){
+	height: 285px;
+	margin-left: -200px;
+	transform: scale(0.5,0.5);
+	animation-name: cards;
+  animation-duration: 0.75s;
+	animation-delay: 0.2s;
+}
+.row-product1 .product:nth-child(3){
+	height: 285px;
+	margin-left: -200px;
+	transform: scale(0.5,0.5);
+	animation-name: cards;
+  animation-duration: 1s;
+	animation-delay: 0.4s;
+}
+.row-product1 .product:nth-child(4){
+	height: 285px;
+	margin-left: -200px;
+	transform: scale(0.5,0.5);
+	animation-name: cards;
+  animation-duration: 0.75s;
+	animation-delay: 0.6s;
+}
+
+.row-product2 .product:nth-child(1){
+	height: 285px;
+	margin-left: 0px;
+	margin-top: -300px;
+	transform: scale(0.5,0.5);
+	animation-name: cards;
+  animation-duration: 0.75s;
+	animation-delay: 0s;
+}
+.row-product2 .product:nth-child(2){
+	height: 285px;
+	margin-left: -200px;
+	margin-top: -300px;
+	transform: scale(0.5,0.5);
+	animation-name: cards;
+  animation-duration: 0.75s;
+	animation-delay: 0.2s;
+}
+.row-product2 .product:nth-child(3){
+	height: 285px;
+	margin-left: -200px;
+	margin-top: -300px;
+	transform: scale(0.5,0.5);
+	animation-name: cards;
+  animation-duration:0.75s;
+	animation-delay: 0.4s;
+}
+.row-product2 .product:nth-child(4){
+	height: 285px;
+	margin-left: -200px;
+	margin-top: -300px;
+	transform: scale(0.5,0.5);
+	animation-name: cards;
+  animation-duration: 0.75s;
+	animation-delay: 0.6s;
+}
+
+
+@keyframes cards{
+	0%{
+		height: 285px;
+	}
+	50%{
+		/*margin-left: inherit;
+		margin-top: inherit;*/
+		height: inherit;
+	}
+	100%{
+		height: inherit;
+		transform: scale(1,1);	
+		margin-left: 4px;
+		margin-top: 4px;	
+	}
+}
+
 .img-product{
 	width: 100%;
 	margin: 0;
@@ -341,6 +442,7 @@ div[class^="product"]:last-child{
 .sort-area{
 	width: 100%;
 	height: 58px;
+	transition: opacity 0.8s;
 }
 .float-right{
 	float: right;
@@ -400,4 +502,9 @@ div[class^="product"]:last-child{
 }
 .segment {
   background: #58abb7;
+}
+
+
+.opaque{
+	opacity: 0;
 }

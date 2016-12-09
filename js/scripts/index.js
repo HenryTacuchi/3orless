@@ -1,5 +1,75 @@
-$(document).ready(function(){
+// var app = {
+//     // Application Constructor
+//     initialize: function() {
+//         this.bindEvents();
+//     },
+//     // Bind Event Listeners
+//     //
+//     // Bind any events that are required on startup. Common events are:
+//     // 'load', 'deviceready', 'offline', and 'online'.
+//     bindEvents: function() {
+//         document.addEventListener('deviceready', this.onDeviceReady, false);
+//     },
+//     // deviceready Event Handler
+//     //
+//     // The scope of 'this' is the event. In order to call the 'receivedEvent'
+//     // function, we must explicitly call 'app.receivedEvent(...);'
+//     onDeviceReady: function() {
+//         app.receivedEvent('deviceready');
 
+// 		   BTPrinter.connect(function(data){
+// 			    console.log("Success");
+// 			    console.log(data);
+// 			 //    BTPrinter.printText(function(data){
+// 				//     console.log("Success");
+// 				//     console.log(data)
+// 				// },function(err){
+// 				//     console.log("Error printText");
+// 				//     console.log(err)
+// 				// }, "String to Print")
+// 			},function(err){
+// 			    console.log("Error Connect");
+// 			    console.log(err)
+// 			}, "Mobile Printer")
+		 		
+// 			// BTPrinter.print(function(data){
+// 			//     console.log("Success");
+// 			//     console.log(data)
+// 			// },function(err){
+// 			//     console.log("Error printText");
+// 			//     console.log(err)
+// 			// }, imgData)
+
+// 			 BTPrinter.printText(function(data){
+// 			    console.log("Success");
+// 			    console.log(data)
+// 			},function(err){
+// 			    console.log("Error printText");
+// 			    console.log(err)
+// 			}, "String test\nHoli boli\t\tHoli boli Holi boli Holi boli \nHoli boli\n")
+
+// 		 //   BTPrinter.printPOSCommand(function(data){
+// 			//     console.log("Success");
+// 			//     console.log(data)
+// 			// },function(err){
+// 			//     console.log("Error");
+// 			//     console.log(err)
+// 			// }, "0C")
+//     },
+//     // Update DOM on a Received Event
+//     receivedEvent: function(id) {
+//         // var parentElement = document.getElementById(id);
+//         // var listeningElement = parentElement.querySelector('.listening');
+//         // var receivedElement = parentElement.querySelector('.received');
+
+//         // listeningElement.setAttribute('style', 'display:none;');
+//         // receivedElement.setAttribute('style', 'display:block;');
+
+//         // console.log('Received Event: ' + id);
+//     }
+// };
+
+$(document).ready(function(){
 	getLanguage();	
 	checkConfiguration();
 	showLoading(true);
@@ -10,11 +80,6 @@ $(document).ready(function(){
 	//             e.preventDefault();
 	//         }, false );
 	// }
-
-    function onDeviceReady() {
-        // Register the event listener
-        document.addEventListener("backbutton", onBackKeyDown, false);
-    }
     
 	// if(localStorage.noSettings == 0){
 	// 	window.location = "config.html";
@@ -61,6 +126,7 @@ $(document).ready(function(){
 		localStorage.removeItem("logo");
 		
 		getImagesFromServer();
+		clearSearchPage();
 	});
 
 	//change type input text form email or password in function of radio button selected
@@ -136,11 +202,24 @@ function clearSearchPage(){
 	localStorage.removeItem("listClassFilter");
 	localStorage.removeItem("listGenderFilter");
 	localStorage.removeItem("listSizeFilter");
+	localStorage.removeItem("listBrandFilterChecked");
+	localStorage.removeItem("listClassFilterChecked");
+	localStorage.removeItem("listGenderFilterChecked");
+	localStorage.removeItem("listSizeFilterChecked");
 	localStorage.removeItem("productList");
 	localStorage.removeItem("countProductFiltered");
 	localStorage.removeItem("indexProductSelected");
 	localStorage.removeItem("resultsProductColorCodeSelected");
 	localStorage.removeItem("resultsProductStyleCodeSelected");
+
+	localStorage.removeItem("currentFirstNameClient");
+	localStorage.removeItem("currentLastNameClient");
+	localStorage.removeItem("currentEmailClient");
+
+	for (var i = 1; i <= localStorage.countProductCartItem; i++) {
+		localStorage.removeItem("cartItemProduct" + (i));
+	}
+	localStorage.countProductCartItem = 0;
 }
 
 //get language from navigator and saved in local storage
@@ -165,7 +244,7 @@ function checkConfiguration(){
 	}
 }
 
-	//show saved background images in home screen
+//show saved background images in home screen
 function LoadBackgroundImages() {
 	var countItem = 1;
 	var template = _.template($("#divItemTemplate").html());
@@ -261,3 +340,4 @@ function getImagesFromServer(){
         }
     });
 }
+

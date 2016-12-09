@@ -5,10 +5,13 @@
 	<title>Configuration</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
+	<script src="../cordova.js"></script>
 	<script type="text/javascript" src="../js/plugins/jquery.min.js"></script>
 	<script type="text/javascript" src="../js/plugins/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../js/plugins/underscore.min.js"></script>
 	<script type="text/javascript" src="../js/scripts/scripts.js"></script>
 	<script type="text/javascript" src="../js/plugins/jquery.email-autocomplete.min.js"></script>
+	<!-- <script type="text/javascript" src="../js/plugins/async.min.js"></script> -->
 	<script type="text/javascript" src="../js/scripts/configuration.js"></script>
 	<script type="text/javascript" src="../js/scripts/captions.js"></script>
 	
@@ -42,15 +45,28 @@
 					<form>
 						<div class="form-group">
 					    <label class="lblStoreNo">Store No<span>*</span></label>
-					    <input type="text" class="form-control storeNo"  placeholder="Enter your store number">
+					    <input type="text" class="form-control storeNo" placeholder="Enter your store number" value="901">
 					    <span class="no-complete noStoreNo hide">Please fill the required field</span>
 					  </div>
 
 						<div class="form-group">
 					    <label class="lblServerId">Server IP<span>*</span></label>
-					    <input type="text" class="form-control serverId" placeholder="Enter your IP">
+					    <input type="text" class="form-control serverId" placeholder="Enter your IP" value="47.149.70.2">
 					    <span class="no-complete noServerId hide">Please fill the required field</span>
 					  </div>
+
+					  <div class="form-group">
+					  	<label class="lblPrinter">Printer<span>*</span></label>
+					  	<div class="dropdown">
+							<div class="btn dropdown-toggle printer-dropdown" data-toggle="dropdown"></div>
+							<ul class="dropdown-menu listPrinter">
+							</ul>
+						</div>	
+						<span class="no-complete noPrinter hide">There is no connection to printer</span>					
+					  </div>
+					  <script type="text/template" id="listPrinterTemplate">
+			               <li class="printer-item" ><%=printerName%></li>
+		            	</script>
 					</form>
 
 				</div>
@@ -65,7 +81,9 @@
 
 		</section>
 		
-
+		<!-- <iframe src="http://www.w3schools.com" class="hide">
+		  <p>Your browser does not support iframes.</p>
+		</iframe> -->
 		<section class="settings-2 hide">
 			<div class="row">
 
@@ -84,7 +102,7 @@
 					<form>
 						<div class="form-group user">
 					    <label class="lblEmail">Email<span>*</span></label>
-					    <input type="email" class="form-control emailUser" placeholder="your@email.com">
+					    <input type="email" class="form-control emailUser" placeholder="your@email.com" value="gustavo@realcs.com">
 					    <span class="no-complete noEmailUser hide">Please fill the required field</span>
 					  </div>
 
@@ -96,13 +114,13 @@
 
 						<div class="form-group">
 					    <label class="lblPassword">New Password<span>*</span></label>
-					    <input type="password" class="form-control passUser">
+					    <input type="password" class="form-control passUser" value="1">
 					    <span class="no-complete noPassUser hide">Please fill the required field</span>
 					  </div>
 
 					  <div class="form-group">
 					    <label class="lblConfirmPassword">Confirm Password<span>*</span></label>
-					    <input type="password" class="form-control confirmPassUser">
+					    <input type="password" class="form-control confirmPassUser" value="1">
 					    <span class="no-complete noConfirmPassUser hide">Please fill the required field</span>
 					  </div>
 					</form>
@@ -134,5 +152,25 @@
 		</div>	
 
 	</div>	
+
+	<!-- loading block -->
+	<div class="loader hide">
+		<div class="container-loader">
+			<div class="loader-principal white">
+			  <div class="segment-holder">
+			    <div class="segment one"></div>
+			  </div>
+			  <div class="segment-holder">
+			    <div class="segment two"></div>
+			  </div>
+			  <div class="segment-holder">
+			    <div class="segment three"></div>
+			  </div>
+			  <div class="segment-holder">
+			    <div class="segment four"></div>
+			  </div>			
+			</div>	
+		</div>
+	</div>
 </body>
 </html>

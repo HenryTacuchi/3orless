@@ -2,7 +2,18 @@ $(document).ready(function(){
     var swiper;
     showLoading(true);
     $(".item-count").text(localStorage.countProductCartItem);
-    getFiltersFromServer();
+
+    //if there are products filtered in local storage
+    if(localStorage.listBrandFilter != undefined
+        || localStorage.listSizeFilter != undefined
+        || localStorage.listGenderFilter != undefined
+        || localStorage.listClassFilter != undefined) {
+        showFilters();
+    }
+    else{
+        getFiltersFromServer();
+    }
+    
     setFilterSelected();
     checkFiltersMarked();
     checkOrderResultOption();
@@ -11,7 +22,7 @@ $(document).ready(function(){
     if(localStorage.productList != undefined) {
         showProductFilter(localStorage.orderResults);
         $('.swiper-wrapper').width($('.swiper-slide').width());
-    }
+    }    
 
     //set image logo
     $(".img-logo").attr("src", localStorage.logo);
@@ -46,10 +57,10 @@ $(document).ready(function(){
 
     //clear search product panel 
     $(".btnClearSearch").click(function(){  
-        localStorage.removeItem("listBrandFilter");
-        localStorage.removeItem("listClassFilter");
-        localStorage.removeItem("listGenderFilter");
-        localStorage.removeItem("listSizeFilter");
+        localStorage.removeItem("listBrandFilterChecked");
+        localStorage.removeItem("listClassFilterChecked");
+        localStorage.removeItem("listGenderFilterChecked");
+        localStorage.removeItem("listSizeFilterChecked");
         localStorage.removeItem("productList");
         localStorage.removeItem("countProductFiltered");
         localStorage.removeItem("indexProductSelected");
@@ -167,10 +178,10 @@ function initializeSwiper(){
 //get products filtered from server, save in local storage and show in results area
 function getProductFilterFromServer(){
     var bodyJSON = '{'+
-                    localStorage.listBrandFilter + ',' +
-                    localStorage.listSizeFilter + ',' +
-                    localStorage.listGenderFilter + ',' +
-                    localStorage.listClassFilter + '}';
+                    localStorage.listBrandFilterChecked + ',' +
+                    localStorage.listSizeFilterChecked + ',' +
+                    localStorage.listGenderFilterChecked + ',' +
+                    localStorage.listClassFilterChecked + '}';
     $.ajax({
         type: "POST",
         url: "http://" + localStorage.serverId + "/WS3orlessFiles/S3orLess.svc/NPRODUCT/ShowProductFilter/" + localStorage.storeNo,
@@ -178,6 +189,7 @@ function getProductFilterFromServer(){
         contentType: "application/json",
         data: bodyJSON,
         crossdomain: true,
+        timeout: 10000,
         beforeSend: function(){
             showLoadingResults(true);
         },
@@ -233,7 +245,7 @@ function showProductFilter(option){
     if (localStorage.countProductFiltered >0) {
         showResultsArea(true);
         initializeSwiper();
-        showSortArea(true);
+        setTimeout(function(){ showSortArea(true); }, 2000);  
         showOrderOption(true);
         showLogo(false);
         var countProductItem = 0;
@@ -279,7 +291,7 @@ function showProductFilter(option){
             //add product to row product
             template = _.template($("#productItemTemplate").html());                       
             html = template({
-                Class: "product-" + (i+1),
+                Class: "animated fadeIn product-" + (i+1),
                 path: productListObject.ProductList[i].imageFile,
                 styleCode: productListObject.ProductList[i].styleCode,
                 styleName: productListObject.ProductList[i].styleName,
@@ -311,55 +323,55 @@ function showProductFilter(option){
 
 //Clear all selected filters from local storage
 function clearSelectedFilters(){
-    localStorage.removeItem("listBrandFilter");
-    localStorage.removeItem("listSizeFilter");
-    localStorage.removeItem("listGenderFilter");
-    localStorage.removeItem("listClassFilter");
+    localStorage.removeItem("listBrandFilterChecked");
+    localStorage.removeItem("listSizeFilterChecked");
+    localStorage.removeItem("listGenderFilterChecked");
+    localStorage.removeItem("listClassFilterChecked");
 }
 
 //Save all selected filter to local storage
 function saveSelectedFilters(){
-    var listBrandFilter = '"Brand":[' ;
-    var listSizeFilter = '"Size":[' 
-    var listGenderFilter = '"Gender":[' 
-    var listClassFilter = '"Class":[' 
+    var listBrandFilterChecked = '"Brand":[' ;
+    var listSizeFilterChecked = '"Size":[' 
+    var listGenderFilterChecked = '"Gender":[' 
+    var listClassFilterChecked = '"Class":[' 
 
     var countBrand = 0;
     $('.item-list-brand .menu-item.selected').each(function() {
-        listBrandFilter = listBrandFilter + '{"codfFilter":"' + $(this).attr('data-value') + '"},';
+        listBrandFilterChecked = listBrandFilterChecked + '{"codfFilter":"' + $(this).attr('data-value') + '"},';
         countBrand++;
     });
-    if(countBrand>0) listBrandFilter = listBrandFilter.substring(0, listBrandFilter.length - 1);
-    listBrandFilter = listBrandFilter + ']';
+    if(countBrand>0) listBrandFilterChecked = listBrandFilterChecked.substring(0, listBrandFilterChecked.length - 1);
+    listBrandFilterChecked = listBrandFilterChecked + ']';
 
     var countSize = 0;
     $('.item-list-size .menu-item.selected').each(function() {
-        listSizeFilter = listSizeFilter + '{"codfFilter":"' + $(this).attr('data-value') + '"},';
+        listSizeFilterChecked = listSizeFilterChecked + '{"codfFilter":"' + $(this).attr('data-value') + '"},';
         countSize++;
     });
-    if(countSize>0) listSizeFilter = listSizeFilter.substring(0, listSizeFilter.length - 1);
-    listSizeFilter = listSizeFilter + ']';
+    if(countSize>0) listSizeFilterChecked = listSizeFilterChecked.substring(0, listSizeFilterChecked.length - 1);
+    listSizeFilterChecked = listSizeFilterChecked + ']';
 
     var countGender = 0;
     $('.item-list-gender .menu-item.selected').each(function() {
-        listGenderFilter = listGenderFilter + '{"codfFilter":"' + $(this).attr('data-value') + '"},';
+        listGenderFilterChecked = listGenderFilterChecked + '{"codfFilter":"' + $(this).attr('data-value') + '"},';
         countGender++;
     });
-    if(countGender>0) listGenderFilter = listGenderFilter.substring(0, listGenderFilter.length - 1);
-    listGenderFilter = listGenderFilter + ']';
+    if(countGender>0) listGenderFilterChecked = listGenderFilterChecked.substring(0, listGenderFilterChecked.length - 1);
+    listGenderFilterChecked = listGenderFilterChecked + ']';
 
     var countClass = 0;
     $('.item-list-class .menu-item.selected').each(function() {
-        listClassFilter = listClassFilter + '{"codfFilter":"' + $(this).attr('data-value') + '"},';
+        listClassFilterChecked = listClassFilterChecked + '{"codfFilter":"' + $(this).attr('data-value') + '"},';
         countClass++;
     });
-    if(countClass>0) listClassFilter = listClassFilter.substring(0, listClassFilter.length - 1);
-    listClassFilter = listClassFilter + ']';
+    if(countClass>0) listClassFilterChecked = listClassFilterChecked.substring(0, listClassFilterChecked.length - 1);
+    listClassFilterChecked = listClassFilterChecked + ']';
 
-    localStorage.listBrandFilter = listBrandFilter;
-    localStorage.listSizeFilter = listSizeFilter;
-    localStorage.listGenderFilter = listGenderFilter;
-    localStorage.listClassFilter = listClassFilter; 
+    localStorage.listBrandFilterChecked = listBrandFilterChecked;
+    localStorage.listSizeFilterChecked = listSizeFilterChecked;
+    localStorage.listGenderFilterChecked = listGenderFilterChecked;
+    localStorage.listClassFilterChecked = listClassFilterChecked; 
 }
 
 //bring all available filters from server and show in filter sidebar
@@ -371,67 +383,143 @@ function getFiltersFromServer(){
         async: false,
         contentType: "application/json",
         crossdomain: true,
+        timeout: 10000,
         success: function (result) {
             //brand filters
-            var data = result.Brand;                
-            if (data != null) {
-                
+            var data = result.Brand;
+            var brandList = '{"BrandList":[';
+            if (data != null && data.length > 0) {
+
                 $.each(data, function (index, value) {
-                    var template = _.template($("#listItemTemplate").html());
-                    var html = template({
-                        ItemValue: value.codfFilter,
-                        ItemText: value.nameFilter
-                    });
-                    $(".item-list-brand").append(html);
-                });               
-            }
+                    var brandFilter = '{'+
+                                    '"codfFilter": "' + value.codfFilter + '",' +     
+                                    '"nameFilter": "' + value.nameFilter + '"' +
+                                    '},';                               
+                    brandList = brandList + brandFilter;  
+                });                    
+                brandList = brandList.substring(0, brandList.length - 1);
+                
+            }   
 
             //size filters
             var data = result.Size;                
-            if (data != null) {
-                
+            var sizeList = '{"SizeList":[';
+            if (data != null && data.length > 0) {
+
                 $.each(data, function (index, value) {
-                    var template = _.template($("#listItemTemplate").html());
-                    var html = template({
-                        ItemValue: value.codfFilter,
-                        ItemText: value.nameFilter
-                    });
-                    $(".item-list-size").append(html);
-                });               
-            }
+                    var sizeFilter = '{'+
+                                    '"codfFilter": "' + value.codfFilter + '",' +     
+                                    '"nameFilter": "' + value.nameFilter + '"' +
+                                    '},';                               
+                    sizeList = sizeList + sizeFilter;  
+                });                    
+                sizeList = sizeList.substring(0, sizeList.length - 1);
+                
+            }   
 
             //gender filters
             var data = result.Gender;                
-            if (data != null) {
-                
+            var genderList = '{"GenderList":[';
+            if (data != null && data.length > 0) {
+
                 $.each(data, function (index, value) {
-                    var template = _.template($("#listItemTemplate").html());
-                    var html = template({
-                        ItemValue: value.codfFilter,
-                        ItemText: value.nameFilter
-                    });
-                    $(".item-list-gender").append(html);
-                });               
-            }
+                    var genderFilter = '{'+
+                                    '"codfFilter": "' + value.codfFilter + '",' +     
+                                    '"nameFilter": "' + value.nameFilter + '"' +
+                                    '},';                               
+                    genderList = genderList + genderFilter;  
+                });                    
+                genderList = genderList.substring(0, genderList.length - 1);
+                
+            }  
 
             //class filters
             var data = result.Class;                
-            if (data != null) {
-                
+            var classList = '{"ClassList":[';
+            if (data != null && data.length > 0) {
+
                 $.each(data, function (index, value) {
-                    var template = _.template($("#listItemTemplate").html());
-                    var html = template({
-                        ItemValue: value.codfFilter,
-                        ItemText: value.nameFilter
-                    });
-                    $(".item-list-class").append(html);
-                });               
-            }
+                    var classFilter = '{'+
+                                    '"codfFilter": "' + value.codfFilter + '",' +     
+                                    '"nameFilter": "' + value.nameFilter + '"' +
+                                    '},';                               
+                    classList = classList + classFilter;  
+                });                    
+                classList = classList.substring(0, classList.length - 1);
+                
+            }  
+
+            brandList = brandList + ']}';
+            sizeList = sizeList + ']}';
+            genderList = genderList + ']}';
+            classList = classList + ']}';
+            localStorage.listBrandFilter = brandList;   
+            localStorage.listSizeFilter = sizeList;  
+            localStorage.listGenderFilter = genderList;  
+            localStorage.listClassFilter = classList;  
+            showFilters();
         },
         error: function (error) {
             // alert(error);
         }
     });
+}
+
+//bring all available filters from server and show in filter sidebar
+function showFilters(){
+    var listBrandFilterObject = JSON.parse(localStorage.listBrandFilter);
+    var listSizeFilterObject = JSON.parse(localStorage.listSizeFilter);
+    var listGenderFilterObject = JSON.parse(localStorage.listGenderFilter);
+    var listClassFilterObject = JSON.parse(localStorage.listClassFilter);
+    showLoading(true);
+    console.log(count = Object.keys(listBrandFilterObject.BrandList).length);
+    console.log(count = Object.keys(listSizeFilterObject.SizeList).length);
+    console.log(count = Object.keys(listGenderFilterObject.GenderList).length);
+    console.log(count = Object.keys(listClassFilterObject.ClassList).length);
+    //brand filters  
+    var countBrand = Object.keys(listBrandFilterObject.BrandList).length  
+    for (var i = 0; i < countBrand; i++) {
+        var template = _.template($("#listItemTemplate").html());
+        var html = template({
+            ItemValue: listBrandFilterObject.BrandList[i].codfFilter,
+            ItemText: listBrandFilterObject.BrandList[i].nameFilter
+        });
+        $(".item-list-brand").append(html);
+    }     
+
+    // //size filters
+    var countSize = Object.keys(listSizeFilterObject.SizeList).length;  
+    for (var i = 0; i < countSize; i++) {
+        var template = _.template($("#listItemTemplate").html());
+        var html = template({
+            ItemValue: listSizeFilterObject.SizeList[i].codfFilter,
+            ItemText: listSizeFilterObject.SizeList[i].nameFilter
+        });
+        $(".item-list-size").append(html);
+    } 
+
+    // //gender filters
+    var countGender = Object.keys(listGenderFilterObject.GenderList).length;
+    for (var i = 0; i < countGender; i++) {
+        var template = _.template($("#listItemTemplate").html());
+        var html = template({
+            ItemValue: listGenderFilterObject.GenderList[i].codfFilter,
+            ItemText: listGenderFilterObject.GenderList[i].nameFilter
+        });
+        $(".item-list-gender").append(html);
+    } 
+
+    // //class filters
+    var countClass = Object.keys(listClassFilterObject.ClassList).length;  
+    for (var i = 0; i < countClass; i++) {
+        var template = _.template($("#listItemTemplate").html());
+        var html = template({
+            ItemValue: listClassFilterObject.ClassList[i].codfFilter,
+            ItemText: listClassFilterObject.ClassList[i].nameFilter
+        });
+        $(".item-list-class").append(html);
+    } 
+    showLoading(false);
 }
 
 //show or hide main loader
@@ -443,9 +531,9 @@ function showLoading(option){
             $(".loader").addClass("show");
     }else{
         if($(".loader").hasClass("show"))
-            $(".loader").removeClass("show").addClass("hide").delay(5000);
+            $(".loader").removeClass("show").addClass("hide");
         else
-            $(".loader").addClass("hide").delay(5000);
+            $(".loader").addClass("hide");
     }
 }
 
@@ -458,24 +546,24 @@ function showLoadingResults(option){
             $(".loader-results").addClass("show");
     }else{
         if($(".loader-results").hasClass("show"))
-            $(".loader-results").removeClass("show").addClass("hide").delay(5000);
+            $(".loader-results").removeClass("show").addClass("hide");
         else
-            $(".loader-results").addClass("hide").delay(5000);
+            $(".loader-results").addClass("hide");
     }
 }
 
 //show or hide area to sort product results
 function showSortArea(option){
     if(option){  
-        if($(".sort-area").hasClass("hide"))
-            $(".sort-area").removeClass("hide").addClass("show");
-        else
-            $(".sort-area").addClass("show");
+        if($(".sort-area").hasClass("opaque"))
+            $(".sort-area").removeClass("opaque");
+        // else
+            // $(".sort-area").addClass("opaque");
     }else{
-        if($(".sort-area").hasClass("show"))
-            $(".sort-area").removeClass("show").addClass("hide");
-        else
-            $(".sort-area").addClass("hide");
+        if($(".sort-area").hasClass("opaque"))
+            $(".sort-area").addClass("opaque");
+        // else
+            // $(".sort-area").addClass("opaque");
     }
 }
 
@@ -512,9 +600,9 @@ function showNoResults(option){
             $(".notfound").addClass("show");
     }else{
         if($(".notfound").hasClass("show"))
-            $(".notfound").removeClass("show").addClass("hide").delay(5000);
+            $(".notfound").removeClass("show").addClass("hide");
         else
-            $(".notfound").addClass("hide").delay(5000);
+            $(".notfound").addClass("hide");
     }
 }
 
@@ -527,9 +615,9 @@ function showResultsArea(option){
             $(".results").addClass("show");
     }else{
         if($(".results").hasClass("show"))
-            $(".results").removeClass("show").addClass("hide").delay(5000);
+            $(".results").removeClass("show").addClass("hide");
         else
-            $(".results").addClass("hide").delay(5000);
+            $(".results").addClass("hide");
     }
 }
 
@@ -565,14 +653,14 @@ function showFiltersMarked(option){
 
 //load selected filters to show in sidebar
 function setFilterSelected(){
-    if(localStorage.listBrandFilter != undefined &&
-        localStorage.listSizeFilter != undefined &&
-        localStorage.listGenderFilter != undefined &&
-        localStorage.listClassFilter != undefined){
+    if(localStorage.listBrandFilterChecked != undefined ||
+        localStorage.listSizeFilterChecked != undefined ||
+        localStorage.listGenderFilterChecked != undefined ||
+        localStorage.listClassFilterChecked != undefined){
         showLogo(false);
         
         //check brand selected filters
-        var brandFilteredObject = JSON.parse("{" + localStorage.listBrandFilter + "}").Brand;            
+        var brandFilteredObject = JSON.parse("{" + localStorage.listBrandFilterChecked + "}").Brand;            
         $(".item-list-brand .menu-item").each(function(){
             var itemValue = $(this).attr('data-value');
             for (var i = 0; i < brandFilteredObject.length; i++) {
@@ -585,7 +673,7 @@ function setFilterSelected(){
         })
 
         //check size selected filters
-        var sizeFilteredObject = JSON.parse("{" + localStorage.listSizeFilter + "}").Size;
+        var sizeFilteredObject = JSON.parse("{" + localStorage.listSizeFilterChecked + "}").Size;
         $(".item-list-size .menu-item").each(function(){
             var itemValue = $(this).attr('data-value');
             for (var i = 0; i < sizeFilteredObject.length; i++) {
@@ -598,7 +686,7 @@ function setFilterSelected(){
         })
 
         //check gender selected filters
-        var genderFilteredObject = JSON.parse("{" + localStorage.listGenderFilter + "}").Gender;
+        var genderFilteredObject = JSON.parse("{" + localStorage.listGenderFilterChecked + "}").Gender;
         $(".item-list-gender .menu-item").each(function(){
             var itemValue = $(this).attr('data-value');
             for (var i = 0; i < genderFilteredObject.length; i++) {
@@ -611,7 +699,7 @@ function setFilterSelected(){
         })
 
         //check class selected filters
-        var classFilteredObject = JSON.parse("{" + localStorage.listClassFilter + "}").Class;
+        var classFilteredObject = JSON.parse("{" + localStorage.listClassFilterChecked + "}").Class;
         $(".item-list-class .menu-item").each(function(){
             var itemValue = $(this).attr('data-value');
             for (var i = 0; i < classFilteredObject.length; i++) {
@@ -629,7 +717,7 @@ function setFilterSelected(){
 function checkFiltersMarked(){
     if($('.filters-marked').children().length>0){
         showFiltersMarked(true);
-        showSortArea(true);
+        setTimeout(function(){ showSortArea(true); }, 2000);        
         $('.area-logo').hide();
         $('.clear-filters').removeClass('hide').addClass('show animated fadeInRightBig');
     }else{

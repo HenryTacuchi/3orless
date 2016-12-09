@@ -4,12 +4,11 @@
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<title>Order</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script src="../cordova.js"></script>
 	<script type="text/javascript" src="../js/plugins/jquery.min.js"></script>
 	<script type="text/javascript" src="../js/plugins/bootstrap.min.js"></script>
-
 	<script type="text/javascript" src="../js/plugins/underscore.min.js"></script>	
 	<script type="text/javascript" src="../js/scripts/print.js"></script>
-	<script src="../js/plugins/init.js" type="text/javascript"></script>
 
 	
 
@@ -22,10 +21,10 @@
 </head>
 <body>
 	<div class="headOrder">
-		<div class="logo"><img src= alt="logo" class="logo-company"></div>
-		<div class="ordernumber">Order #123</div>
-		<div class="clientname">Pepito</div>
-		<div class="date">13/</div>
+		<div class="logo"><img src="" alt="logo" class="logo-company"></div>
+		<div class="ordernumber"></div>
+		<div class="clientname"></div>
+		<div class="date"></div>
 	</div>
 	<script>
 
@@ -45,24 +44,25 @@
 	<div class="cart-items">
 		<h4 class="lblCart">Cart</h4>
 		<ul class="list-items">
-			<li class="item">
-				<div class="sku">100001</div>
-				<div class="productDetail">ADIDAS NEW</div>
-				<div class="retailPrice">$99.99</div>
-			</li>	
-			<li class="item">
-				<div class="sku">100003</div>
-				<div class="productDetail">ADIDAS NEW</div>
-				<div class="retailPrice">$199.99</div>
-			</li>
+			<script type="text/template" id="cartItemTemplate">
+				
+					<li class="item  <%=Class%>">
+						<div class="brandName"><%=brandName%></div>
+						<div class="styleName"><%=styleName%></div>
+						<div class="color"><%=colorCode%></div>
+						<div class="size"><%=size%></div>
+						<div class="price"><%=price%></div>
+					</li>
+				
+			</script>
 		</ul>
 	</div>
 
 	<div class="footerOrder">
-		<div class="total">Total: $299.98</div>
-		<div class="saving">Your savings: $50.00</div>
+		<div class="total"></div>
+		<div class="saving"></div>
 
 	</div>
+
 		
 </body>
-</html>
