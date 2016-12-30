@@ -85,7 +85,7 @@ form{
 .img-product img{
 	width: 50%;
 }
-.brand{
+.brand,.size{
 	font-size: 125%;
 }
 .areaStyle div{
@@ -121,18 +121,18 @@ form{
 /*footer*/
 .options{
 	display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
 }
 .btn-back:before {
-  content: '\e702';
-  margin-left: -1em;
-  font-size: 100%;
-  padding-right: 10px;
-  font-family: 'Scalia User Icons';
-  display: block;
-  float: left;
+	content: '\e614';
+	margin-left: -1em;
+	font-size: 100%;
+	padding-right: 10px;
+	font-family: 'Scalia User Icons';
+	display: block;
+	float: left;
 }
 .btn-clear-cart:before {
   content: '\e777';

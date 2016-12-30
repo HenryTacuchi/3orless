@@ -9,6 +9,7 @@ $(document).ready(function(){
 		$(".btnDone").text("Listo");
 
 		//Configuration Page
+		$(".lblConfig").text("Configuración");
 		$(".lblStoreNo").html("N° Tienda<span>*</span>");
 		$(".storeNo").attr('placeholder',"Ingrese el número de tienda");
 		$(".lblServerId").html("IP del Servidor<span>*</span>");
@@ -35,11 +36,14 @@ $(document).ready(function(){
 		$(".lblClearFilters").text("Remover filtros");
 		
 		$(".txtPrice").text("Precio");
-		$(".sort-dropdown").text("Seleccione");
-		$(".lowToHigh").text("Menor a Mayor");
-		$(".highToLow").text("Mayor a Menor");
+		if(localStorage.flag3orless == 1 && localStorage.threeOrLessOrderResults == "") $(".sort-dropdown").text("Seleccione");
+		if(localStorage.flag3orless == 0 && localStorage.kioskOrderResults == "") $(".sort-dropdown").text("Seleccione");
+		$(".lowToHigh").text("Menor a mayor");
+		$(".highToLow").text("Mayor a menor");
 
 		$(".txtStyleName").text("Estilo:");
+		$(".appName3orless").text("Tres o menos");
+		$(".appNameKiosk").text("Catálogo Kiosko");
 
 		//Product Detail Page
 		$(".lblStyle").text("Estilo: ");
@@ -63,5 +67,18 @@ $(document).ready(function(){
 		$(".btn-recover").text("Recuperar Carrito");
 		$(".btn-done").text("Listo");
 		$(".txtEmail").attr('placeholder',"contacto@email.com");
+
+		//Registration Page
+		$(".lblInstructions").text("Por favor, complete los campos requeridos para suscribirse");
+		$(".lblNumber").html("Teléfono");
+		$(".lblBirthDate").html("Fecha de Nacimiento");
+		$(".appNameRegistration").text("Registro Cliente");
+		$(".btn-submit").text("Enviar");
+		$(".modal-title").text("Seleccione su fecha de nacimiento");
+		
+		//Menu Page
+		$(".option1").text("Registro Cliente");
+		$(".option2").text("Catálogo Kiosko");
+		$(".option3").text("Tres o menos");
 	}
 })

@@ -18,29 +18,7 @@ var loadCboPrinters = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'loadCboPrinters.receivedEvent(...);'
     onDeviceReady: function() {
-        loadCboPrinters.receivedEvent('deviceready');
-
-    		//Wifi Printer        
-   //      if(cordova.platformId = 'android'){
-
-			// // cordova.plugins.printer.check(function (avail, count) {
-		 // //    	alert(avail ? 'Found ' + count + ' services' : 'No');
-			// // });
-			// var uri = "192.168.1.53";
-			// // cordova.plugins.printer.pick(function (uri) {
-			// //     // alert(uri ? uri : 'Canceled');
-			// //     cordova.plugins.printer.print(page, { printerId: uri });
-			// // });
-			// cordova.plugins.printer.print(page, {printerId: uri }, function (res) {
-			//     if(res){
-			//     	clearSearchPage();				  	
-			// 		window.location = "search.html";
-			//     }
-			//     else{
-			//     	alert('Canceled');
-			//     }			    
-			// });
-   //      }
+        loadCboPrinters.receivedEvent('deviceready');    
 
    			//Bluetooth Printer
 		   BTPrinter.list(function(data){
@@ -112,6 +90,55 @@ $(document).ready(function(){
     //     suggClass: "custom-classname", 
     //     domains: ["realcs.com"] 
     // });
+
+    //disable backbutton
+	document.addEventListener("deviceready", onDeviceReady, false);
+	function onDeviceReady() {
+        // Register the event listener
+        document.addEventListener("backbutton", onBackKeyDown, false);
+    }
+
+    // Handle the back button
+    //
+    function onBackKeyDown() {
+    	//do nothing
+    }
+
+    $('.storeNo').bind('keypress', function(event) {
+    if(event.which == 13||event.which == 10) {
+      $(".serverId").focus();
+    }
+    });
+
+    $('.emailUser').bind('keypress', function(event) {
+    if(event.which == 13||event.which == 10) {
+    	if (typeof localStorage.password == "undefined" || localStorage.password == "null") $(".passUser").focus();
+    	else $(".oldPass").focus();
+    }
+    });
+
+    $('.oldPass').bind('keypress', function(event) {
+    if(event.which == 13||event.which == 10) {
+      $(".passUser").focus();
+    }
+    });
+
+    $('.passUser').bind('keypress', function(event) {
+    if(event.which == 13||event.which == 10) {
+      $(".confirmPassUser").focus();
+    }
+    });
+
+    $('.confirmPassUser').bind('keypress', function(event) {
+    if(event.which == 13||event.which == 10) {
+      $(".btnFinish").click();
+    }
+    });
+
+    $('.btn-exit').click(function(){
+    	KioskPlugin.exitKiosk();
+    	navigator.app.exitApp();
+    });
 
 	$(".storeNo").focus();
 	//fill dropdown with all available bluetooth printers
@@ -625,16 +652,28 @@ function showLoading(option){
 
 //remove all variables related to search page from local storage
 function clearSearchPage(){
-	localStorage.removeItem("listBrandFilter");
-	localStorage.removeItem("listClassFilter");
-	localStorage.removeItem("listGenderFilter");
-	localStorage.removeItem("listSizeFilter");
-	localStorage.removeItem("listBrandFilterChecked");
-	localStorage.removeItem("listClassFilterChecked");
-	localStorage.removeItem("listGenderFilterChecked");
-	localStorage.removeItem("listSizeFilterChecked");
-	localStorage.removeItem("productList");
-	localStorage.removeItem("countProductFiltered");
+	localStorage.removeItem("threeOrLessListBrandFilter");
+	localStorage.removeItem("threeOrLessListClassFilter");
+	localStorage.removeItem("threeOrLessListGenderFilter");
+	localStorage.removeItem("threeOrLessListSizeFilter");
+	localStorage.removeItem("threeOrLessListBrandFilterChecked");
+	localStorage.removeItem("threeOrLessListClassFilterChecked");
+	localStorage.removeItem("threeOrLessListGenderFilterChecked");
+	localStorage.removeItem("threeOrLessListSizeFilterChecked");
+	localStorage.removeItem("threeOrLessProductList");
+	localStorage.removeItem("threeOrLessCountProductFiltered");
+	localStorage.removeItem("threeOrLessOrderResults");
+	localStorage.removeItem("kioskListBrandFilter");
+	localStorage.removeItem("kioskListClassFilter");
+	localStorage.removeItem("kioskListGenderFilter");
+	localStorage.removeItem("kioskListSizeFilter");
+	localStorage.removeItem("kioskListBrandFilterChecked");
+	localStorage.removeItem("kioskListClassFilterChecked");
+	localStorage.removeItem("kioskListGenderFilterChecked");
+	localStorage.removeItem("kioskListSizeFilterChecked");
+	localStorage.removeItem("kioskProductList");
+	localStorage.removeItem("kioskCountProductFiltered");
+	localStorage.removeItem("kioskOrderResults");
 	localStorage.removeItem("indexProductSelected");
 	localStorage.removeItem("resultsProductColorCodeSelected");
 	localStorage.removeItem("resultsProductStyleCodeSelected");

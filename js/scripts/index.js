@@ -70,16 +70,50 @@
 // };
 
 $(document).ready(function(){
+
+	//disable backbutton
+	document.addEventListener("deviceready", onDeviceReady, false);
+	function onDeviceReady() {
+        // Register the event listener
+        document.addEventListener("backbutton", onBackKeyDown, false);
+        document.addEventListener("menubutton", onMenuKeyDown, false);
+        document.addEventListener("volumedownbutton", onVolumeDownKeyDown, false);
+        document.addEventListener("volumeupbutton", onVolumeUpKeyDown, false);
+        document.addEventListener("pause", onPauseKeyDown, false);
+        
+    }
+
+    // Handle the back button
+    //
+    function onBackKeyDown() {
+    	//do nothing
+    }
+
+    function onMenuKeyDown() {
+    	//do nothing
+    	alert("Menu");
+    }
+
+    function onVolumeDownKeyDown() {
+    	//do nothing
+    	alert("VolumeDown");
+    }
+
+    function onVolumeUpKeyDown() {
+    	//do nothing
+    	alert("VolumeUp");
+    }
+
+    function onPauseKeyDown() {
+    	//do nothing
+    	alert("pause");
+    }
+
 	getLanguage();	
 	checkConfiguration();
 	showLoading(true);
 
-	// document.addEventListener("deviceready", onDeviceReady, false);
-	//     function onDeviceReady() {
-	//         document.addEventListener("backbutton", function (e) {
-	//             e.preventDefault();
-	//         }, false );
-	// }
+
     
 	// if(localStorage.noSettings == 0){
 	// 	window.location = "config.html";
@@ -94,7 +128,7 @@ $(document).ready(function(){
 
 	//when click in home screen redirects to Search screen
 	$(".home").click(function(){
-		window.location.href = "search.html";
+		window.location.href = "menu.html";
 	});
 
 	//show or hide form to redirect to configuration screen
@@ -187,7 +221,8 @@ $(document).ready(function(){
     $(window).on("load", function() {
 		showLoading(false);
 		// clearSearchPage();
-		localStorage.orderResults = "";		
+		if(localStorage.threeOrLessOrderResults == undefined) localStorage.threeOrLessOrderResults = "";		
+		if(localStorage.kioskOrderResults == undefined) localStorage.kioskOrderResults = "";		
     });
 
     // adding animation to message
@@ -198,16 +233,28 @@ $(document).ready(function(){
 
 //remove all variables related to search page from local storage
 function clearSearchPage(){
-	localStorage.removeItem("listBrandFilter");
-	localStorage.removeItem("listClassFilter");
-	localStorage.removeItem("listGenderFilter");
-	localStorage.removeItem("listSizeFilter");
-	localStorage.removeItem("listBrandFilterChecked");
-	localStorage.removeItem("listClassFilterChecked");
-	localStorage.removeItem("listGenderFilterChecked");
-	localStorage.removeItem("listSizeFilterChecked");
-	localStorage.removeItem("productList");
-	localStorage.removeItem("countProductFiltered");
+	localStorage.removeItem("threeOrLessListBrandFilter");
+	localStorage.removeItem("threeOrLessListClassFilter");
+	localStorage.removeItem("threeOrLessListGenderFilter");
+	localStorage.removeItem("threeOrLessListSizeFilter");
+	localStorage.removeItem("threeOrLessListBrandFilterChecked");
+	localStorage.removeItem("threeOrLessListClassFilterChecked");
+	localStorage.removeItem("threeOrLessListGenderFilterChecked");
+	localStorage.removeItem("threeOrLessListSizeFilterChecked");
+	localStorage.removeItem("threeOrLessProductList");
+	localStorage.removeItem("threeOrLessCountProductFiltered");
+	localStorage.removeItem("threeOrLessOrderResults");
+	localStorage.removeItem("kioskListBrandFilter");
+	localStorage.removeItem("kioskListClassFilter");
+	localStorage.removeItem("kioskListGenderFilter");
+	localStorage.removeItem("kioskListSizeFilter");
+	localStorage.removeItem("kioskListBrandFilterChecked");
+	localStorage.removeItem("kioskListClassFilterChecked");
+	localStorage.removeItem("kioskListGenderFilterChecked");
+	localStorage.removeItem("kioskListSizeFilterChecked");
+	localStorage.removeItem("kioskProductList");
+	localStorage.removeItem("kioskCountProductFiltered");
+	localStorage.removeItem("kioskOrderResults");
 	localStorage.removeItem("indexProductSelected");
 	localStorage.removeItem("resultsProductColorCodeSelected");
 	localStorage.removeItem("resultsProductStyleCodeSelected");

@@ -1,27 +1,42 @@
 $(document).ready(function(){
     var swiper;
-    showLoading(true);
+
+    //disable backbutton
+    document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+        // Register the event listener
+        document.addEventListener("backbutton", onBackKeyDown, false);
+    }
+
+    // Handle the back button
+    //
+    function onBackKeyDown() {
+        //do nothing
+    }
+    
+    // showLoading(true);
+    showPageElement(".loader",true);
     $(".item-count").text(localStorage.countProductCartItem);
 
     //if there are products filtered in local storage
-    if(localStorage.listBrandFilter != undefined
-        || localStorage.listSizeFilter != undefined
-        || localStorage.listGenderFilter != undefined
-        || localStorage.listClassFilter != undefined) {
+    if(localStorage.threeOrLessListBrandFilter != undefined
+        || localStorage.threeOrLessListSizeFilter != undefined
+        || localStorage.threeOrLessListGenderFilter != undefined
+        || localStorage.threeOrLessListClassFilter != undefined) {
         showFilters();
     }
     else{
         getFiltersFromServer();
     }
-    
-    setFilterSelected();
+    setFilterSelected();    
+
     checkFiltersMarked();
     checkOrderResultOption();
 
     //if there are products filtered in local storage
-    if(localStorage.productList != undefined) {
-        showProductFilter(localStorage.orderResults);
-        $('.swiper-wrapper').width($('.swiper-slide').width());
+    if(localStorage.threeOrLessProductList != undefined) {
+        showProductFilter(localStorage.threeOrLessOrderResults);
+        resizeElement($('.swiper-wrapper'));        
     }    
 
     //set image logo
@@ -48,7 +63,7 @@ $(document).ready(function(){
     $(document).on("click",".product",function(){
         var className = this.className;
         var indexProductSelected = className.substring(className.lastIndexOf("-")+1) - 1; 
-        var productListObject = JSON.parse(localStorage.productList);
+        var productListObject = JSON.parse(localStorage.threeOrLessProductList);
         var product = productListObject.ProductList[indexProductSelected];
         localStorage.resultsProductStyleCodeSelected = product.styleCode;
         localStorage.resultsProductColorCodeSelected = product.colorCode;
@@ -57,26 +72,31 @@ $(document).ready(function(){
 
     //clear search product panel 
     $(".btnClearSearch").click(function(){  
-        localStorage.removeItem("listBrandFilterChecked");
-        localStorage.removeItem("listClassFilterChecked");
-        localStorage.removeItem("listGenderFilterChecked");
-        localStorage.removeItem("listSizeFilterChecked");
-        localStorage.removeItem("productList");
-        localStorage.removeItem("countProductFiltered");
+        localStorage.removeItem("threeOrLessListBrandFilterChecked");
+        localStorage.removeItem("threeOrLessListClassFilterChecked");
+        localStorage.removeItem("threeOrLessListGenderFilterChecked");
+        localStorage.removeItem("threeOrLessListSizeFilterChecked");
+        localStorage.removeItem("threeOrLessProductList");
+        localStorage.removeItem("threeOrLessCountProductFiltered");
         localStorage.removeItem("indexProductSelected");
         localStorage.removeItem("resultsProductColorCodeSelected");
         localStorage.removeItem("resultsProductStyleCodeSelected");
+        localStorage.threeOrLessOrderResults = "";
         $(".filters-marked .filter").each(function(){
             var itemValue = $(this).attr('data-value');
             $(this).click();
             removeFilter($(this));
         })
         checkFiltersMarked();
-        $('.swiper-wrapper').width($('.swiper-slide').width());
-        showResultsArea(false);
+        resizeElement($('.swiper-wrapper'));
+        // showResultsArea(false);
+        showPageElement(".results",false);
         showSortArea(false);
-        showFiltersMarked(false);
-        showOrderOption(false);
+        // showFiltersMarked(false);
+        showPageElement(".filters-marked",false);
+        // showOrderOption(false);
+        showPageElement(".float-right",false);
+        showPageElement(".notfound",false);
         showLogo(true);
         if($('.itemName').hasClass('expand'))
             $('.itemName').removeClass('expand');
@@ -85,13 +105,14 @@ $(document).ready(function(){
 
     //apply filters and search products 
     $(".btnFilter").click(function(){  
-        showFiltersMarked(true); 
-            if($(".results").hasClass("hide"))
-                $(".results").removeClass("hide").addClass("show");
-            else
-                $(".results").addClass("show");  
-        localStorage.countProductFiltered = 0;
-        localStorage.productList = '{"ProductList":[]}';
+        // showFiltersMarked(true); 
+        showPageElement(".filters-marked",true);
+        if($(".results").hasClass("hide"))
+            $(".results").removeClass("hide").addClass("show");
+        else
+            $(".results").addClass("show");  
+        localStorage.threeOrLessCountProductFiltered = 0;
+        localStorage.threeOrLessProductList = '{"ProductList":[]}';
         clearSelectedFilters();
         saveSelectedFilters();        
         getProductFilterFromServer();
@@ -99,18 +120,22 @@ $(document).ready(function(){
 
     //order search product results from low to high price
     $(".lowToHigh").click(function () {
-        showLoadingResults(true);
-        localStorage.orderResults = "asc";
+        // showLoadingResults(true);
+        showPageElement(".loader-results",true);
+        localStorage.threeOrLessOrderResults = "asc";
         showProductFilter("asc");
-        showLoadingResults(false);
+        // showLoadingResults(false);
+        showPageElement(".loader-results",false);
     })
 
     //order search product results from high to low price
     $(".highToLow").click(function () {
-        showLoadingResults(true);
-        localStorage.orderResults = "desc";
+        // showLoadingResults(true);
+        showPageElement(".loader-results",true);
+        localStorage.threeOrLessOrderResults = "desc";
         showProductFilter("desc");
-        showLoadingResults(false);
+        // showLoadingResults(false);
+        showPageElement(".loader-results",false);
     })
 
     //remove all filters
@@ -124,14 +149,16 @@ $(document).ready(function(){
     
     //when page is loaded hide loaders
     $(window).on("load", function() {
-       showLoading(false);
-       showLoadingResults(false);
+       // showLoading(false);
+       showPageElement(".loader",false);
+       // showLoadingResults(false);
+       showPageElement(".loader-results",false);
        // if($('.filters-marked').children().length==0){
        //      // $(".filters-marked").addClass("hide");
        // }
-       if(localStorage.countProductFiltered == undefined)
+       if(localStorage.threeOrLessCountProductFiltered == undefined)
             $(".filters-marked").addClass("hide");
-       if(localStorage.countProductFiltered==0 || localStorage.countProductFiltered == undefined)
+       if(localStorage.threeOrLessCountProductFiltered==0 || localStorage.threeOrLessCountProductFiltered == undefined)
             $(".results").addClass("hide");
     });
 
@@ -153,11 +180,15 @@ $(document).ready(function(){
 });
 
 function checkOrderResultOption(){
-    if(localStorage.orderResults != "")
-        if(localStorage.orderResults == "asc")
-            $('.sort-dropdown').removeClass('highToLow').addClass($(this).attr('class')).text("Low to high");
+    if(localStorage.threeOrLessOrderResults != "")
+        if(localStorage.threeOrLessOrderResults == "asc")
+            // $('.sort-dropdown').removeClass('highToLow').addClass($(this).attr('class')).text("Low to high");
+            if(localStorage.current_lang == "es") $(".sort-dropdown").text("Menor a mayor");
+            else $(".sort-dropdown").text("Low to high");
         else
-            $('.sort-dropdown').removeClass('lowToHigh').addClass($(this).attr('class')).text("High to low");
+            // $('.sort-dropdown').removeClass('lowToHigh').addClass($(this).attr('class')).text("High to low");
+            if(localStorage.current_lang == "es") $(".sort-dropdown").text("Mayor a menor");
+            else $(".sort-dropdown").text("High to low");
 }
 
 //initialize swiper
@@ -178,29 +209,31 @@ function initializeSwiper(){
 //get products filtered from server, save in local storage and show in results area
 function getProductFilterFromServer(){
     var bodyJSON = '{'+
-                    localStorage.listBrandFilterChecked + ',' +
-                    localStorage.listSizeFilterChecked + ',' +
-                    localStorage.listGenderFilterChecked + ',' +
-                    localStorage.listClassFilterChecked + '}';
+                    localStorage.threeOrLessListBrandFilterChecked + ',' +
+                    localStorage.threeOrLessListSizeFilterChecked + ',' +
+                    localStorage.threeOrLessListGenderFilterChecked + ',' +
+                    localStorage.threeOrLessListClassFilterChecked + '}';
     $.ajax({
         type: "POST",
-        url: "http://" + localStorage.serverId + "/WS3orlessFiles/S3orLess.svc/NPRODUCT/ShowProductFilter/" + localStorage.storeNo,
+        url: "http://" + localStorage.serverId + "/WS3orlessFiles/S3orLess.svc/NPRODUCT/ShowProductFilter/" + localStorage.storeNo + "/" + localStorage.flag3orless,
         // async: false,
         contentType: "application/json",
         data: bodyJSON,
         crossdomain: true,
         timeout: 10000,
         beforeSend: function(){
-            showLoadingResults(true);
+            // showLoadingResults(true);
+            showPageElement(".loader-results",true);
         },
         complete: function(){
-            showLoadingResults(false);
+            // showLoadingResults(false);
+            showPageElement(".loader-results",false);
         },
         success:function(result){
             var data = result.fProdList;                
             var productList = '{"ProductList":[';
             if (data.length >0) {
-                localStorage.countProductFiltered = data.length;   
+                localStorage.threeOrLessCountProductFiltered = data.length;   
 
                 $.each(data, function (index, value) {
                     var product = '{'+
@@ -222,14 +255,13 @@ function getProductFilterFromServer(){
                 countProductFiltered = 0;
             }
             productList = productList + ']}';
-            localStorage.productList = productList;   
-            if(localStorage.orderResults == "")          
+            localStorage.threeOrLessProductList = productList;   
+            if(localStorage.threeOrLessOrderResults == "")          
                 showProductFilter("asc");
             else
-                showProductFilter(localStorage.orderResults);
+                showProductFilter(localStorage.threeOrLessOrderResults);
 
-        
-            $('.swiper-wrapper').width($('.swiper-slide').width());
+            resizeElement($('.swiper-wrapper'));            
         },
         error:function(error) {
             // alert("error");
@@ -240,18 +272,20 @@ function getProductFilterFromServer(){
 //load product results saved in local storage and show in results area
 function showProductFilter(option){
     $(".swiper-slide").remove();
-    var productListObject = JSON.parse(localStorage.productList);
+    var productListObject = JSON.parse(localStorage.threeOrLessProductList);
                   
-    if (localStorage.countProductFiltered >0) {
-        showResultsArea(true);
+    if (localStorage.threeOrLessCountProductFiltered >0) {
+        // showResultsArea(true);
+        showPageElement(".results",true);
         initializeSwiper();
-        setTimeout(function(){ showSortArea(true); }, 2000);  
-        showOrderOption(true);
+        setTimeout(function(){ showSortArea(true); }, 1000);  
+        // showOrderOption(true);
+        showPageElement(".float-right",true);
         showLogo(false);
         var countProductItem = 0;
         var countSwipe = 0;
         var countRowProduct = 0;
-        var sizeData = localStorage.countProductFiltered;   
+        var sizeData = localStorage.threeOrLessCountProductFiltered;   
         var indexIni, indexEnd, increment,condition;
 
         //order from high to low price
@@ -310,10 +344,13 @@ function showProductFilter(option){
     }      
     else{
         showSortArea(false);
-        showResultsArea(false);
-        showOrderOption(false);
+        // showResultsArea(false);}
+        showPageElement(".results",false);
+        // showOrderOption(false);
+        showPageElement(".float-right",false);
         showLogo(true);
-        showNoResults(true);
+        // showNoResults(true);
+        showPageElement(".notfound",true);
     }
     if(localStorage.current_lang=="es"){
         $(".txtStyleName").text("Estilo: ");
@@ -323,10 +360,10 @@ function showProductFilter(option){
 
 //Clear all selected filters from local storage
 function clearSelectedFilters(){
-    localStorage.removeItem("listBrandFilterChecked");
-    localStorage.removeItem("listSizeFilterChecked");
-    localStorage.removeItem("listGenderFilterChecked");
-    localStorage.removeItem("listClassFilterChecked");
+    localStorage.removeItem("threeOrLessListBrandFilterChecked");
+    localStorage.removeItem("threeOrLessListSizeFilterChecked");
+    localStorage.removeItem("threeOrLessListGenderFilterChecked");
+    localStorage.removeItem("threeOrLessListClassFilterChecked");
 }
 
 //Save all selected filter to local storage
@@ -368,18 +405,19 @@ function saveSelectedFilters(){
     if(countClass>0) listClassFilterChecked = listClassFilterChecked.substring(0, listClassFilterChecked.length - 1);
     listClassFilterChecked = listClassFilterChecked + ']';
 
-    localStorage.listBrandFilterChecked = listBrandFilterChecked;
-    localStorage.listSizeFilterChecked = listSizeFilterChecked;
-    localStorage.listGenderFilterChecked = listGenderFilterChecked;
-    localStorage.listClassFilterChecked = listClassFilterChecked; 
+    localStorage.threeOrLessListBrandFilterChecked = listBrandFilterChecked;
+    localStorage.threeOrLessListSizeFilterChecked = listSizeFilterChecked;
+    localStorage.threeOrLessListGenderFilterChecked = listGenderFilterChecked;
+    localStorage.threeOrLessListClassFilterChecked = listClassFilterChecked; 
 }
 
 //bring all available filters from server and show in filter sidebar
 function getFiltersFromServer(){
-    showLoading(true);
+    // showLoading(true);
+    showPageElement(".loader",true);
     $.ajax({
         type: "GET",
-        url: "http://" + localStorage.serverId + "/WS3orlessFiles/S3orLess.svc/NPRODUCT/GetFilter/" + localStorage.storeNo,            
+        url: "http://" + localStorage.serverId + "/WS3orlessFiles/S3orLess.svc/NPRODUCT/GetFilter/" + localStorage.storeNo + "/" + localStorage.flag3orless,            
         async: false,
         contentType: "application/json",
         crossdomain: true,
@@ -453,10 +491,10 @@ function getFiltersFromServer(){
             sizeList = sizeList + ']}';
             genderList = genderList + ']}';
             classList = classList + ']}';
-            localStorage.listBrandFilter = brandList;   
-            localStorage.listSizeFilter = sizeList;  
-            localStorage.listGenderFilter = genderList;  
-            localStorage.listClassFilter = classList;  
+            localStorage.threeOrLessListBrandFilter = brandList;   
+            localStorage.threeOrLessListSizeFilter = sizeList;  
+            localStorage.threeOrLessListGenderFilter = genderList;  
+            localStorage.threeOrLessListClassFilter = classList;  
             showFilters();
         },
         error: function (error) {
@@ -467,15 +505,12 @@ function getFiltersFromServer(){
 
 //bring all available filters from server and show in filter sidebar
 function showFilters(){
-    var listBrandFilterObject = JSON.parse(localStorage.listBrandFilter);
-    var listSizeFilterObject = JSON.parse(localStorage.listSizeFilter);
-    var listGenderFilterObject = JSON.parse(localStorage.listGenderFilter);
-    var listClassFilterObject = JSON.parse(localStorage.listClassFilter);
-    showLoading(true);
-    console.log(count = Object.keys(listBrandFilterObject.BrandList).length);
-    console.log(count = Object.keys(listSizeFilterObject.SizeList).length);
-    console.log(count = Object.keys(listGenderFilterObject.GenderList).length);
-    console.log(count = Object.keys(listClassFilterObject.ClassList).length);
+    var listBrandFilterObject = JSON.parse(localStorage.threeOrLessListBrandFilter);
+    var listSizeFilterObject = JSON.parse(localStorage.threeOrLessListSizeFilter);
+    var listGenderFilterObject = JSON.parse(localStorage.threeOrLessListGenderFilter);
+    var listClassFilterObject = JSON.parse(localStorage.threeOrLessListClassFilter);
+    // showLoading(true);
+    showPageElement(".loader",true);
     //brand filters  
     var countBrand = Object.keys(listBrandFilterObject.BrandList).length  
     for (var i = 0; i < countBrand; i++) {
@@ -519,7 +554,8 @@ function showFilters(){
         });
         $(".item-list-class").append(html);
     } 
-    showLoading(false);
+    // showLoading(false);
+    showPageElement(".loader",false);
 }
 
 //show or hide main loader
@@ -651,16 +687,31 @@ function showFiltersMarked(option){
     }
 }
 
+//show or hide html element
+function showPageElement(element,option){
+    if(option){  
+        if($(element).hasClass("hide"))
+            $(element).removeClass("hide").addClass("show");
+        else
+            $(element).addClass("show");
+    }else{
+        if($(element).hasClass("show"))
+            $(element).removeClass("show").addClass("hide");
+        else
+            $(element).addClass("hide");
+    }
+}
+
 //load selected filters to show in sidebar
 function setFilterSelected(){
-    if(localStorage.listBrandFilterChecked != undefined ||
-        localStorage.listSizeFilterChecked != undefined ||
-        localStorage.listGenderFilterChecked != undefined ||
-        localStorage.listClassFilterChecked != undefined){
+    if(localStorage.threeOrLessListBrandFilterChecked != undefined ||
+        localStorage.threeOrLessListSizeFilterChecked != undefined ||
+        localStorage.threeOrLessListGenderFilterChecked != undefined ||
+        localStorage.threeOrLessListClassFilterChecked != undefined){
         showLogo(false);
         
         //check brand selected filters
-        var brandFilteredObject = JSON.parse("{" + localStorage.listBrandFilterChecked + "}").Brand;            
+        var brandFilteredObject = JSON.parse("{" + localStorage.threeOrLessListBrandFilterChecked + "}").Brand;            
         $(".item-list-brand .menu-item").each(function(){
             var itemValue = $(this).attr('data-value');
             for (var i = 0; i < brandFilteredObject.length; i++) {
@@ -673,7 +724,7 @@ function setFilterSelected(){
         })
 
         //check size selected filters
-        var sizeFilteredObject = JSON.parse("{" + localStorage.listSizeFilterChecked + "}").Size;
+        var sizeFilteredObject = JSON.parse("{" + localStorage.threeOrLessListSizeFilterChecked + "}").Size;
         $(".item-list-size .menu-item").each(function(){
             var itemValue = $(this).attr('data-value');
             for (var i = 0; i < sizeFilteredObject.length; i++) {
@@ -686,7 +737,7 @@ function setFilterSelected(){
         })
 
         //check gender selected filters
-        var genderFilteredObject = JSON.parse("{" + localStorage.listGenderFilterChecked + "}").Gender;
+        var genderFilteredObject = JSON.parse("{" + localStorage.threeOrLessListGenderFilterChecked + "}").Gender;
         $(".item-list-gender .menu-item").each(function(){
             var itemValue = $(this).attr('data-value');
             for (var i = 0; i < genderFilteredObject.length; i++) {
@@ -699,7 +750,7 @@ function setFilterSelected(){
         })
 
         //check class selected filters
-        var classFilteredObject = JSON.parse("{" + localStorage.listClassFilterChecked + "}").Class;
+        var classFilteredObject = JSON.parse("{" + localStorage.threeOrLessListClassFilterChecked + "}").Class;
         $(".item-list-class .menu-item").each(function(){
             var itemValue = $(this).attr('data-value');
             for (var i = 0; i < classFilteredObject.length; i++) {
@@ -716,19 +767,31 @@ function setFilterSelected(){
 //check if exists filters marked 
 function checkFiltersMarked(){
     if($('.filters-marked').children().length>0){
-        showFiltersMarked(true);
-        setTimeout(function(){ showSortArea(true); }, 2000);        
+        // showFiltersMarked(true);
+        showPageElement(".filters-marked",true);
+        setTimeout(function(){ showSortArea(true); }, 1000);        
         $('.area-logo').hide();
         $('.clear-filters').removeClass('hide').addClass('show animated fadeInRightBig');
     }else{
-        showClearFilter(false);
+        // showClearFilter(false);
+        showPageElement(".clear-filters",false);
         $('.clear-filters').removeClass('show').addClass('hide');
-        if(localStorage.countProductFiltered==0)
+        if(localStorage.threeOrLessCountProductFiltered==0){
             $('.area-logo').show();
+            showPageElement(".results",false);
+        }
     }
 }
 
 //if exists path image error, show no image
 function handleError(image){
     image.src = '../img/imNoFound.jpg';
+}
+
+function resizeElement(element){
+    element.width($('.swiper-slide').width());
+    var resizeProduct = $('main').height() - $('.sort-area').height() - $('.filters-marked').height();
+    
+    $('.swiper-slide').height( resizeProduct );
+    $('.img-product').height( $('.img-product').width());
 }

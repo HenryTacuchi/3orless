@@ -14,9 +14,10 @@ $(function(){ o.init(); });
 
 $(window).load(function(){
 	
+	$('img').width($(window).width()).height($(window).height());
 	setInterval(function(){
 		move();
-	} , 3000);
+	} , 3500);
 });
 
 

@@ -7,7 +7,6 @@ body{
 }
 nav{
 	height: 54px;
-	background-color: #58abb7;
 	z-index: 999;
 }
 section{
@@ -71,8 +70,10 @@ main{
     width: 18px;
     height: 18px;
     z-index: 0;
-    border: 2px solid #58abb7;
+    border-width: 2px;
+    border-style: solid;
     border-radius: 2px;
+    -webkit-transition: .2s;
     transition: .2s;
 }
 .menu-item.selected:before{
@@ -84,8 +85,12 @@ main{
   height: 20px;
   border-top: 2px solid transparent;
   border-left: 2px solid transparent;
-  border-right: 3px solid #58abb7;
-  border-bottom: 3px solid #58abb7;
+  border-right-style: solid;
+  border-right-width: 3px;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  -webkit-transform: rotate(40deg);
+  -webkit-transform-origin: 100% 100%;
   transform: rotate(40deg);
   transform-origin: 100% 100%;
 }
@@ -102,10 +107,12 @@ main{
 .itemName + .items{
 	max-height: 0;
 	overflow: auto;
+	-webkit-transition: max-height 0.35s;
 	transition: max-height 0.35s;
 }
 .itemName.expand + .items{
 	max-height: 244px;
+	-webkit-transition: max-height 0.2s;
 	transition: max-height 0.2s;
 }
 
@@ -194,7 +201,7 @@ main{
 	border-style: solid;
 	border-width: 1px;
 	margin-right: 15px;
-	margin-bottom: 10px;
+	margin-bottom: 5px;
 	padding-left: 5px;
 }
 .filter:before{
@@ -240,27 +247,13 @@ main{
 .swiper-slide {
   text-align: center;
   font-size: 120%;
-  background: #fff;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: stretch;
   flex-wrap: wrap;
 }
-.swiper-slide.swiper-slide-next,
-.swiper-slide.swiper-slide-prev{
-	/*opacity: 0;*/
-}
-.swiper-pagination-bullet {
-  width: 32px !important;
-  height: 32px !important;
-  border-radius: 4px !important;
-  margin: 0 3px !important;
-  text-align: center;
-  line-height: 32px;
-  font-size: 120%;
-  opacity: 1 !important;
-}
+
 .swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction{
 	bottom: initial !important;
 }
@@ -278,13 +271,27 @@ div[class^="row-product"]{
 	align-items: stretch;
 }
 .product{
-	/*all transition to take 1s */
 	transition:all 2s;
 	-webkit-transition:all 2s;
 
-	/*set card transform origin to 20% from x-axis and 80% from y-axis */
-	transform-origin: 20% 80%;
+	transform-origin: left center;
 	-webikit-transform-origin: 20% 80%;
+
+	animation-name: translateProduct;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+
+  -webkit-animation-name: translateProduct;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-timing-function: ease-out;
+}
+@keyframes translateProduct {
+    0%   {transform: translateX(20px); opacity: 0;}
+    100% {transform: translateX(0px); opacity: 1;}
+}
+@-webkit-keyframes translateProduct {
+    0%   {-webkit-transform: translateX(20px); opacity: 0;}
+    100% {-webkit-transform: translateX(0px); opacity: 1;}
 }
 .product img{
 	width: 100%;
@@ -305,110 +312,55 @@ div[class^="product"]:last-child{
 	margin-right: 0;
 }
 .row-product1 .product:nth-child(1){
-	height: 285px;
-	margin-left: 0px;
-	transform: scale(0.5,0.5);
-	animation-name: cards;
-  animation-duration: 0.75s;
-	animation-delay: 0s;
+	-webkit-animation-delay: 0.1s;
+	animation-delay: 0.1s;
 }
 .row-product1 .product:nth-child(2){
-	height: 285px;
-	margin-left: -200px;
-	transform: scale(0.5,0.5);
-	animation-name: cards;
-  animation-duration: 0.75s;
+	-webkit-animation-delay: 0.2s;
 	animation-delay: 0.2s;
 }
 .row-product1 .product:nth-child(3){
-	height: 285px;
-	margin-left: -200px;
-	transform: scale(0.5,0.5);
-	animation-name: cards;
-  animation-duration: 1s;
-	animation-delay: 0.4s;
+	-webkit-animation-delay: 0.3s;
+	animation-delay: 0.3s;
 }
 .row-product1 .product:nth-child(4){
-	height: 285px;
-	margin-left: -200px;
-	transform: scale(0.5,0.5);
-	animation-name: cards;
-  animation-duration: 0.75s;
-	animation-delay: 0.6s;
+	-webkit-animation-delay: 0.4s;
+	animation-delay: 0.4s;
 }
-
 .row-product2 .product:nth-child(1){
-	height: 285px;
-	margin-left: 0px;
-	margin-top: -300px;
-	transform: scale(0.5,0.5);
-	animation-name: cards;
-  animation-duration: 0.75s;
-	animation-delay: 0s;
-}
-.row-product2 .product:nth-child(2){
-	height: 285px;
-	margin-left: -200px;
-	margin-top: -300px;
-	transform: scale(0.5,0.5);
-	animation-name: cards;
-  animation-duration: 0.75s;
+	-webkit-animation-delay: 0.2s;
 	animation-delay: 0.2s;
 }
+.row-product2 .product:nth-child(2){
+	-webkit-animation-delay: 0.3s;
+	animation-delay: 0.3s;
+}
 .row-product2 .product:nth-child(3){
-	height: 285px;
-	margin-left: -200px;
-	margin-top: -300px;
-	transform: scale(0.5,0.5);
-	animation-name: cards;
-  animation-duration:0.75s;
+	-webkit-animation-delay: 0.4s;
 	animation-delay: 0.4s;
 }
 .row-product2 .product:nth-child(4){
-	height: 285px;
-	margin-left: -200px;
-	margin-top: -300px;
-	transform: scale(0.5,0.5);
-	animation-name: cards;
-  animation-duration: 0.75s;
-	animation-delay: 0.6s;
-}
-
-
-@keyframes cards{
-	0%{
-		height: 285px;
-	}
-	50%{
-		/*margin-left: inherit;
-		margin-top: inherit;*/
-		height: inherit;
-	}
-	100%{
-		height: inherit;
-		transform: scale(1,1);	
-		margin-left: 4px;
-		margin-top: 4px;	
-	}
+	-webkit-animation-delay: 0.5s;
+	animation-delay: 0.5s;
 }
 
 .img-product{
+	position: relative;
 	width: 100%;
 	margin: 0;
 	padding: 0;
-	height: 167px;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  overflow: hidden;
+	/*height: set in Jquery - resizeElement function*/
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	overflow: hidden;
 }
 .img-product img{
 	width: 100%;
 	height: 100%;
-	overflow-x: hidden; 
 }
 .brand{
-	font-size: 125%;
-	padding-top: 15px;
+	font-size: 115%;
+	/*padding-top: 15px;*/
 }
 .areaStyle, .areaPrice{
 	text-align: center;
@@ -425,7 +377,7 @@ div[class^="product"]:last-child{
 	font-weight: 400;	
 }
 .areaPrice{
-	padding-bottom: 15px;
+	/*padding-bottom: 15px;*/
 }
 
 
@@ -442,11 +394,12 @@ div[class^="product"]:last-child{
 .sort-area{
 	width: 100%;
 	height: 58px;
-	transition: opacity 0.8s;
+	-webkit-transition: opacity 0.6s;
+	transition: opacity 0.6s;
 }
 .float-right{
 	float: right;
-	margin: 5px 15px;
+	margin: 8px 15px;
 }
 .float-right span{
 	font-family: 'Scalia User Icons';
@@ -464,7 +417,7 @@ div[class^="product"]:last-child{
 	border-width: 1px;
 	border-style: solid; 
   min-width: 160px;
-  padding: 10px 48px 10px 5px;
+  padding: 7px 48px 7px 5px;
 }
 .dropdown-menu{
 	right: 0;
@@ -480,31 +433,100 @@ div[class^="product"]:last-child{
 .dropdown .btn:before{
 	content: '';
 	position: absolute;
-	top: 1px;
+	top: 0px;
 	right: 0;
 	width: 44px;
-	height: 98%;
+	height: 100%;
 	border-top-right-radius: 4px;
 	border-bottom-right-radius: 4px;
-	background-color: #d2dae1;
 }
 .dropdown .btn:after{
 	content: '\e602';
 	position: absolute;
 	font-family: 'Scalia';
 	right: 13px;
-	color: #ffffff;
-}
-
-/*loader*/
-.loader{
-	border-color: #58abb7;
-}
-.segment {
-  background: #58abb7;
 }
 
 
 .opaque{
 	opacity: 0;
+}
+
+
+@media only screen and (min-width: 1280px) {
+    aside{
+    	width: 300px;
+    }
+    .itemName,
+    .items .menu-item{
+    	font-size: 110%;
+	    padding: 18px 30px 18px 18px;
+	} 
+	.sort-area{
+		height: 44px;
+	} 
+	.float-left{
+		margin: 8px;
+	}
+	.float-right {
+    margin: 3px 13px;
+	}
+	.swiper-slide {
+	  font-size: 120%;
+	}  
+	.swiper-slide div[class^="product"]{
+    margin: 2px 6px;
+  }
+  .swiper-slide div[class^="product"]:first-child{
+		margin-left: 0;
+	}
+	.swiper-slide div[class^="product"]:last-child{
+		margin-right: 0;
+	}
+	.dropdown .btn{
+	    padding: 4px 48px 4px 5px;
+	}
+}
+
+@media only screen and (min-width: 1360px) {
+	.itemName, .items .menu-item {
+	    font-size: 120%;
+	    padding: 20px 30px 20px 18px;
+	}
+	.btn-clear-search{
+		bottom: 60px;
+	}
+   .swiper-slide {
+    	font-size: 160%;
+	}
+	.brand{
+		font-size: 120%;
+	}
+	.swiper-slide div[class^="product"] {
+	    margin: 5px 6px;
+	}
+	.sort-area{
+		height: 54px;
+	}
+	.float-right {
+	    margin: 7px 13px;
+	}
+	.float-left {
+	    margin: 13px;
+	}
+}
+
+@media only screen and (min-width: 1920px) {
+	.float-right {
+	    margin: 3px 13px;
+	}
+	.dropdown .btn {
+	    padding: 3px 48px 3px 5px;
+	}
+	.float-left {
+    	margin: 8px;
+	}
+	.swiper-slide div[class^="product"] {
+	    margin: 5px 9px;
+	}
 }

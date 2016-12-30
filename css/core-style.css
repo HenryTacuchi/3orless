@@ -56,16 +56,21 @@ h1,h2,h3,h4{
 }
 body,html{
 	height: 100%;
+  font-size: 12px;
 }
 p,span,label,.ancestor,.dropdown-menu li{
 	font-size: 19px;
 }
 del{
-  font-size: 17px;
   font-weight: 300;
 }
 button,.btn,.menu-item{
 	font-size: 18px;
+}
+/*disable user select*/
+div,p,a,label,button,select,option{
+  -webkit-user-select: none;
+  user-select: none
 }
 .container{
 	width: 100%;
@@ -222,7 +227,7 @@ span.no-complete{
   border-radius: 4px 4px 0 0;
   top: 57%;
   margin-top: -35px;
-  font-size: 54%;
+  font-size: 70%;
   text-align: center;
   padding-bottom: 3px;
   line-height: 13px;
@@ -269,7 +274,8 @@ input[type=radio]+label:after, input[type=radio]+label:before {
   transition: .28s ease;
 }
 input[type=checkbox]+label, input[type=radio]:checked+label, input[type=radio]:not(:checked)+label {
-  padding-left: 35px;
+  padding-left: 30px;
+  padding-right: 20px;
   display: inline-block;
   line-height: 25px;
   -khtml-user-select: none;
@@ -278,7 +284,8 @@ input[type=checkbox]+label, input[type=radio]:checked+label, input[type=radio]:n
 }
 input[type=radio]:not(:checked)+label:before {
   border-radius: 50%;
-  border: 2px solid #ffffff;
+  border-style: solid;
+  border-width: 2px;
 }
 input[type=radio]:checked+label:before {
   border-radius: 50%;
@@ -286,11 +293,16 @@ input[type=radio]:checked+label:before {
 }
 input[type=radio]:checked+label:after {
   border-radius: 50%;
-  border: 2px solid #ffffff;
-  background-color: #ffffff;
+  border-style: solid;
+  border-width: 2px;
   z-index: 0;
   -webkit-transform: scale(1.02);
   transform: scale(1.02);
+}
+
+footer {
+    position: relative;
+    z-index: 10;
 }
 
 /*alerts*/
@@ -341,7 +353,8 @@ input[type=radio]:checked+label:after {
   border: 15px solid transparent;
 }
 .msg-txt:before {
-  border-right: 20px solid #ffffff;
+  border-style: solid;
+  border-width: 20px;
 }
 .msg-txt:after {
   top: 50%;
@@ -361,7 +374,8 @@ input[type=radio]:checked+label:after {
   font-size: 0;
   line-height: 0;
   padding: 25px;
-  border: 1px solid #58abb7;
+  border-style: solid;
+  border-width: 1px;
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg);
   -webkit-animation: rotate-loader 5s infinite, come-border 0.5s;
@@ -373,11 +387,7 @@ input[type=radio]:checked+label:after {
   height: 100%;
   z-index: 999999;
   top: 0;
-  background-color: #ffffff;
   opacity: 0.9;  
-}
-.loader-results .loader-section{
-  border-color: #58abb7;
 }
 .segment-holder {
   position: relative;
@@ -388,7 +398,6 @@ input[type=radio]:checked+label:after {
 
 .segment {
   position: absolute;
-  background: #ffffff;
 }
 
 .one {
@@ -512,7 +521,7 @@ input[type=radio]:checked+label:after {
 .custom-classname,.eac-cval,.eac-input-wrap{
   font-family: 'Source Sans Pro';
   font-size: 100%;
-  color: #ccc;
+  display: block !important; 
 }
 
 .swiper-wrapper{
@@ -525,4 +534,40 @@ input[type=radio]:checked+label:after {
 }
 .swiper-button-next.swiper-button-disabled, .swiper-button-prev.swiper-button-disabled{
   opacity: 0 !important;
+}
+
+
+@media only screen and (min-width: 1280px) {
+    body {
+        font-size: 14px;
+    }
+    button.btn:before{
+      font-size: 100%;
+      margin-left: -1.2em; 
+    }
+    p, span, label, .ancestor, .dropdown-menu li{
+      font-size: 20px;
+    }
+    .icon{
+      font-size: 200%;
+    }
+}
+
+@media only screen and (min-width: 1360px) {
+    body {
+        font-size: 15px;
+    }
+    button, .btn, .menu-item{
+      font-size: 22px;
+    }
+    button.btn:before{
+      font-size: 104%;
+      margin-left: -1.1em; 
+    }
+    p, span, label, .ancestor, .dropdown-menu li{
+      font-size: 20px;
+    }
+    .icon{
+      font-size: 200%;
+    }
 }

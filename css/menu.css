@@ -1,0 +1,179 @@
+body{
+	height: initial;
+}
+.container{
+	justify-content: flex-start;
+}
+section {
+    padding: 30px 0;
+}
+.logoArea{
+	text-align: center;
+	-webkit-perspective: 250px; /* Chrome, Safari, Opera  */
+    perspective: 250px;
+}
+.logoApp{
+	width: 200px;
+
+	animation-name: entryLogo;
+    animation-duration: 0.7s;
+    animation-timing-function: ease-in-out;
+
+    -webkit-animation-name: entryLogo;
+    -webkit-animation-duration: 0.7s;
+    -webkit-animation-timing-function: ease-in-out;
+}
+@keyframes entryLogo {
+    0% {transform: rotateX(90deg);  opacity: 0;}
+    90% {transform: rotateX(-10deg); }
+    100% {transform: rotateX(0deg); opacity: 1;}
+}
+@-webkit-keyframes entryLogo {
+    0% {-webkit-transform: rotateX(90deg);  opacity: 0;}
+    90% {-webkit-transform: rotateX(-10deg); }
+    100% {-webkit-transform: rotateX(0deg); opacity: 1;}
+}
+
+.optionsArea{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+.bgmenu,.img-bgmenu{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	z-index: -10;
+}
+.img-bgmenu{
+  -webkit-filter: blur(9px);
+  filter: blur(9px);
+}
+
+
+.opt{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	width: 200px;
+	height: 200px;
+	border-radius: 50%;
+	margin: 0 25px;	
+	font-size: 115%;
+	text-align: center;	
+    
+    padding: 0 25px;
+
+    transition: all 0.1s;
+    animation-name: comeBall;
+    animation-duration: 0.7s;
+    animation-timing-function: ease-in-out;
+
+    -webkit-transition: all 0.1s;
+    -webkit-animation-name: comeBall;
+    -webkit-animation-duration: 0.7s;
+    -webkit-animation-timing-function: ease-in-out;
+}
+.opt:active{
+	transform: scale(0.95,0.95);
+}
+.opt:active div{
+	opacity: 0.8;
+}
+.opt:hover,.opt:active{
+	text-decoration: none;
+}
+.opt:focus{
+	outline: none;
+}
+.opt:before{
+	content: "";
+	position: absolute;
+	top: 1%;
+	left: 5%;
+	width: 90%;
+	height: 90%;
+	border-radius: 50%;
+	background: radial-gradient(circle at 50% 0px, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 58%);
+	filter: blur(5px);
+	-webkit-filter: blur(5px);
+	-webkit-transition: all 3s;
+    transition: all 3s;
+	z-index: 2;
+	opacity: 1;
+}
+.opt:active:before{
+	opacity: 0;
+	background: radial-gradient(circle at 50% 0px, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 58%);
+}
+.opt div{
+	padding-top: 54px;
+	font-size: 180%;
+	font-family: 'Roboto Condensed';
+	font-weight: 500;
+    text-transform: uppercase;
+}
+
+@keyframes comeBall {
+    0% {transform: scale(0,0);  opacity: 0;}
+    80% {transform: scale(1.1,1.1); opacity: 1;}
+    100% {transform: scale(1,1);}
+}
+
+@-webkit-keyframes comeBall {
+    0% {-webkit-transform: scale(0,0);  opacity: 0;}
+    80% {-webkit-transform: scale(1.1,1.1); opacity: 1;}
+    100% {-webkit-transform: scale(1,1);}
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background: url(../img/home/bg.png) no-repeat center;
+    background-size: cover;
+}
+
+.option1:before,.option2:before,.option3:before{
+	position: absolute;
+	font-weight: 100;
+	text-shadow: none;        
+    top: 0px;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+.option1:before{
+	content: '\e600';
+	font-size: 80px;
+    font-family: 'Scalia User Icons';
+}
+.option2:before{
+	content: '\e605';
+	font-size: 72px;
+    font-family: 'Scalia User Icons';
+}
+.option3:before{
+	content: '\e786';
+	font-size: 70px;
+    font-family: 'Scalia User Icons';
+}
+
+
+@media only screen and (min-width: 1280px) {
+	.logoApp{
+		width: 230px;
+	}
+    .opt{
+    	width: 230px;
+    	height: 230px;
+    	font-size: 125%;
+    }
+}

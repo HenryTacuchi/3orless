@@ -36,7 +36,7 @@ var app = {
 			// cordova.plugins.printer.print(page, {printerId: uri }, function (res) {
 			//     if(res){
 			//     	clearSearchPage();				  	
-			// 		window.location = "search.html";
+			// 		window.location = "search3orless.html";
 			//     }
 			//     else{
 			//     	alert('Canceled');
@@ -44,11 +44,11 @@ var app = {
 			// });
    //      }
 
-		   showLoading(true);
+		   showLoading(true); 		   
 		   BTPrinter.connect(function(data){
 			    console.log("Success Connect");
 			    console.log(data);
-				BTPrinter.printText(function(data){
+				BTPrinter.print(function(data){
 					console.log("Success PrintText");
 					console.log(data);
 					setTimeout(function(){
@@ -57,7 +57,7 @@ var app = {
 						    console.log(data);		
 							clearSearchPage();	
 							showLoading(false);			  	
-							window.location = "search.html";
+							window.location = "search3orless.html";
 						},function(err){
 						    console.log("Error Disconnect");
 						    console.log(err);
@@ -66,7 +66,7 @@ var app = {
 					},3000); 	
 				},function(err){
 					console.log("Error printText");
-					console.log(err);
+					console.log(err);					
 					showLoading(false);
 				}, page);				
 			},function(err){
@@ -91,7 +91,7 @@ var app = {
 					  } else {
 					    clearSearchPage();	
 						showLoading(false);			  	
-						window.location = "search.html";
+						window.location = "search3orless.html";
 					  }
 					});
 				else				
@@ -113,11 +113,47 @@ var app = {
 					  } else {
 					    clearSearchPage();	
 						showLoading(false);			  	
-						window.location = "search.html";
+						window.location = "search3orless.html";
 					  }
 					});
 			    showLoading(false);
-			}, localStorage.printerName)	 					 
+			}, localStorage.printerName)	 
+			// cordova.plugins.bixolonPrint.settings = {
+			//   lineFeed: 3,
+			//   formFeed: false,      // enable\disable jump to next position, in black marker and label modes
+			//   autoConnect: false,    // Android only: if this is set to false displays a dialog box for selecting the printer
+			//   toastMessage: true,   // Android only: show a printer message
+			//   separator: '=',
+			//   codePage: cordova.plugins.bixolonPrint.CodePage.CP_1252_LATIN1 // define code page, default value is set to CP_1252_LATIN1.
+			// };
+			// cordova.plugins.bixolonPrint.getStatus(function(){alert("success");}, function(){alert("error");printTicket()}, true);
+		
+			// 	cordova.plugins.bixolonPrint.addHr();
+			// 	cordova.plugins.bixolonPrint.addLine("#@*èòçìàé€");
+			// 	// finally print
+			// 	cordova.plugins.bixolonPrint.printText(
+			// 	    function (response) {
+			// 	  //       setTimeout(function(){
+			// 			// 	BTPrinter.disconnect(function(data){
+			// 			// 	    console.log("Success Disconnect");
+			// 			// 	    console.log(data);		
+			// 			// 		clearSearchPage();	
+			// 			// 		showLoading(false);			  	
+			// 			// 		window.location = "search3orless.html";
+			// 			// 	},function(err){
+			// 			// 	    console.log("Error Disconnect");
+			// 			// 	    console.log(err);
+			// 			// 	    showLoading(false);
+			// 			// 	}, localStorage.printerName)
+			// 			// },3000);
+			// 	    },
+			// 	    function (error) {
+			// 	        alert("print failure: " + error)
+			// 	    },
+			// 	    {
+			// 	        codePage: cordova.plugins.bixolonPrint.CodePage.CP_1252_LATIN1
+			// 	    }
+			// 	);				 
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -139,6 +175,25 @@ $(document).ready(function(){
 	else{
 		$(".btn-recover").prop("disabled",false);	
 	}
+
+	$('.txtFirstName').bind('keypress', function(event) {
+    if(event.which == 13||event.which == 10) {
+      $(".txtLastName").focus();
+    }
+    });
+
+    $('.txtLastName').bind('keypress', function(event) {
+    if(event.which == 13||event.which == 10) {
+      $(".txtEmail").focus();
+    }
+    });
+
+    $('.txtEmail').bind('keypress', function(event) {
+    if(event.which == 13||event.which == 10) {
+    	$(".txtEmail").blur();
+      $(".section-cart-items").show();
+    }
+    });
 
 	$("input").focus(function(){
 		$(".section-cart-items").hide();
@@ -179,7 +234,7 @@ $(document).ready(function(){
         localStorage.currentEmailClient = "";
         //remove all products from cart item and redirect to search screen
         clearSearchPage();
-        window.location = "search.html";
+        window.location = "search3orless.html";
     });
 
     //show products from last cart
@@ -508,16 +563,17 @@ function getProductList(){
 
 //remove all variables related to search page from local storage
 function clearSearchPage(){
-	localStorage.removeItem("listBrandFilter");
-	localStorage.removeItem("listClassFilter");
-	localStorage.removeItem("listGenderFilter");
-	localStorage.removeItem("listSizeFilter");
-	localStorage.removeItem("listBrandFilterChecked");
-	localStorage.removeItem("listClassFilterChecked");
-	localStorage.removeItem("listGenderFilterChecked");
-	localStorage.removeItem("listSizeFilterChecked");
-	localStorage.removeItem("productList");
-	localStorage.removeItem("countProductFiltered");
+	localStorage.removeItem("threeOrLessListBrandFilter");
+	localStorage.removeItem("threeOrLessListClassFilter");
+	localStorage.removeItem("threeOrLessListGenderFilter");
+	localStorage.removeItem("threeOrLessListSizeFilter");
+	localStorage.removeItem("threeOrLessListBrandFilterChecked");
+	localStorage.removeItem("threeOrLessListClassFilterChecked");
+	localStorage.removeItem("threeOrLessListGenderFilterChecked");
+	localStorage.removeItem("threeOrLessListSizeFilterChecked");
+	localStorage.removeItem("threeOrLessProductList");
+	localStorage.removeItem("threeOrLessCountProductFiltered");
+	localStorage.threeOrLessOrderResults = "";
 	localStorage.removeItem("indexProductSelected");
 	localStorage.removeItem("resultsProductColorCodeSelected");
 	localStorage.removeItem("resultsProductStyleCodeSelected");
@@ -595,3 +651,10 @@ function printTicket(){
     });
 }
 
+$(window).load(function(){
+    setSizeCart();
+});
+
+function setSizeCart(){
+	$('.items').height($('.cart-items').height());
+}

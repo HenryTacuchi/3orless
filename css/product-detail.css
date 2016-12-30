@@ -7,7 +7,6 @@ body{
 }
 nav{
 	height: 54px;
-	background-color: #58abb7;
 	z-index: 999;
 }
 section{
@@ -26,11 +25,16 @@ article{
 	margin: 15px;
 }
 
+h1, h2, h3 {
+  margin-top: 12px;
+  margin-bottom: 5px;
+}
+
 /*product detail*/
 .productDetail{
 	border-style: solid;
 	border-width: 1px;
-	font-size: 130%;
+	font-size: 160%;
 	border-radius: 4px;
 	padding: 0 20px;	
 
@@ -127,14 +131,19 @@ article{
 	height: 100%;
 	border-top-right-radius: 4px;
 	border-bottom-right-radius: 4px;
-	background-color: #d2dae1;
+}
+.dropdown .btn:active:after{
+	width: initial;
+	height: initial;
+	left: auto;
+	top: auto;
+	background-color: transparent;
 }
 .dropdown .btn:after{
 	content: '\e602';
 	position: absolute;
 	font-family: 'Scalia';
 	right: 8px;
-	color: #ffffff;
 }
 
 /*main Img*/
@@ -159,15 +168,33 @@ article{
 	width: 100%;
 	height: 100%;
 	
+  -webkit-animation-name: vanishIn;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-delay: 0s;
   animation-name: vanishIn;
-  animation-duration: 0.9s;
+  animation-duration: 0.5s;
   animation-delay: 0s;
+}
+@-webkit-keyframes vanishIn {
+  0% {
+    opacity: 0;
+    -webkit-transform-origin: 50% 50%;
+    -webkit-transform: scale(1.6, 1.6);
+    -webkit-filter: blur(90px);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform-origin: 50% 50%;
+    -webkit-transform: scale(1, 1);
+    -webkit-filter: blur(0px);
+  }
 }
 @keyframes vanishIn {
   0% {
     opacity: 0;
     transform-origin: 50% 50%;
-    transform: scale(2, 2);
+    transform: scale(1.6, 1.6);
     filter: blur(90px);
   }
 
@@ -296,27 +323,51 @@ figure{
 }
 div[class^="product"]{
 	display: inline-block;
-	width: 20.149999%;
+	width: 200px;
 	position: relative;
-	margin: 10.5px;
+	margin: 4px;
 	border-width: 1px;
 	border-style: solid;
 	border-radius: 4px;
+	opacity: 0;
+
+	transform-origin: left center;
+	-webikit-transform-origin: 20% 80%;
+
+	animation-name: translateProduct;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+
+  -webkit-animation-name: translateProduct;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-timing-function: ease-out;
+
+  -webkit-animation-fill-mode: forwards; /* Safari 4.0 - 8.0 */
+    animation-fill-mode: forwards;
 }
-.product:first-of-type{
-	margin-left: 21px;
+@keyframes translateProduct {
+    0%   {transform: translateX(-50px); opacity: 0;}
+    100% {transform: translateX(0px); opacity: 1;}
+}
+@-webkit-keyframes translateProduct {
+    0%   {-webkit-transform: translateX(-50px); opacity: 0;}
+    100% {-webkit-transform: translateX(0px); opacity: 1;}
+}
+.product.product-1{
+	margin-left: 15px;
 }
 .product:last-of-type{
-	margin-right: 21px;
+	margin-right: 15px;
 }
 .product img{	
 	width: 100%;
 }
 .img-product{
+	display: block;
 	width: 100%;
-	margin: 0;
+	margin: auto;
 	padding: 0;
-	height: 170px;
+	/*height: 172px;*/
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   overflow: hidden;
@@ -345,7 +396,26 @@ div[class^="product"]{
 	padding-bottom: 5px;
 }
 
-
+.product-1{
+	-webkit-animation-delay: 0.4s;
+	animation-delay: 0.4s;
+}
+.product-2{
+	-webkit-animation-delay: 0.6s;
+	animation-delay: 0.6s;
+}
+.product-3{
+	-webkit-animation-delay: 0.8s;
+	animation-delay: 0.8s;
+}
+.product-4{
+	-webkit-animation-delay: 1s;
+	animation-delay: 1s;
+}
+.product-5{
+	-webkit-animation-delay: 1.2s;
+	animation-delay: 1.2s;
+}
 /* two items */
 /*.product:first-of-type:nth-last-child(2),*/
 .product:first-of-type:nth-last-child(1) ~ .product {
@@ -390,4 +460,56 @@ div[class^="product"]{
   font-family: 'Scalia User Icons';
   display: block;
   float: left;
+}
+
+@media only screen and (min-width: 1280px) {
+    article{
+    	min-width: 380px;
+    }
+    .productDetail{
+    	font-size: 164%;
+    }
+    .dropdown .btn{
+    	font-size: 90%;
+    	line-height: 90%;
+    }
+    .dropdown .btn:after{
+    	font-size: 75%;
+    }
+    .dropdown-menu li{
+    	font-size: 125%;
+    }
+    div[class^="product"]{
+			width: 210px;
+		}
+}
+@media only screen and (min-width: 1360px) {
+    article{
+    	min-width: 410px;
+    }
+    body{
+    	font-size: 140%;
+    }
+    h3, .h3 {
+	    font-size: 32px;
+		}
+		div[class^="product"]{
+			width: 290px;
+		}
+}
+
+
+@media only screen and (min-width: 1920px) {
+	article{
+  	min-width: 600px;
+  }
+  body{
+  	font-size: 160%;
+  }
+  h3, .h3 {
+    font-size: 34px;
+	}
+	div[class^="product"]{
+		width: 350px;
+	}
 }
