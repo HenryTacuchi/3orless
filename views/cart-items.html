@@ -15,6 +15,7 @@
 	<script type="text/javascript" src="../js/plugins/jquery.email-autocomplete.min.js"></script>
 	<script type="text/javascript" src="../js/scripts/cart-items.js"></script>
 	<script type="text/javascript" src="../js/scripts/captions.js"></script>
+	<script type="text/javascript" src="../js/scripts/colorApp.js"></script>
 	
 
 	<link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -27,7 +28,7 @@
 </head>
 <body>
 
-	<nav class="animated fadeIn">
+	<nav class="animated fadeIn setBaColor">
 
 		<div class="left-options">
 			<div class="icon btn-home">&#xe610;</div>
@@ -45,7 +46,7 @@
 		<!-- product details -->
 		<article class="form-user">
 			<h2 class="text-center lblCompleteFields">Please complete the fields</h2>
-			<form >
+			<form>
 				<div class="form-inline row">
 					<div class="form-group user col-xs-12 col-md-6">
 						<label class="lblName">Firstname<span>*</span></label>		
@@ -72,7 +73,7 @@
 		<!-- product details -->
 		<article class="cart-items">
 			<div class="thead">
-				<h3 class="text-center lblCartItems">Cart Items</h3>
+				<h3 class="text-center lblCartItems setColor">Cart Items</h3>
 			</div>
 			
 
@@ -109,7 +110,7 @@
 		      			<div class="areaStyle">
 			      			<span class="txtStyleName">Style:</span><span class="styleName"><%=styleName%></span>
 			      		</div>
-			      		<div class="brand"><%=brandName%></div>
+			      		<div class="brand setColor"><%=brandName%></div>
 			      		<div class="size"><%=size%></div>
 		      		</div>
 	    			<div class="col-xs-2  center-text">
@@ -127,10 +128,10 @@
 
 	<footer>
 		<div class="options">
-			<button class="btn bg-color1 btn-back">Back</button>
-			<button class="btn bg-color1 btn-clear-cart">Clear All</button>
-			<button class="btn bg-color1 btn-recover">Recover Cart</button>
-			<button class="btn bg-color1 btn-done">Done</button>
+			<button class="btn btn-back setBaColor">Back</button>
+			<button class="btn btn-clear-cart setBaColor">Clear All</button>
+			<button class="btn btn-recover setBaColor">Recover Cart</button>
+			<button class="btn btn-done setBaColor">Done</button>
 		</div>
 	</footer>
 
@@ -149,25 +150,7 @@
 		</div>							
 	</div>	
 
-	<!-- loading block -->
-	<!-- <div class="loader hide">
-		<div class="container-loader">
-			<div class="loader-principal">
-			  <div class="segment-holder">
-			    <div class="segment one"></div>
-			  </div>
-			  <div class="segment-holder">
-			    <div class="segment two"></div>
-			  </div>
-			  <div class="segment-holder">
-			    <div class="segment three"></div>
-			  </div>
-			  <div class="segment-holder">
-			    <div class="segment four"></div>
-			  </div>			
-			</div>
-		</div>
-	</div> -->
+	<!-- loading block printer -->
 	<div class="loader hide">
 		<div class="container-loader">
 			<div class="loader-principal-printer">

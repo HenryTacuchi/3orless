@@ -9,11 +9,13 @@
 	<script type="text/javascript" src="../js/plugins/jquery.min.js"></script>
 	<script type="text/javascript" src="../js/plugins/bootstrap.min.js"></script>
 	<script type="text/javascript" src="../js/plugins/underscore.min.js"></script>
+	<script type="text/javascript" src="../js/plugins/jscolor.min.js"></script>
 	<script type="text/javascript" src="../js/scripts/scripts.js"></script>
 	<script type="text/javascript" src="../js/plugins/jquery.email-autocomplete.min.js"></script>
 	<!-- <script type="text/javascript" src="../js/plugins/async.min.js"></script> -->
 	<script type="text/javascript" src="../js/scripts/configuration.js"></script>
 	<script type="text/javascript" src="../js/scripts/captions.js"></script>
+	<script type="text/javascript" src="../js/scripts/colorApp.js"></script>
 	
 	<link href="../css/bootstrap.min.css" rel="stylesheet">
 	<link href="../css/core-style.css" rel="stylesheet">
@@ -25,7 +27,7 @@
 </head>
 <body>
 
-	<nav class="animated fadeIn">
+	<nav class="animated fadeIn setBaColor" id="styleNav">
 
 		<div class="left-options">
 			<div class="icon btn-exit">&#xe774;</div>
@@ -33,6 +35,13 @@
 				Configuration
 			</label>			
 		</div>
+		<ul class="right-options">
+			<li>
+				<label>Set Color</label>
+				<input type="text" id="valueNav" class="form-control form-color">
+				<button class="icon btn-setcolor jscolor {valueElement:'valueNav',styleElement:'styleNav', value:'58abb7', hash:true, shadow:false}" id="valueBtn">&nbsp;</button>
+			</li>
+		</ul>	
 	</nav>
 
 	<div class="container">
@@ -44,7 +53,7 @@
 				<div class="col-xs-3">
 					<div class="form-group areaIcon iconConfig">
 						<div class="icon-circle">
-							<div class="btn btn-img btn-config bg-color1">
+							<div class="btn btn-img btn-config setBaColor">
 								<span>&#xe6d2</span>
 							</div>
 						</div>				    
@@ -84,7 +93,7 @@
 
 				<div class="col-xs-3">
 					<div class="form-group area areaSave">
-				    <button type="button" class="btn btn-save bg-color1 btnSave">Save</button>
+				    <button type="button" class="btn btn-save btnSave setBaColor">Save</button>
 				  </div>
 				</div>
 
@@ -140,7 +149,7 @@
 
 				<div class="col-xs-3">
 					<div class="form-group area areaFinish">
-				    <button type="button" class="btn btn-finish bg-color1 btnFinish">Finish</button>
+				    <button type="button" class="btn btn-finish btnFinish setBaColor">Finish</button>
 				  </div>
 				</div>
 
@@ -167,7 +176,7 @@
 	<!-- loading block -->
 	<div class="loader hide">
 		<div class="container-loader">
-			<div class="loader-principal white">
+			<div class="loader-principal">
 			  <div class="segment-holder">
 			    <div class="segment one"></div>
 			  </div>

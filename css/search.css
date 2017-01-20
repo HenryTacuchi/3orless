@@ -49,7 +49,8 @@ main{
 .items{
 	line-height: 30px;
 }
-.items .menu-item{
+.items .menu-item,
+.items .sku-item{
 	position: relative;
 	padding-left: 40px;
 	border-bottom-width: 1px;
@@ -60,8 +61,8 @@ main{
 	display: block;
   padding: 15px 30px 15px 15px;
 }
-.menu-item:before{
-    content: '';
+
+.menu-item .checkbox{
     position: absolute;
     top: 0;
     bottom: 0;
@@ -69,6 +70,9 @@ main{
     margin: auto;
     width: 18px;
     height: 18px;
+    min-height: 18px;
+    min-width: 18px;
+    padding: 0;
     z-index: 0;
     border-width: 2px;
     border-style: solid;
@@ -76,15 +80,16 @@ main{
     -webkit-transition: .2s;
     transition: .2s;
 }
-.menu-item.selected:before{
+.menu-item.selected .checkbox{
 	top: 0;
 	bottom: 0;
   right: 25px;
   margin: auto;
   width: 9px;
   height: 20px;
-  border-top: 2px solid transparent;
-  border-left: 2px solid transparent;
+  min-width: auto;
+  border-top: 2px solid transparent !important;
+  border-left: 2px solid transparent !important;
   border-right-style: solid;
   border-right-width: 3px;
   border-bottom-style: solid;
@@ -99,10 +104,18 @@ main{
 	font-size: 15px;
     font-family: 'Scalia';
     font-weight: normal;
-    padding-right: 10px;	
+    padding-right: 10px;
+    -webkit-transform-origin: center;
+    -webkit-transition: all 0.12s;	
+    transform-origin: center;
+    transition: all 0.12s;	
 }
 .itemName.expand:before{
-	content: '\e602';
+	display: inline-block;
+	-webkit-transform-origin: center;
+	-webkit-transform: translate3D(-5px,5px,0) rotate(90deg);
+	transform-origin: center;
+	transform: translate3D(-5px,5px,0) rotate(90deg);
 }
 .itemName + .items{
 	max-height: 0;
@@ -399,7 +412,7 @@ div[class^="product"]:last-child{
 }
 .float-right{
 	float: right;
-	margin: 8px 15px;
+	margin: 11px 15px;
 }
 .float-right span{
 	font-family: 'Scalia User Icons';
@@ -413,11 +426,10 @@ div[class^="product"]:last-child{
 	display: inline-table;
 }
 .dropdown .btn {
-  text-transform: inherit;
-	border-width: 1px;
-	border-style: solid; 
-  min-width: 160px;
-  padding: 7px 48px 7px 5px;
+  min-width: 162px;
+  padding: 5px 40px 5px 5px;
+  font-family: 'Roboto Condensed';
+  font-size: 150%;
 }
 .dropdown-menu{
 	right: 0;
@@ -431,25 +443,21 @@ div[class^="product"]:last-child{
 	padding: 0 15px;
 }
 .dropdown .btn:before{
-	content: '';
-	position: absolute;
-	top: 0px;
-	right: 0;
-	width: 44px;
-	height: 100%;
-	border-top-right-radius: 4px;
-	border-bottom-right-radius: 4px;
+	width: 34px;
 }
 .dropdown .btn:after{
-	content: '\e602';
-	position: absolute;
-	font-family: 'Scalia';
-	right: 13px;
+	right: 9px;
 }
 
 
 .opaque{
 	opacity: 0;
+}
+
+/*searchKiosk.html Style*/
+.items .sku-item {
+	display: block;
+    padding: 15px 20px;
 }
 
 
@@ -476,12 +484,22 @@ div[class^="product"]:last-child{
 	}  
 	.swiper-slide div[class^="product"]{
     margin: 2px 6px;
-  }
-  .swiper-slide div[class^="product"]:first-child{
+    }
+    .swiper-slide div[class^="product"]:first-child{
 		margin-left: 0;
 	}
 	.swiper-slide div[class^="product"]:last-child{
 		margin-right: 0;
+	}
+	.menu-item .checkbox{
+		right: 18px;
+		width: 22px;
+		height: 22px;
+	}
+	.menu-item.selected .checkbox{
+		right: 30px;
+		width: 10px;
+		height: 22px;
 	}
 	.dropdown .btn{
 	    padding: 4px 48px 4px 5px;
@@ -491,13 +509,23 @@ div[class^="product"]:last-child{
 @media only screen and (min-width: 1360px) {
 	.itemName, .items .menu-item {
 	    font-size: 120%;
-	    padding: 20px 30px 20px 18px;
+	    padding: 20px 30px 20px 23px;
 	}
 	.btn-clear-search{
 		bottom: 60px;
 	}
    .swiper-slide {
     	font-size: 160%;
+	}
+	.menu-item .checkbox{
+		right: 20px;
+		width: 24px;
+		height: 24px;
+	}
+	.menu-item.selected .checkbox{
+		right: 32px;
+		width: 12px;
+		height: 24px;
 	}
 	.brand{
 		font-size: 120%;

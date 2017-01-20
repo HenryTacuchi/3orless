@@ -1,18 +1,5 @@
 $(document).ready(function(){
     var swiper;
-
-    //disable backbutton
-    document.addEventListener("deviceready", onDeviceReady, false);
-    function onDeviceReady() {
-        // Register the event listener
-        document.addEventListener("backbutton", onBackKeyDown, false);
-    }
-
-    // Handle the back button
-    //
-    function onBackKeyDown() {
-        //do nothing
-    }
     
     // showLoading(true);
     showPageElement(".loader",true);
@@ -223,11 +210,13 @@ function getProductFilterFromServer(){
         timeout: 10000,
         beforeSend: function(){
             // showLoadingResults(true);
+            setColorApp();
             showPageElement(".loader-results",true);
         },
         complete: function(){
             // showLoadingResults(false);
             showPageElement(".loader-results",false);
+            setColorApp();
         },
         success:function(result){
             var data = result.fProdList;                

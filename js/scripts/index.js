@@ -71,44 +71,6 @@
 
 $(document).ready(function(){
 
-	//disable backbutton
-	document.addEventListener("deviceready", onDeviceReady, false);
-	function onDeviceReady() {
-        // Register the event listener
-        document.addEventListener("backbutton", onBackKeyDown, false);
-        document.addEventListener("menubutton", onMenuKeyDown, false);
-        document.addEventListener("volumedownbutton", onVolumeDownKeyDown, false);
-        document.addEventListener("volumeupbutton", onVolumeUpKeyDown, false);
-        document.addEventListener("pause", onPauseKeyDown, false);
-        
-    }
-
-    // Handle the back button
-    //
-    function onBackKeyDown() {
-    	//do nothing
-    }
-
-    function onMenuKeyDown() {
-    	//do nothing
-    	alert("Menu");
-    }
-
-    function onVolumeDownKeyDown() {
-    	//do nothing
-    	alert("VolumeDown");
-    }
-
-    function onVolumeUpKeyDown() {
-    	//do nothing
-    	alert("VolumeUp");
-    }
-
-    function onPauseKeyDown() {
-    	//do nothing
-    	alert("pause");
-    }
-
 	getLanguage();	
 	checkConfiguration();
 	showLoading(true);
@@ -387,4 +349,5 @@ function getImagesFromServer(){
         }
     });
 }
+
 

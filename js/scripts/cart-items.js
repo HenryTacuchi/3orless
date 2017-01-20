@@ -48,7 +48,7 @@ var app = {
 		   BTPrinter.connect(function(data){
 			    console.log("Success Connect");
 			    console.log(data);
-				BTPrinter.print(function(data){
+				BTPrinter.printText(function(data){
 					console.log("Success PrintText");
 					console.log(data);
 					setTimeout(function(){
@@ -162,6 +162,7 @@ var app = {
 
 
 $(document).ready(function(){
+
 	if(localStorage.currentFirstNameClient != undefined && localStorage.currentFirstNameClient != "")
 		$(".txtFirstName").val(localStorage.currentFirstNameClient);
 	if(localStorage.currentLastNameClient != undefined && localStorage.currentLastNameClient != "")
@@ -252,6 +253,7 @@ $(document).ready(function(){
 		$(".items").html("");
 		$(".item-count").text(localStorage.countProductCartItem);
 		getProductList();
+		setColorApp();
     });
 
     //done button redirects to home screen
@@ -441,7 +443,9 @@ $(document).ready(function(){
 		setTimeout(function(){ 
 			$(".items").empty(); 
 			$(".item-count").text(localStorage.countProductCartItem);
-			getProductList();}, 500);
+			getProductList();
+			setColorApp();}, 500);
+
     });
 
 });
@@ -653,6 +657,7 @@ function printTicket(){
 
 $(window).load(function(){
     setSizeCart();
+    setColorApp();
 });
 
 function setSizeCart(){

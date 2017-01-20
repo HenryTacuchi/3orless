@@ -1,5 +1,5 @@
 /*Colors*/
-/*Fountaint Blue --> #58abb7*/
+/*Fountaint Blue --> #58ABB7*/
 /*Catskill White --> #f1f5f8*/
 /*White          --> #ffffff*/
 
@@ -11,20 +11,71 @@
 /*Geyser          --> #D2DAE1*/
 /*River bed       --> #4C5867*/
 
-.btn, .appName{
+/*****************************************************/
+/* SETCOLOR is the class to set the color of the app */
+/*****************************************************/
+nav,
+.btn-config,
+.btn-save,
+.btn-finish,
+.btn-refresh,
+.btn-back,
+.btn-clear-cart,
+.btn-recover,
+.btn-done,
+.btn-filter,
+.btn-back,
+.btn-add-continue,
+.btn-add-finish,
+.btn-clear-cart,
+.btn-recover,
+.btn-done,
+.opt{
+	background-color: #58ABB7;
+}
+.bg-color1{
+	background-color: #58ABB7;
+}
+.segment{
+	background-color: #58ABB7;
+}
+.dropdown-menu li:active,.dropdown-menu li:focus{
+	background-color: #58ABB7;
+}
+
+.color1,.filter,
+.messageUser p,
+.itemName{
+	color: #58ABB7;
+}
+.items .menu-item:active{
+	color: #58ABB7;
+}
+.price{
+	color: #58ABB7;
+}
+.float-right label,
+.float-right span{
+	color: #58ABB7;
+}
+.menu-item:before,
+.sku-item:before{
+	border-color: #58ABB7;
+}
+.loader-principal,.loader-section {
+  border-color: #58ABB7;
+}
+.menu-item.selected:before{
+	border-right-color: #58ABB7;
+	border-bottom-color: #58ABB7;
+}
+
+
+.btn, .appName, nav label{
 	color: #ffffff;
-}
-.loader-results .loader-section{
-  border-color: #58abb7;
-}
-.segment {
-  background: #ffffff;
 }
 .custom-classname,.eac-cval,.eac-input-wrap{
   color: #ccc;
-}
-.segment{
-	background: #58abb7;
 }
 input{
 	color: #384554;
@@ -39,7 +90,7 @@ input[type=radio]:checked+label:after {
   background-color: #ffffff;
 }
 .msg-txt:before {
-  border-color: #ffffff;
+  border-right-color: #ffffff;
 }
 section{
 	background-color: #f1f5f8;
@@ -53,24 +104,11 @@ aside{
 main{
 	background-color: #ffffff;
 }
-nav{
-	background-color: #58abb7;
-}
-
 .btn:active,.btn:focus{
 	color: #f1f5f8;
 }
 .btn:active:after,.btn:focus:after{
 	background: rgba(255,255,255,0.2);
-}
-.btn-refresh{
-	background-color: #58abb7;
-}
-.bg-color1{
-	background-color: #58abb7;
-}
-.color1,.filter,.messageUser p{
-	color: #58abb7;
 }
 .bg-color2{
 	background-color: #ff7070;
@@ -87,8 +125,6 @@ nav{
 .borderc3{
 	border-color: #60afba;
 }
-
-
 .icon{
 	color: #ffffff;
 }
@@ -111,10 +147,8 @@ nav{
 	border-color: #d6dadd;
 	box-shadow: 0 3px 0 0 rgba(98, 112, 128, 0.1);
 }
-
 .itemName{
 	background-color: #ffffff;
-	color: #58abb7;
 	border-right-color: #D2DAE1;
 	border-top-color: #D2DAE1;
 	border-left-color: #D2DAE1;
@@ -123,7 +157,8 @@ nav{
 .ancestor:last-child .itemName:not(.expand){
 	border-bottom-color: #D2DAE1;
 }
-.items .menu-item{
+.items .menu-item,
+.items .sku-item{
 	background-color: #f1f5f8;
 	border-bottom-color: #ffffff;
 	color: #4C5867;
@@ -133,40 +168,18 @@ nav{
 	border-right-color: #4C5867;
 	border-bottom-color: #4C5867;
 }
-.menu-item:before{
-    border-color: #58abb7;
-}
-.menu-item.selected:before{
-	border-right-color: #58abb7;
-	border-bottom-color: #58abb7;
-}
-.items .menu-item:active{
-	color: #58ABB7;
-}
-
-
 .filter:before{
 	color: #ff7070;
 }
 .areaStyle div,.brand{
 	color: #627080;
 }
-.price{
-	color: #58ABB7;
-}
-
 
 .float-right .dropdown .btn{
 	color: #4c5867;
 }
 .dropdown-menu li:active,.dropdown-menu li:focus{
-	background-color: #58ABB7;
 	color: #ffffff;
-}
-
-.float-right label,
-.float-right span{
-	color: #58abb7;
 }
 .dropdown .btn {
 	border-color: #d2dae1;
@@ -192,7 +205,6 @@ nav{
 .notfound{
 	color: #4c5867;
 }
-
 .swiper-pagination-bullet {
   color: #418f9a;
   background: #ffffff;
@@ -202,7 +214,6 @@ nav{
   color: #fff;
   background: #ff7070;
 }
-
 footer{
 	background-color: #2c2e3a;
 }
@@ -220,12 +231,10 @@ footer{
 .size-dropdown,.size-dropdown:active,.size-dropdown:focus{
 	color: #333;
 }
-
 .btn-clear,.btn-clear:focus, .btn-clear:active{
 	background-color: transparent;
 	color: #418f9a;
 }
-
 .section-form-user,
 .section-cart-items{
 	background-color: #ffffff;
@@ -270,11 +279,9 @@ label span{
 .section-product-detail{
 	background-color: #ffffff;
 }
-
 del{
 	color: #99a3b0;
 }
-
 .mainImg,.views{
 	border-top-color: #D2DAE1;
 	border-bottom-color: #D2DAE1;
@@ -286,29 +293,22 @@ del{
 .views{
 	border-right-color: #D2DAE1;
 }
-
 .dropdown .btn {
-    color: #333;
+	color: #333;
 }
-
 .opt{
-	background-color: #58abb7;
 	color: #ffffff;
 }
-
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control{
 	background-color: #ffffff;
 }
 .opt:hover,.opt:active{
 	color: #ffffff;
 }
-
 /*search*/
 .swiper-slide {
   background: #fff;
 }
-
-
 /*index*/
 .home .paths a {
 	background:#333;
@@ -316,20 +316,14 @@ del{
 .btn-config:hover,.btn-config:focus{
 	color: #ffffff !important;
 }
-
-
 /*registration*/
 .modal-content{
-    background-color: #f1f5f8;
+	background-color: #f1f5f8;
 }
 .placeholder {
-    color: #999;
+	color: #999;
 }
-
 /*loader*/
-.loader-principal,.loader-section {
-  border-color: #58abb7;
-}
 .loader-results,.loader{
   background-color: #ffffff;
 }

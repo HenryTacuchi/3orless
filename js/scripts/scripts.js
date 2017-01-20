@@ -1,5 +1,31 @@
-$(document).ready(function(){
+$(document).ready(function(){	
 
+	
+	//disable backbutton
+	document.addEventListener("deviceready", onDeviceReady, false);
+	function onDeviceReady() {
+        // Register the event listener
+        document.addEventListener("backbutton", onBackKeyDown, false);
+        document.addEventListener("menubutton", onMenuKeyDown, false);
+        document.addEventListener("pause", onPauseKeyDown, false);
+    }
+
+    // Handle the back button
+    //
+    function onBackKeyDown() {
+    	//do nothing
+    }
+
+    function onMenuKeyDown() {
+    	//do nothing
+    	// alert("Menu");
+    }
+
+    function onPauseKeyDown() {
+    	//do nothing
+    	// alert("pause");
+    }
+    
 	$('.itemName').click(function(){		
 		// sidebar expand items when you click any category
 		if($(this).hasClass('expand'))
@@ -13,7 +39,7 @@ $(document).ready(function(){
 
 	$('.menu-item').click(function(){
 		// if($(".filters-marked").hasClass("hide"))
-		// 	$(".filters-marked").removeClass("hide").addClass("show");
+		// 	$(".filters-mark ed").removeClass("hide").addClass("show");
 		// else
 		// 	$(".filters-marked").addClass("show");	
 		if($(".results").hasClass("hide"))
@@ -61,11 +87,20 @@ $(document).ready(function(){
 
 });
 
+$(window).load(function(){
+	//set colorPicker color
+	var pathName = location.href.substring(location.href.lastIndexOf("/")+1);
+	if(pathName == "config.html"){
+		document.getElementById('valueBtn').jscolor.fromString(localStorage.colorBackground);	
+	}
+})
+
 function addFilter( element ){
 	var random = Math.floor((Math.random()*3)+1);  //random de 1 a 3
 	$('.filters-marked').append(
-		"<div class='filter filter-"+ random + " animated rubberBand' data-value='"+ element.attr('data-value') +"'>" + element.text() + "</div>"
+		"<div class='filter filter-"+ random + " animated rubberBand setColor' data-value='"+ element.attr('data-value') +"'>" + element.text() + "</div>"
 	);
+	setColorApp();
 }
 
 function removeFilter(element){
@@ -128,3 +163,4 @@ function existsProductCart(searchStyleCode,searchColorCode,size){
 	}
 	return false;
 }
+

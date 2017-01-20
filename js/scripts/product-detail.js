@@ -1,19 +1,6 @@
 $(document).ready(function(){
     var data;
 
-    //disable backbutton
-    document.addEventListener("deviceready", onDeviceReady, false);
-    function onDeviceReady() {
-        // Register the event listener
-        document.addEventListener("backbutton", onBackKeyDown, false);
-    }
-
-    // Handle the back button
-    //
-    function onBackKeyDown() {
-        //do nothing
-    }
-
     //show or hide options for 3orless or Kiosk
     if(localStorage.flag3orless == 1){
         $(".right-options").show();

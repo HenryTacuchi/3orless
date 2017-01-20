@@ -13,6 +13,7 @@
 	<script type="text/javascript" src="../js/scripts/captions.js"></script>
 	<script type="text/javascript" src="../js/plugins/swiper.jquery.min.js"></script>
 	<script type="text/javascript" src="../js/scripts/scripts.js"></script>
+	<script type="text/javascript" src="../js/scripts/colorApp.js"></script>
 
 
 
@@ -28,7 +29,7 @@
 </head>
 <body>
 
-	<nav class="animated fadeIn">
+	<nav class="animated fadeIn setBaColor">
 
 		<div class="left-options">
 			<div class="icon btn-home">&#xe610;</div>
@@ -46,7 +47,7 @@
 		<aside class="sidebar">
 			<ul class="general-menu animated fadeIn">
 				<li class="ancestor itemGender animated slideInLeft">
-					<div class="itemName txtGenderFilter">Gender</div>
+					<div class="itemName txtGenderFilter setColor">Gender</div>
 					<ul class="items item-list-gender">
 						<!-- <li class="menu-item">Men</li>
 						<li class="menu-item">Women</li>
@@ -55,7 +56,7 @@
 				</li>
 				<li class="ancestor itemBrand animated slideInLeft">
 					<!-- add class 'expand' to expand the item-list ex: <div class="itemName txtBrand EXPAND">Brand</div> -->
-					<div class="itemName txtBrandFilter">Brand</div>
+					<div class="itemName txtBrandFilter setColor">Brand</div>
 					<ul class="items item-list-brand">
 						<!-- add class 'selected' to change the state  ex:<li class="menu-item selected">Adidas</li>-->
 						<!-- <li class="menu-item">Adidas</li>
@@ -63,14 +64,14 @@
 					</ul>
 				</li>
 				<li class="ancestor itemType animated slideInLeft">
-					<div class="itemName txtTypeFilter">Type</div>
+					<div class="itemName txtTypeFilter setColor">Type</div>
 					<ul class="items item-list-class">
 						<!-- <li class="menu-item">Running</li>
 						<li class="menu-item">Casual</li> -->
 					</ul>
 				</li>
 				<li class="ancestor itemSize animated slideInLeft">
-					<div class="itemName txtSizeFilter">Size</div>
+					<div class="itemName txtSizeFilter setColor">Size</div>
 					<ul class="items item-list-size">
 						<!-- <li class="menu-item">10</li>
 						<li class="menu-item">11</li>
@@ -78,17 +79,24 @@
 						<li class="menu-item">13</li> -->
 					</ul>
 				</li>
-				
+				<li class="ancestor itemSize animated slideInLeft">
+					<div class="itemName txtSKUFilter setColor">SKU</div>
+					<ul class="items item-list-sku">
+						<li class="sku-item">	
+							<input type="text" value="" class="form-control txtSKU" >
+						</li>
+					</ul>
+				</li>
 				
 				<!-- template for div class item	-->
 	            <script type="text/template" id="listItemTemplate">
-	                <li class="menu-item" data-value="<%=ItemValue%>"><%=ItemText%></li>
+	                <li class="menu-item" data-value="<%=ItemValue%>"><div class="checkbox setBoColor"></div><%=ItemText%></li>
 	            </script>
 			</ul>
 
 			<button class="btn btn-block btn-clear-search btnClearSearch bg-color2 animated fadeIn" >Clear Search</button>
 			<!-- clear filters -->
-			<button class="btn btn-block btn-filter btnFilter bg-color1 animated fadeIn" >Apply Filter</button>
+			<button class="btn btn-block btn-filter btnFilter animated fadeIn setBaColor">Apply Filter</button>
 			<!-- apply filter -->
 		</aside>
 
@@ -105,7 +113,7 @@
 					<img src="" alt="logo Company" class="img-logo animated fadeInDown">
 			</div>
 
-			<!-- results -->
+			<!-- filters result -->
 			<div class="results">
 
 				<!-- sort products -->
@@ -117,8 +125,8 @@
 						</div>
 					</div>
 					<div class="float-right hide">
-						<span>&#xe6f2</span>
-						<label class="txtPrice">Price </label>					
+						<span class="setColor">&#xe6f2</span>
+						<label class="txtPrice setColor">Price </label>					
 						<div class="dropdown">
 							<div class="btn dropdown-toggle sort-dropdown " data-toggle="dropdown">Choose Filter</div>
 							<ul class="dropdown-menu">
@@ -161,13 +169,13 @@
 	            		<div class="img-product">
 	            			<img src="<%=path%>" onerror="handleError(this)">
 	            		</div>
-	            		<div class="brand" data-value="<%=brandCode%>"><%=brandName%></div>
+	            		<div class="brand setColor" data-value="<%=brandCode%>"><%=brandName%></div>
 	            		<div class="areaStyle">	            		
 	            			<div class="txtStyleName">Style:</div>
 	            			<div class="styleName" data-value="<%=styleCode%>"><%=styleName%></div>
 	            		</div>	            		
 	            		<div class="areaPrice">
-	            			 <del class="txtOriginalPrice">$<%=originalPrice%></del> <div class="price txtRetailPrice">$<%=price%></div>        			
+	            			 <del class="txtOriginalPrice">$<%=originalPrice%></del> <div class="price txtRetailPrice setColor">$<%=price%></div>        			
 	            		</div>	  
 	            	</div>
 	            </script>
@@ -180,18 +188,18 @@
 
     	<!-- loading 2 block -->
     	<div class="loader-results hide">
-    		<div class="loader-section">
+    		<div class="loader-section setBoColor">
 				  <div class="segment-holder">
-				    <div class="segment one"></div>
+				    <div class="segment one setBaColor"></div>
 				  </div>
 				  <div class="segment-holder">
-				    <div class="segment two"></div>
+				    <div class="segment two setBaColor"></div>
 				  </div>
 				  <div class="segment-holder">
-				    <div class="segment three"></div>
+				    <div class="segment three setBaColor"></div>
 				  </div>
 				  <div class="segment-holder">
-				    <div class="segment four"></div>
+				    <div class="segment four setBaColor"></div>
 				  </div>
 				</div>
     	</div>
@@ -204,18 +212,18 @@
 
 	<!-- loading block -->
 	<div class="loader hide">
-		<div class="loader-principal">
+		<div class="loader-principal setBoColor">
 		  <div class="segment-holder">
-		    <div class="segment one"></div>
+		    <div class="segment one setBaColor"></div>
 		  </div>
 		  <div class="segment-holder">
-		    <div class="segment two"></div>
+		    <div class="segment two setBaColor"></div>
 		  </div>
 		  <div class="segment-holder">
-		    <div class="segment three"></div>
+		    <div class="segment three setBaColor"></div>
 		  </div>
 		  <div class="segment-holder">
-		    <div class="segment four"></div>
+		    <div class="segment four setBaColor"></div>
 		  </div>			
 		</div>
 	</div>

@@ -141,19 +141,4 @@
     text-align: center;
     width: 36%;
     display: inline-block;
-
-/*    -webkit-animation-name: repeatMessage;
-    -webkit-animation-duration: 3s;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-timing-function: ease-in-out;
-    -webkit-animation-delay: 1s;*/
 }
-
-/*@-webkit-keyframes repeatMessage {
-  0%     { opacity: 0; bottom: -30px; }
-  2%  { opacity: 1; bottom: 0; } 
-  34% { opacity: 1; bottom: 0; } 
-  36% { opacity: 0; bottom: -30px; }
-  100%   { opacity: 0; bottom: -30px; }
-}
-*/

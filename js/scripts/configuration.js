@@ -90,20 +90,7 @@ $(document).ready(function(){
     //     suggClass: "custom-classname", 
     //     domains: ["realcs.com"] 
     // });
-
-    //disable backbutton
-	document.addEventListener("deviceready", onDeviceReady, false);
-	function onDeviceReady() {
-        // Register the event listener
-        document.addEventListener("backbutton", onBackKeyDown, false);
-    }
-
-    // Handle the back button
-    //
-    function onBackKeyDown() {
-    	//do nothing
-    }
-
+     
     $('.storeNo').bind('keypress', function(event) {
     if(event.which == 13||event.which == 10) {
       $(".serverId").focus();
@@ -136,7 +123,7 @@ $(document).ready(function(){
     });
 
     $('.btn-exit').click(function(){
-    	KioskPlugin.exitKiosk();
+    	// KioskPlugin.exitKiosk();
     	navigator.app.exitApp();
     });
 
@@ -163,9 +150,9 @@ $(document).ready(function(){
 		});
 		// $(".validations").removeClass("hide").addClass("animated fadeInLeft");
 		if (localStorage.current_lang == "es") 
-			{ $(".txtMessage").text("No se encontró imágenes en el servidor. Por favor, verifique la IP!"); } 
+			{ $(".txtMessage").text("Error de conexión con el servidor. Por favor, verifique la IP!"); } 
 		else
-			{{ $(".txtMessage").text("No images found in server. Please, check Server IP!"); } }
+			{{ $(".txtMessage").text("Server connection error. Please, check Server IP!"); } }
 		$(".validations").delay(delay).queue(function(){
 		    $(this).addClass("animated fadeOutLeft").dequeue();
 		});
@@ -285,6 +272,7 @@ $(document).ready(function(){
 
 	//Save email and password
     $(".btnFinish").click(function(){
+    	localStorage.colorBackground = $(".form-color").val();    	
     	if (localStorage.current_lang == "es") { $(".txtMessage").text("Por favor, verifique los campos e inténtelo nuevamente!"); }
     	else{$(".txtMessage").text("Validation errors occurred. Please confirm the fields and submit it again.!");}
 		$(".validations").addClass("hide");

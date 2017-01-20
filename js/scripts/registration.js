@@ -43,18 +43,6 @@ var correctnumberFormat = true;
 
 
 $(document).ready(function () {
-  //disable backbutton
-  document.addEventListener("deviceready", onDeviceReady, false);
-  function onDeviceReady() {
-        // Register the event listener
-        document.addEventListener("backbutton", onBackKeyDown, false);
-    }
-
-    // Handle the back button
-    //
-    function onBackKeyDown() {
-      //do nothing
-    }
 
     $('.txtEmail').bind('keypress', function(event) {
     if(event.which == 13||event.which == 10) {

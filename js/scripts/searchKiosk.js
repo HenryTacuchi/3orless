@@ -1,18 +1,5 @@
 $(document).ready(function(){
     var swiper;
-
-    //disable backbutton
-    document.addEventListener("deviceready", onDeviceReady, false);
-    function onDeviceReady() {
-        // Register the event listener
-        document.addEventListener("backbutton", onBackKeyDown, false);
-    }
-
-    // Handle the back button
-    //
-    function onBackKeyDown() {
-        //do nothing
-    }
     
     // showLoading(true);
     showPageElement(".loader",true);
@@ -106,6 +93,7 @@ $(document).ready(function(){
     //apply filters and search products 
     $(".btnFilter").click(function(){  
         // showFiltersMarked(true); 
+        setColorApp();
         showPageElement(".filters-marked",true);
         if($(".results").hasClass("hide"))
             $(".results").removeClass("hide").addClass("show");
@@ -116,6 +104,7 @@ $(document).ready(function(){
         clearSelectedFilters();
         saveSelectedFilters();        
         getProductFilterFromServer();
+        setColorApp();
     });
 
     //order search product results from low to high price
@@ -223,11 +212,13 @@ function getProductFilterFromServer(){
         timeout: 10000,
         beforeSend: function(){
             // showLoadingResults(true);
+            setColorApp();
             showPageElement(".loader-results",true);
         },
         complete: function(){
             // showLoadingResults(false);
             showPageElement(".loader-results",false);
+            setColorApp();
         },
         success:function(result){
             var data = result.fProdList;                
