@@ -35,7 +35,7 @@ $(document).ready(function(){
 		$(".notfound").text("No se han encontrado resultados");
 		$(".lblClearFilters").text("Remover filtros");
 		
-		$(".txtPrice").text("Precio");
+		$(".txtSortby").text("Ordenar por ");
 		if(localStorage.flag3orless == 1 && localStorage.threeOrLessOrderResults == "") $(".sort-dropdown").text("Seleccione");
 		if(localStorage.flag3orless == 0 && localStorage.kioskOrderResults == "") $(".sort-dropdown").text("Seleccione");
 		$(".lowToHigh").text("Menor a mayor");
@@ -60,12 +60,12 @@ $(document).ready(function(){
 
 		//Cart Item Page
 		$(".lblCompleteFields").text("Por favor, complete los campos");
-		$(".lblName").html("Nombres<span>*</span>");
-		$(".lblLastName").html("Apellidos<span>*</span>");
+		$(".lblName").html("Nombre<span>*</span>");
+		$(".lblLastName").html("Apellido<span>*</span>");
 		$(".lblCartItems").text("Productos agregados");
 		$(".btn-clear-cart").text("Limpiar Todo");
 		$(".btn-recover").text("Recuperar Carrito");
-		$(".btn-done").text("Listo");
+		$(".btn-done").text("Ticket");
 		$(".txtEmail").attr('placeholder',"contacto@email.com");
 
 		//Registration Page

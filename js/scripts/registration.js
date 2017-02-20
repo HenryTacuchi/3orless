@@ -355,7 +355,11 @@ $(document).ready(function () {
                           type: "success",
                           confirmButtonColor: "#8fbf75",
                           confirmButtonText: "¡Ok, Genial!",          
-                          closeOnConfirm: true
+                          closeOnConfirm: false
+                        },
+                        function(isConfirm){
+                          showLoading(false);         
+                          window.location = "menu.html";
                         });
                       else        
                         swal({
@@ -364,7 +368,11 @@ $(document).ready(function () {
                           type: "success",
                           confirmButtonColor: "#8fbf75",
                           confirmButtonText: "Ok, Cool!",         
-                          closeOnConfirm: true
+                          closeOnConfirm: false
+                        },
+                        function(isConfirm){
+                          showLoading(false);         
+                          window.location = "menu.html";
                         });
                   }
                   else if (result == 2) {

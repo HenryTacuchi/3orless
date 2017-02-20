@@ -340,8 +340,15 @@ $(document).ready(function(){
 				  closeOnConfirm: false
 				},
 				function(){
-					loadPrint();
-					printTicket();
+					if (!(localStorage.printerName == undefined || localStorage.printerName =='')){
+						loadPrint();
+						printTicket();
+					}
+					else{
+					    clearSearchPage();	
+						showLoading(false);			  	
+						window.location = "search3orless.html";
+					}
 				});
 			else				
 				swal({
@@ -353,8 +360,15 @@ $(document).ready(function(){
 				  closeOnConfirm: false
 				},
 				function(){
-				  	loadPrint();
-					printTicket();
+					if (!(localStorage.printerName == undefined || localStorage.printerName =='')){
+						loadPrint();
+						printTicket();
+					}
+					else{
+					    clearSearchPage();	
+						showLoading(false);			  	
+						window.location = "search3orless.html";
+					}
 				});
 		}    
 		//if name or email format is wrong 			
