@@ -401,6 +401,41 @@ div[class^="product"]{
 }
 
 
+/*btn Other Stores*/
+.storesArea{
+	max-height: 196px;
+	overflow-y: auto;
+}
+.row.store{
+	display: flex;
+	margin-left: 0;
+	margin-right: 0;
+	padding: 10px 0;
+}
+.row.store:nth-child(odd),.row.store:nth-child(even){
+	border-top-width: 1px;
+	border-top-style: solid;
+}
+.store span[class*="lbl"] {
+    font-family: 'Roboto Condensed';
+}
+.txtStoreName{
+	font-family: 'Roboto Condensed';
+	font-size: 24px;
+	font-weight: 500;
+}
+.lblStockOtherStore{
+	font-size: 125%;
+}
+.center-text{
+	display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+
+
+
 /*footer*/
 .options{
 	display: flex;
@@ -435,7 +470,15 @@ div[class^="product"]{
   display: block;
   float: left;
 }
-
+.btn-CheckStores:before {
+    content: '\e750';
+    margin-left: -1em;
+    font-size: 100%;
+    padding-right: 10px;
+    font-family: 'Scalia User Icons';
+    display: block;
+    float: left;
+}
 @media only screen and (min-width: 1280px) {
     article{
     	min-width: 380px;

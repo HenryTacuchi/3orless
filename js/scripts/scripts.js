@@ -37,28 +37,28 @@ $(document).ready(function(){
 
 	});
 
-	$('.menu-item').click(function(){
-		// if($(".filters-marked").hasClass("hide"))
-		// 	$(".filters-mark ed").removeClass("hide").addClass("show");
-		// else
-		// 	$(".filters-marked").addClass("show");	
-		if($(".results").hasClass("hide"))
-			$(".results").removeClass("hide").addClass("show");
-		else
-			$(".results").addClass("show");		
-		// add or remove selected class when you click a filter from any category
+	// $('.menu-item').click(function(){
+	// 	// if($(".filters-marked").hasClass("hide"))
+	// 	// 	$(".filters-mark ed").removeClass("hide").addClass("show");
+	// 	// else
+	// 	// 	$(".filters-marked").addClass("show");	
+	// 	if($(".results").hasClass("hide"))
+	// 		$(".results").removeClass("hide").addClass("show");
+	// 	else
+	// 		$(".results").addClass("show");		
+	// 	// add or remove selected class when you click a filter from any category
 
-		if($(this).hasClass('selected')){
-			removeFilter($(this));
-			$(this).removeClass('selected');
-		}else{
-			addFilter($(this));
-			$(this).addClass('selected');			
-		}
+	// 	if($(this).hasClass('selected')){
+	// 		removeFilter($(this));
+	// 		$(this).removeClass('selected');
+	// 	}else{
+	// 		addFilter($(this));
+	// 		$(this).addClass('selected');			
+	// 	}
 
-		checkFiltersMarked();
+	// 	checkFiltersMarked();
 
-	});
+	// });
 
 	$('.dropdown-menu li').click(function(){
 		// add or remove selected class when you click a filter from any category

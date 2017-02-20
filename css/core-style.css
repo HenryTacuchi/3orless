@@ -159,6 +159,17 @@ nav li label{
     font-family: 'Scalia' !important;
     font-weight: normal;
 }
+.btn-scan{
+  background-image: url('../img/catalog/icon-scan.svg');
+  /*background-size: 50%;*/
+  background-repeat: no-repeat;
+  /*background-position: center;*/
+  
+  /*FJ*/
+  background-size: 25px;
+  background-position: 20px 20px;
+
+}
 .form-group label{
 	margin-bottom: 0;
 	font-weight: 400;
@@ -243,12 +254,18 @@ span.no-complete{
 
 /*nav*/
 .appName{
-  height: 90%;
+  /*height: 90%;*/
   font-family: 'Roboto Condensed';
   font-weight: 100; 
   font-size: 165%;
   padding: 12px 0px;
   text-transform: uppercase;
+
+  /*FJ*/
+  padding: 16px 0px;
+  margin: 0px;
+  vertical-align: top;
+
 }
 .left-options{
   float: left;
@@ -260,20 +277,47 @@ span.no-complete{
   display: inline-block;
   height: 100%;
 }
+
+/*FJ*/
+.right-options .li-options {
+  vertical-align: -webkit-baseline-middle;
+}
+
+.right-options .span-total {
+  color: white;
+  padding: 0px 5px 0px 5px;
+  font-family: 'Roboto Condensed' !important;
+  font-size: 18px;
+}
+
+.right-options .span-precio-total {
+  padding: 0px 10px 0px 5px !important;
+}
+
+/*FJ*/
+
 .icon{
   width: 54px;
   display: inline-block;
   text-align: center;
   font-family: 'Scalia User Icons';
   line-height: 54px;
-  font-size: 195%;
+  /*font-size: 195%;*/
   position: relative;
+
+  /*FJ*/
+  line-height: 50px;
+  font-size: 205%;
 }
 .btn-cart{
-  margin-top: 3px;
+  /*margin-top: 3px;*/
+  /*FJ*/
 }
 .icon.btn-home{
-  line-height: 54px;
+  /*line-height: 54px;*/
+  /*FJ*/
+  line-height: 60px;
+  display: inline-block;
 }
 .item-count{
   position: absolute;

@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	<title>Cart Items</title>
+	<title>Scan Items</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<script src="../cordova.js"></script>
 	<script type="text/javascript" src="../js/plugins/jquery.min.js"></script>
@@ -13,7 +13,7 @@
 	<script type="text/javascript" src="../js/plugins/sweetalert.min.js" ></script>
 	<script type="text/javascript" src="../js/scripts/scripts.js"></script>
 	<script type="text/javascript" src="../js/plugins/jquery.email-autocomplete.min.js"></script>
-	<script type="text/javascript" src="../js/scripts/cart-items.js"></script>
+	<script type="text/javascript" src="../js/scripts/scan-items.js"></script>
 	<script type="text/javascript" src="../js/scripts/captions.js"></script>
 	<script type="text/javascript" src="../js/scripts/colorApp.js"></script>
 	
@@ -24,7 +24,7 @@
 	<link href="../css/colors.css" rel="stylesheet">
 	<link href="../css/animate.css" rel="stylesheet">
 
-	<link rel="stylesheet" type="text/css" href="../css/cart-items.css">
+	<link rel="stylesheet" type="text/css" href="../css/scan-items.css">
 </head>
 <body>
 
@@ -48,11 +48,21 @@
 			<h2 class="text-center lblCompleteFields">Please complete the fields</h2>
 			<form>
 				<div class="form-inline row">
-					<div class="form-group user col-xs-12 col-md-12">
+					<div class="form-group user col-xs-12 col-md-6">
 						<label class="lblName">Firstname<span>*</span></label>		
 						<input type="text" value="" class="form-control txtFirstName" value="Gustavo">								
 						<span class="no-complete noFirstName hide">Please fill the required field</span>
 					</div>
+					<div class="form-group user col-xs-12 col-md-6">
+						<label class="lblLastName">Lastname<span>*</span></label>		
+						<input type="text" value="" class="form-control txtLastName" value="Coronado">								
+						<span class="no-complete noLastName hide">Please fill the required field</span>
+					</div>
+				</div>					
+				<div class="form-group user">
+					<label class="lblEmail">E-mail<span>*</span></label>		
+					<input type="email" value="" class="form-control txtEmail" placeholder="your@email.com" value="gustavo@realcs.com">								
+					<span class="no-complete noEmail hide">Please fill the required field</span>
 				</div>
 			</form>
 		</article>
@@ -63,7 +73,10 @@
 		<!-- product details -->
 		<article class="cart-items">
 			<div class="thead">
-				<h3 class="text-center lblCartItems setColor">Cart Items</h3>
+				<!-- <h3 class="text-center lblCartItems setColor">Cart Items</h3> -->
+				<div class="form-group scan col-xs-4 col-xs-offset-4">	
+					<input type="text" value="" class="form-control txtScan" placeholder="Scan product">
+				</div>
 			</div>
 			
 
@@ -120,8 +133,7 @@
 		<div class="options">
 			<button class="btn btn-back setBaColor">Back</button>
 			<button class="btn btn-clear-cart setBaColor">Clear All</button>
-			<button class="btn btn-recover setBaColor">Recover Cart</button>
-			<button class="btn btn-done setBaColor">Ticket</button>
+			<button class="btn btn-done setBaColor">Order</button>
 		</div>
 	</footer>
 

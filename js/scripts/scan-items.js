@@ -180,13 +180,13 @@ $(document).ready(function(){
     });
 
 
-	$("input").focus(function(){
-		$(".section-cart-items").hide();
-	});
+	// $("input").focus(function(){
+	// 	$(".section-cart-items").hide();
+	// });
 
-	$("input").blur(function(){
-		$(".section-cart-items").show();
-	});
+	// $("input").blur(function(){
+	// 	$(".section-cart-items").show();
+	// });
 
 	$(".item-count").text(localStorage.countProductCartItem);
 	

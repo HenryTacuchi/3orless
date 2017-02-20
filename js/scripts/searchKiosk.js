@@ -1,6 +1,8 @@
+var swiper;
+
 $(document).ready(function(){
-    var swiper;
     
+    initializeSwiper();
     // showLoading(true);
     showPageElement(".loader",true);
     $(".item-count").text(localStorage.countProductCartItem);
@@ -87,25 +89,24 @@ $(document).ready(function(){
         showLogo(true);
         if($('.itemName').hasClass('expand'))
             $('.itemName').removeClass('expand');
-        $(".swiper-wrapper").html("");
+        // $(".swiper-wrapper").html("");
+        $(".swiper-slide").remove();
     });
 
     //apply filters and search products 
-    $(".btnFilter").click(function(){  
-        // showFiltersMarked(true); 
-        setColorApp();
-        showPageElement(".filters-marked",true);
-        if($(".results").hasClass("hide"))
-            $(".results").removeClass("hide").addClass("show");
-        else
-            $(".results").addClass("show");  
-        localStorage.kioskCountProductFiltered = 0;
-        localStorage.kioskProductList = '{"ProductList":[]}';
-        clearSelectedFilters();
-        saveSelectedFilters();        
-        getProductFilterFromServer();
-        setColorApp();
-    });
+    // $(".btnFilter").click(function(){  
+    //     // showFiltersMarked(true); 
+    //     showPageElement(".filters-marked",true);
+    //     if($(".results").hasClass("hide"))
+    //         $(".results").removeClass("hide").addClass("show");
+    //     else
+    //         $(".results").addClass("show");  
+    //     localStorage.kioskCountProductFiltered = 0;
+    //     localStorage.kioskProductList = '{"ProductList":[]}';
+    //     clearSelectedFilters();
+    //     saveSelectedFilters();        
+    //     getProductFilterFromServer();
+    // });
 
     //order search product results from low to high price
     $(".lowToHigh").click(function () {
@@ -135,6 +136,31 @@ $(document).ready(function(){
             removeFilter($(this));
         })
     })
+
+    $('.menu-item').click(function(){        
+        // add or remove selected class when you click a filter from any category
+
+        if($(this).hasClass('selected')){
+            removeFilter($(this));
+            $(this).removeClass('selected');
+        }else{
+            addFilter($(this));
+            $(this).addClass('selected');           
+        }
+
+        checkFiltersMarked();
+        
+        if($(".results").hasClass("hide"))
+            $(".results").removeClass("hide").addClass("show");
+        else
+            $(".results").addClass("show");  
+        localStorage.kioskCountProductFiltered = 0;
+        localStorage.kioskProductList = '{"ProductList":[]}';
+        clearSelectedFilters();
+        saveSelectedFilters();        
+        getProductFilterFromServer();
+
+    });
     
     //when page is loaded hide loaders
     $(window).on("load", function() {
@@ -150,22 +176,6 @@ $(document).ready(function(){
        if(localStorage.kioskCountProductFiltered==0 || localStorage.kioskCountProductFiltered == undefined)
             $(".results").addClass("hide");
     });
-
-    //observer for loader
-    // var target = document.querySelector('.swiper-wrapper');
-
-    // // create an observer instance
-    // var observer = new MutationObserver(function(mutations) {
-    //   mutations.forEach(function(mutation) {
-    //     showLoading(false);
-    //   });    
-    // });
-
-    // // configuration of the observer:
-    // var config = { attributes: true, childList: true, characterData: true }
-
-    // // pass in the target node, as well as the observer options
-    // observer.observe(target, config);
 });
 
 function checkOrderResultOption(){
@@ -264,6 +274,9 @@ function getProductFilterFromServer(){
 //load product results saved in local storage and show in results area
 function showProductFilter(option){
     $(".swiper-slide").remove();
+    if ($(".swiper-slide").childElementCount>0){
+        swiper.destroy(true, true);
+    }
     var productListObject = JSON.parse(localStorage.kioskProductList);
                   
     if (localStorage.kioskCountProductFiltered >0) {

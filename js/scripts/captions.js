@@ -45,6 +45,10 @@ $(document).ready(function(){
 		$(".appName3orless").text("Tres o menos");
 		$(".appNameKiosk").text("Catálogo Kiosko");
 
+		if(localStorage.flag3orless == 0){
+			$(".appName3orless").text("Catálogo Kiosko");
+		}
+
 		//Product Detail Page
 		$(".lblStyle").text("Estilo: ");
 		$(".lblPrice").text("Precio:");
@@ -80,5 +84,10 @@ $(document).ready(function(){
 		$(".option1").text("Registro Cliente");
 		$(".option2").text("Catálogo Kiosko");
 		$(".option3").text("Tres o menos");
+	}
+	else{
+		if(localStorage.flag3orless == 0){
+			$(".appName3orless").text("Kiosk Catalog");
+		}
 	}
 })

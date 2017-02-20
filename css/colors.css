@@ -268,11 +268,15 @@ label span{
 .form-user h2{
 	color: #4c5867;
 }
-.row.product:nth-child(even){
-	background-color: #f1f5f8;
+.row.product:nth-child(even),
+.row.store:nth-child(even){
+	/*background-color: #f1f5f8;*/
+	background-color: #ffffff;
 	border-top-color: #D2DAE1;
 }
-.row.product:nth-child(odd){
+.row.product:nth-child(odd),
+.row.store:nth-child(odd){
+	background-color: #ffffff;
 	border-top-color: #D2DAE1;
 }
 

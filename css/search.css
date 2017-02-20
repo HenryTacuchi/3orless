@@ -6,7 +6,8 @@ body{
 	align-items: stretch;
 }
 nav{
-	height: 54px;
+	/*FJ*/
+	/*height: 54px;*/
 	z-index: 999;
 }
 section{
@@ -459,7 +460,6 @@ div[class^="product"]:last-child{
 	display: block;
     padding: 15px 20px;
 }
-
 
 @media only screen and (min-width: 1280px) {
     aside{

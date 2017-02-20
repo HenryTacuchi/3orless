@@ -39,7 +39,7 @@ body.stop-scrolling {
       left: 15px;
       right: 15px; } }
   .sweet-alert h2 {
-    color: #384554;
+    color: #222;
     font-size: 30px;
     text-align: center;
     font-weight: normal;
@@ -50,7 +50,7 @@ body.stop-scrolling {
     line-height: 40px;
     display: block; }
   .sweet-alert p {
-    color: #797979;
+    color: #353535;
     font-size: 125%;
     text-align: center;
     font-weight: 300;

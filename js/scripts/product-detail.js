@@ -47,6 +47,62 @@ $(document).ready(function(){
         }  
     });
 
+    $(".btn-CheckStores").click(function(){
+        if (localStorage.current_lang == "es") 
+                          swal({
+                          title: "Otras Tiendas",
+                          text: "<ul class='storesArea'>"+
+            "<li class='row store'>"+
+              "<div class='col-xs-9 center-text'>"+
+                "<div class='text-left'><span class='txtStoreName storeName'>NiceKicks Name Store 1</span></div>"+
+                "<div class='text-left'><span class='lblAddress'>Address:</span><span class='txtAddress'> 555 Jarvis Dr.</span></div>"+
+                "<div class='text-left'><span class='lblPhone'>Phone:</span><span class='txtPhone'> 408 - 132 - 987</span></div>"+
+              "</div>"+
+              "<div class='col-xs-3 center-text'>"+
+                "<div class='text-right'>"+
+                  "<span class='txtStockOtherStore'>Stock:</span>"+
+                  "<span class='lblStockOtherStore'>5</span>"+
+                "</div>"+
+              "</div>"+
+            "</li>"+
+            "<li class='row store'>"+
+              "<div class='col-xs-9 center-text'>"+
+                "<div class='text-left'><span class='txtStoreName storeName'>NiceKicks Name Store 1</span></div>"+
+                "<div class='text-left'><span class='lblAddress'>Address:</span><span class='txtAddress'> 555 Jarvis Dr.</span></div>"+
+                "<div class='text-left'><span class='lblPhone'>Phone:</span><span class='txtPhone'> 408 - 132 - 987</span></div>"+
+              "</div>"+
+              "<div class='col-xs-3 center-text'>"+
+                "<div class='text-right'>"+
+                  "<span class='txtStockOtherStore'>Stock:</span>"+
+                  "<span class='lblStockOtherStore'>5</span>"+
+                "</div>"+
+              "</div>"+
+            "</li>"+
+          "</ul>",
+                          confirmButtonColor: "#8fbf75",
+                          confirmButtonText: "¡Ok, Genial!",          
+                          html: true,
+                          closeOnConfirm: false
+                        },
+                        function(isConfirm){
+                          showLoading(false);         
+                          window.location = "menu.html";
+                        });
+                      else        
+                        swal({
+                          title: "Registry Confirmation",
+                          text: "Thanks for your subscription.",
+                          type: "success",
+                          confirmButtonColor: "#8fbf75",
+                          confirmButtonText: "Ok, Cool!",         
+                          closeOnConfirm: false
+                        },
+                        function(isConfirm){
+                          showLoading(false);         
+                          window.location = "menu.html";
+                        });
+    })
+
 	//show or hide main loader
 	function showLoading(option){
 	    if(option){  
@@ -189,9 +245,13 @@ $(".size-item").click(function(){
 		//  $(".sort-dropdown").text($(this).attr("data-value"));
         $(".size-dropdown").text($(this).text());
         $(".txtOnHand").text(data.listStock[$(this).attr("data-value")]);
+});
 
 
-    });
+$(".btn-CheckStores").click(function(){
+    $("#modalOtherStores").modal("show");
+});
+
 
 //save index of product selected and redirect to product detail screen
 $(document).on("click",".product",function(){
