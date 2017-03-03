@@ -156,19 +156,19 @@ nav li label{
     outline: none;
 }
 .btn-cart{
-    font-family: 'Scalia' !important;
+    font-family: 'Scalia User Icons' !important;
     font-weight: normal;
 }
 .btn-scan{
-  background-image: url('../img/catalog/icon-scan.svg');
+  /*background-image: url('../img/catalog/icon-scan.svg');*/
   /*background-size: 50%;*/
   background-repeat: no-repeat;
   /*background-position: center;*/
   
   /*FJ*/
   background-size: 25px;
-  background-position: 20px 20px;
-
+  background-position: 20px 10px;
+  font-size: 280% !important;
 }
 .form-group label{
 	margin-bottom: 0;
@@ -279,21 +279,18 @@ span.no-complete{
 }
 
 /*FJ*/
-.right-options .li-options {
-  vertical-align: -webkit-baseline-middle;
-}
-
 .right-options .span-total {
   color: white;
-  padding: 0px 5px 0px 5px;
   font-family: 'Roboto Condensed' !important;
-  font-size: 18px;
+  font-size: 15px;
+  display: block;
+  padding: 0px 15px 0px 5px !important;
+  text-align: center;
 }
 
-.right-options .span-precio-total {
-  padding: 0px 10px 0px 5px !important;
+.right-options .li-total {
+  padding-top: 9px;
 }
-
 /*FJ*/
 
 .icon{
@@ -321,17 +318,17 @@ span.no-complete{
 }
 .item-count{
   position: absolute;
-  left: 58%;
+  left: 54%;
   width: 22px;
   height: 14px;
   margin-left: -13px;
   border-radius: 4px 4px 0 0;
-  top: 63%;
+  top: 53%;
   margin-top: -35px;
   font-size: 64%;
   text-align: center;
   padding-bottom: 3px;
-  line-height: 13px;
+  line-height: 14px;
 }
 .item-count:after{
   content: '';
@@ -404,6 +401,8 @@ input[type=radio]:checked+label:after {
 footer {
     position: relative;
     z-index: 10;
+    /*FJ*/
+    padding: 7px 9px;
 }
 
 /*alerts*/

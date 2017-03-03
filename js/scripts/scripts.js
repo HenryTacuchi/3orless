@@ -111,12 +111,65 @@ function removeFilter(element){
   });
 }
 
+/* Redondea un Decimal a dos cifras */
+(function() {
+	/**
+	* Ajuste decimal de un número.
+	*
+	* @param {String}  tipo  El tipo de ajuste.
+	* @param {Number}  valor El numero.
+	* @param {Integer} exp   El exponente (el logaritmo 10 del ajuste base).
+	* @returns {Number} El valor ajustado.
+	*/
+	function decimalAdjust(type, value, exp) {
+		// Si el exp no está definido o es cero...
+		if (typeof exp === 'undefined' || +exp === 0) {
+			return Math[type](value);
+		}
+		value = +value;
+		exp = +exp;
+		// Si el valor no es un número o el exp no es un entero...
+		if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+			return NaN;
+		}
+		// Shift
+		value = value.toString().split('e');
+		value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
+		// Shift back
+		value = value.toString().split('e');
+		return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
+	}
+
+	// Decimal round
+	if (!Math.round10) {
+		Math.round10 = function(value, exp) {
+			return decimalAdjust('round', value, exp);
+		};
+	}
+})();
+
 //add product item to cart
 function addProductCartItem(){
 	//validate if existst style, color and size
 	if(!existsProductCart($(".txtStyleCode").text(),$(".txtColorCode").text(),$(".size-dropdown").text())){
 		var product = '{"Product":';
-	    localStorage.countProductCartItem++;   
+	    localStorage.countProductCartItem++;
+
+	    /*FJ*/
+		var totalPrice = 0, totalOriginalPrice = 0;
+	    totalPrice = $(".txtRetailPrice").text().split('$');
+	    totalPrice = Number(totalPrice[1]);
+	    totalOriginalPrice = $(".txtOriginalPrice").text().split('$');
+	    totalOriginalPrice = Number(totalOriginalPrice[1]);
+
+	    if (Number(localStorage.countProductCartItem) > 0) {
+	    	localStorage.totalPrice = Math.round10((Number(localStorage.totalPrice) + Number(totalPrice)), -2);
+	    	localStorage.totalOriginalPrice = Math.round10((Number(localStorage.totalOriginalPrice) + Number(totalOriginalPrice)), -2);
+	    } else {
+	    	localStorage.totalPrice = Number(totalPrice);
+	    	localStorage.totalOriginalPrice = Number(totalOriginalPrice);
+	    }
+	    /*FJ*/
 
 	    product += '{'+    
 	                    '"brandName": "' + $(".txtBrand").text() + '",' +
@@ -132,7 +185,7 @@ function addProductCartItem(){
 	    return true;
 	}
 	else{
-		if (localStorage.current_lang == "es") 
+		if (localStorage.current_lang == "es")
 			swal({
 				title: "Mensaje",
 				text:  "El producto ya ha sido agregado!",

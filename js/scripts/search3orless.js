@@ -1,11 +1,31 @@
 var swiper;
+var removeAllFilter = false;
 
 $(document).ready(function(){
-    
+    localStorage.removeItem("resultsProductSKUSelected");
     initializeSwiper();
-    // showLoading(true);
+    
     showPageElement(".loader",true);
-    $(".item-count").text(localStorage.countProductCartItem);
+    
+    if (localStorage.printerName == undefined || localStorage.printerName ==''){
+        $('.btn-printer').css('background-image',"url('../img/catalog/icon-printer-off.svg')");
+    }    
+    else{
+        $('.btn-printer').css('background-image',"url('../img/catalog/icon-printer.svg')");
+    }    
+
+    /*FJ*/
+    if (Number(localStorage.totalPrice)>0) {
+        $(".span-precio-total").text('$'+localStorage.totalPrice);    
+    }else{
+        $(".span-precio-total").text('$0.00');
+    }
+    /*FJ*/
+    if(localStorage.countProductCartItem==null ||  localStorage.countProductCartItem==0){
+        $(".item-count").addClass("hide");
+    }else{
+        $(".item-count").text(localStorage.countProductCartItem);
+    }
 
     //if there are products filtered in local storage
     if(localStorage.threeOrLessListBrandFilter != undefined
@@ -28,17 +48,33 @@ $(document).ready(function(){
         resizeElement($('.swiper-wrapper'));        
     }    
 
+    if(localStorage.threeOrLessCountProductFiltered == undefined ||
+        localStorage.threeOrLessCountProductFiltered == 0){
+        getFeaturedProductFilterFromServer();
+    }
+
     //set image logo
     $(".img-logo").attr("src", localStorage.logo);
 
     //cart button redirects to cart items screen
-    $(".btn-cart").click(function(){
-        window.location = "cart-items.html";
+    $(".btn-star").click(function(){
+        if(localStorage.countProductCartItem==null ||  localStorage.countProductCartItem==0){
+            swal({
+              title: "El carrito está vacío",
+              text: "Aún no tiene productos en el carrito de compra.",
+              type: "info",
+              confirmButtonColor: "#8fbf75",
+              confirmButtonText: "Entendido",                 
+              closeOnConfirm: true
+            });
+        }else{
+            window.location = "cart-items.html";
+        }
     });
 
     //home button redirects to home screen
     $(".btn-home").click(function(){
-        window.location = "index.html";
+        window.location = "menu.html";
     });
 
     //save index of product selected and redirect to product detail screen
@@ -51,7 +87,7 @@ $(document).ready(function(){
     //save index of product selected and redirect to product detail screen
     $(document).on("click",".product",function(){
         var className = this.className;
-        var indexProductSelected = className.substring(className.lastIndexOf("-")+1) - 1; 
+        var indexProductSelected = className.substring(className.lastIndexOf("-")+1).substring(0,1) - 1;
         var productListObject = JSON.parse(localStorage.threeOrLessProductList);
         var product = productListObject.ProductList[indexProductSelected];
         localStorage.resultsProductStyleCodeSelected = product.styleCode;
@@ -129,11 +165,18 @@ $(document).ready(function(){
 
     //remove all filters
     $(".clear-filters").click(function () {
+        removeAllFilter = true;
+
         $(".filters-marked .filter").each(function(){
             var itemValue = $(this).attr('data-value');
             $(this).click();
             removeFilter($(this));
         })
+        localStorage.threeOrLessCountProductFiltered = 0;
+        localStorage.threeOrLessProductList = '{"ProductList":[]}';
+        clearSelectedFilters();
+        saveSelectedFilters();        
+        getFeaturedProductFilterFromServer();
     })
 
     $('.menu-item').click(function(){        
@@ -156,13 +199,22 @@ $(document).ready(function(){
         localStorage.threeOrLessCountProductFiltered = 0;
         localStorage.threeOrLessProductList = '{"ProductList":[]}';
         clearSelectedFilters();
-        saveSelectedFilters();        
-        getProductFilterFromServer();
+        saveSelectedFilters();   
+        if(removeAllFilter != true){
+            getProductFilterFromServer();
+        }     
 
+    });
+    
+    //home button redirects to home screen
+    $(".btn-scan").click(function(){
+        window.location = "scan-items.html";
     });
     
     //when page is loaded hide loaders
     $(window).on("load", function() {
+        // resize Swiper
+        resizeElement($('.swiper-wrapper'));
        // showLoading(false);
        showPageElement(".loader",false);
        // showLoadingResults(false);
@@ -181,12 +233,12 @@ function checkOrderResultOption(){
     if(localStorage.threeOrLessOrderResults != "")
         if(localStorage.threeOrLessOrderResults == "asc")
             // $('.sort-dropdown').removeClass('highToLow').addClass($(this).attr('class')).text("Low to high");
-            if(localStorage.current_lang == "es") $(".sort-dropdown").text("Menor a mayor");
-            else $(".sort-dropdown").text("Low to high");
+            if(localStorage.current_lang == "es") $(".sort-dropdown").text("$ - $$");
+            else $(".sort-dropdown").text("$ - $$");
         else
             // $('.sort-dropdown').removeClass('lowToHigh').addClass($(this).attr('class')).text("High to low");
-            if(localStorage.current_lang == "es") $(".sort-dropdown").text("Mayor a menor");
-            else $(".sort-dropdown").text("High to low");
+            if(localStorage.current_lang == "es") $(".sort-dropdown").text("$$ - $");
+            else $(".sort-dropdown").text("$$ - $");
 }
 
 //initialize swiper
@@ -194,13 +246,70 @@ function initializeSwiper(){
     swiper = new Swiper('.swiper-container', {        
         pagination:  '.swiper-pagination',
         paginationClickable: true,
-        paginationBulletRender: function (swiper, index, className) {
-            return '<span class="' + className + '">' + (index + 1) + '</span>';
-        },
         width: $('main').width(),
         nextButton: '.swiper-button-next',
         prevButton: '.swiper-button-prev',
         spaceBetween: 0,
+        speed: 600
+    });
+}
+
+//get products filtered from server, save in local storage and show in results area
+function getFeaturedProductFilterFromServer(){
+    $.ajax({
+        type: "GET",
+        url: "http://" + localStorage.serverId + "/WS3orlessFiles/S3orLess.svc/NPRODUCT/ShowFeaturedProductFilter/" + localStorage.storeNo + "/" + localStorage.flag3orless,
+        // async: false,
+        contentType: "application/json",
+        crossdomain: true,
+        timeout: 10000,
+        beforeSend: function(){
+            // showLoadingResults(true);
+            setColorApp();
+            showPageElement(".loader-results",true);
+        },
+        complete: function(){
+            // showLoadingResults(false);
+            showPageElement(".loader-results",false);
+            setColorApp();
+        },
+        success:function(result){
+            var data = result.showFeaturedProductFilterResult.fProdList;                
+            var productList = '{"ProductList":[';
+            if (data.length >0) {
+                localStorage.threeOrLessCountProductFiltered = data.length;   
+
+                $.each(data, function (index, value) {
+                    var product = '{'+
+                                    '"brandCode": "' + value.brandCode + '",' +     
+                                    '"brandName": "' + value.brandName + '",' +
+                                    '"colorCode": "' + value.colorCode + '",' +
+                                    '"imageFile": "' + value.imageFile.replace(/\\/g,"\\\\") + '",' +
+                                    '"price": "' + value.price + '",' +
+                                    '"originalPrice": "' + (value.productPrice).toFixed(2) + '",' +
+                                    '"styleCode": "' + value.styleCode + '",' +
+                                    '"styleName": "' + value.styleName + '"' +
+                                    '},';                               
+                    productList = productList + product;  
+                });                    
+                productList = productList.substring(0, productList.length - 1);
+                
+            }      
+            else{
+                countProductFiltered = 0;
+            }
+            productList = productList + ']}';
+            localStorage.threeOrLessProductList = productList;   
+            if(localStorage.threeOrLessOrderResults == "")          
+                showProductFilter("asc");
+            else
+                showProductFilter(localStorage.threeOrLessOrderResults);
+
+            // resizeElement($('.swiper-wrapper'));            
+        },
+        error:function(error) {
+            alert("error");
+        }
     });
 }
 
@@ -261,27 +370,28 @@ function getProductFilterFromServer(){
             else
                 showProductFilter(localStorage.threeOrLessOrderResults);
 
-            resizeElement($('.swiper-wrapper'));            
+            // resizeElement($('.swiper-wrapper'));            
         },
         error:function(error) {
-            // alert("error");
+            alert("error");
         }
     });
 }
 
 //load product results saved in local storage and show in results area
 function showProductFilter(option){
-    $(".swiper-slide").remove();
+    swiper.removeAllSlides();
     if ($(".swiper-slide").childElementCount>0){
         swiper.destroy(true, true);
     }
-
+    //hide content of swipe-wrapper for precautions with the dimensions
+    $('.swiper-wrapper').hide();
     var productListObject = JSON.parse(localStorage.threeOrLessProductList);
                   
     if (localStorage.threeOrLessCountProductFiltered >0) {
         // showResultsArea(true);
         showPageElement(".results",true);
-        initializeSwiper();
+        // initializeSwiper();
         setTimeout(function(){ showSortArea(true); }, 1000);  
         // showOrderOption(true);
         showPageElement(".float-right",true);
@@ -342,6 +452,7 @@ function showProductFilter(option){
             countProductItem++;
             //if all product has added to results area
             if(i == indexEnd){
+                $('.swiper-wrapper').show();
                 break;
             }
         }                                  
@@ -770,17 +881,19 @@ function setFilterSelected(){
 
 //check if exists filters marked 
 function checkFiltersMarked(){
-    if($('.filters-marked').children().length>0){
+    if($('.filters-marked').children().length>1){
         // showFiltersMarked(true);
         showPageElement(".filters-marked",true);
-        setTimeout(function(){ showSortArea(true); }, 1000);        
+        setTimeout(function(){ showSortArea(true); }, 500);        
         $('.area-logo').hide();
         $('.clear-filters').removeClass('hide').addClass('show animated fadeInRightBig');
     }else{
         // showClearFilter(false);
-        showPageElement(".clear-filters",false);
+        // showPageElement(".clear-filters",false);
+        // showPageElement(".btn-clear",false);
+        showPageElement(".filters-marked",false);
         $('.clear-filters').removeClass('show').addClass('hide');
-        if(localStorage.threeOrLessCountProductFiltered==0){
+        if(localStorage.kioskCountProductFiltered==0){
             $('.area-logo').show();
             showPageElement(".results",false);
         }
@@ -794,7 +907,16 @@ function handleError(image){
 
 function resizeElement(element){
     element.width($('.swiper-slide').width());
-    var resizeProduct = $('main').height() - $('.sort-area').height() - $('.filters-marked').height();
+    
+    // stretch product by Class
+    var resizeProduct;
+    if($('.filters-marked').children().length>1){
+        resizeProduct = $('main').height() - $('.sort-area').height() - $('.filters-marked').height();
+        $('.product').removeClass('stretch');
+    }else{
+        resizeProduct = $('main').height() - $('.sort-area').height();
+        $('.product').addClass('stretch');
+    }
     
     $('.swiper-slide').height( resizeProduct );
     $('.img-product').height( $('.img-product').width());

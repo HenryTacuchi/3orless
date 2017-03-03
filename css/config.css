@@ -5,20 +5,42 @@ nav{
 	height: 54px;
 	z-index: 999;
 }
+/*
 .settings-1, .areaSave{
 	height: 234px;
 }
+
 .settings-2, .areaFinish{
 	height: 304px;
 }
+
 .iconConfig{
 	height: 162px;
     padding: 73px 25px 73px 0;
 }
+
 .iconPass{
 	height: 300px;
 	padding: 107px 25px 107px 0;
 }
+*/
+
+/*FJ*/
+.settings-1, .settings-2 {
+	height: 330px;
+}
+
+.areaSave, .areaFinish {
+	height: 245px;
+}
+
+.iconConfig, .iconPass {
+    padding: 80px 25px 80px 0;
+}
+
+/*FJ*/
+
+
 
 .settings-1, .settings-2{
 	position: absolute;
@@ -36,6 +58,26 @@ nav{
 	-webkit-animation-delay: 0.5s;
 	animation-delay: 0.5s;
 }
+
+/*FJ*/
+.h1-conf {
+	text-align: center;
+    color: #777;
+    margin-bottom: 20px;
+    font-size: 35px;
+    line-height: 40px;
+}
+
+.label-conf {
+	margin-right: 10px !important;
+}
+
+.form-conf {
+	padding: 15px 0px 0px;
+}
+
+/*FJ*/
+
 .btn-setcolor{
 	background-image: url('../img/config/picker.png');
 	background-size: 34px;
@@ -88,6 +130,8 @@ nav{
 .icon.btn-exit{
   font-family: 'Scalia User Icons';
   font-size: 140%;
+  /*FJ*/
+  line-height: 60px !important;
 }
 
 @media only screen and (min-width: 1280px) {

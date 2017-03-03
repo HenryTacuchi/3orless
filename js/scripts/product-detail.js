@@ -13,17 +13,41 @@ $(document).ready(function(){
         $(".btn-add-finish").hide();
     }
 
-	$(".item-count").text(localStorage.countProductCartItem);
+    /*FJ*/
+    if (Number(localStorage.totalPrice)>0) {
+        $(".span-precio-total").text('$'+localStorage.totalPrice);
+    }else{
+        $(".span-precio-total").text('$0.00');
+    }
+
+    /*FJ*/
+    if(localStorage.countProductCartItem==null ||  localStorage.countProductCartItem==0){
+        $(".item-count").addClass("hide");
+    }else{
+        $(".item-count").text(localStorage.countProductCartItem);
+    }
+
     getProductSelect();    
 
     //cart button redirects to cart items screen
     $(".btn-cart").click(function(){
-        window.location = "cart-items.html";
+        if(localStorage.countProductCartItem==null ||  localStorage.countProductCartItem==0){
+            swal({
+              title: "El carrito está vacío",
+              text: "Aún no tiene productos en el carrito de compra.",
+              type: "info",
+              confirmButtonColor: "#8fbf75",
+              confirmButtonText: "Entendido",                 
+              closeOnConfirm: true
+            });
+        }else{
+            window.location = "cart-items.html";
+        }
     });
 
     //home button redirects to home screen
     $(".btn-home").click(function(){
-        window.location = "index.html";
+        window.location = "menu.html";
     });
 
     //home button redirects to home screen
@@ -48,59 +72,83 @@ $(document).ready(function(){
     });
 
     $(".btn-CheckStores").click(function(){
-        if (localStorage.current_lang == "es") 
-                          swal({
-                          title: "Otras Tiendas",
-                          text: "<ul class='storesArea'>"+
-            "<li class='row store'>"+
-              "<div class='col-xs-9 center-text'>"+
-                "<div class='text-left'><span class='txtStoreName storeName'>NiceKicks Name Store 1</span></div>"+
-                "<div class='text-left'><span class='lblAddress'>Address:</span><span class='txtAddress'> 555 Jarvis Dr.</span></div>"+
-                "<div class='text-left'><span class='lblPhone'>Phone:</span><span class='txtPhone'> 408 - 132 - 987</span></div>"+
-              "</div>"+
-              "<div class='col-xs-3 center-text'>"+
-                "<div class='text-right'>"+
-                  "<span class='txtStockOtherStore'>Stock:</span>"+
-                  "<span class='lblStockOtherStore'>5</span>"+
-                "</div>"+
-              "</div>"+
-            "</li>"+
-            "<li class='row store'>"+
-              "<div class='col-xs-9 center-text'>"+
-                "<div class='text-left'><span class='txtStoreName storeName'>NiceKicks Name Store 1</span></div>"+
-                "<div class='text-left'><span class='lblAddress'>Address:</span><span class='txtAddress'> 555 Jarvis Dr.</span></div>"+
-                "<div class='text-left'><span class='lblPhone'>Phone:</span><span class='txtPhone'> 408 - 132 - 987</span></div>"+
-              "</div>"+
-              "<div class='col-xs-3 center-text'>"+
-                "<div class='text-right'>"+
-                  "<span class='txtStockOtherStore'>Stock:</span>"+
-                  "<span class='lblStockOtherStore'>5</span>"+
-                "</div>"+
-              "</div>"+
-            "</li>"+
-          "</ul>",
-                          confirmButtonColor: "#8fbf75",
-                          confirmButtonText: "¡Ok, Genial!",          
-                          html: true,
-                          closeOnConfirm: false
-                        },
-                        function(isConfirm){
-                          showLoading(false);         
-                          window.location = "menu.html";
-                        });
-                      else        
-                        swal({
-                          title: "Registry Confirmation",
-                          text: "Thanks for your subscription.",
-                          type: "success",
-                          confirmButtonColor: "#8fbf75",
-                          confirmButtonText: "Ok, Cool!",         
-                          closeOnConfirm: false
-                        },
-                        function(isConfirm){
-                          showLoading(false);         
-                          window.location = "menu.html";
-                        });
+        var title,storeName,address,phone,stockQty;
+        var lblAddress,lblPhone,confirmButtonText,textStores;
+        var sizeCode = $(".size-dropdown").text();
+        var tempColorSelected = localStorage.resultsProductColorCodeSelected.replace("/","-");
+        $.ajax({
+            type: "GET",
+            url: "http://" + localStorage.serverId + "/WS3orlessFiles/S3orLess.svc/NPRODUCT/checkProductStockInOtherStores/" + localStorage.resultsProductStyleCodeSelected + "/" + sizeCode +"/" + tempColorSelected ,            
+            async: false,
+            contentType: "application/json",
+            crossdomain: true,
+            timeout: 10000,
+            beforeSend: function(){
+                showLoading(true);
+            },
+            complete: function(){
+                showLoading(false);
+            },
+            success: function (result) {
+                //Product Selected                
+                data = result; 
+                if (data != null) {
+                    if (localStorage.current_lang == "es") {
+                        title = "Otras Tiendas";            
+                        lblAddress = "Direccion:";
+                        lblPhone = "Teléfono:";
+                        confirmButtonText = "Ok, Genial!";
+                    }else{
+                        title = "Other Stores";
+                        lblAddress = "Address:";
+                        lblPhone = "Phone:";
+                        confirmButtonText = "Ok, Cool!";
+                    }
+
+                    textStores = "<ul class='storesArea'>";
+                        
+                    for (var i = 0; i <data.checkProductStockInOtherStoresResult.length; i++) {
+                        storeName = data.checkProductStockInOtherStoresResult[i].StoreName;
+                        address = data.checkProductStockInOtherStoresResult[i].Address + " " +
+                                    data.checkProductStockInOtherStoresResult[i].City + " " +
+                                    data.checkProductStockInOtherStoresResult[i].State + " " +
+                                    data.checkProductStockInOtherStoresResult[i].ZipCode;
+                        phone = data.checkProductStockInOtherStoresResult[i].Phone1;
+                        stockQty = data.checkProductStockInOtherStoresResult[i].OnHandQty;
+                        textStores += "<li class='row store'>"+
+                        "<div class='col-xs-9 center-text'>"+
+                            "<div class='text-left'><span class='txtStoreName storeName'>"+storeName+"</span></div>"+
+                            "<div class='text-left'><span class='lblAddress'>"+lblAddress+"</span><span class='txtAddress'> "+address+"</span></div>"+
+                            "<div class='text-left'><span class='lblPhone'>"+lblPhone+"</span><span class='txtPhone'> "+phone+"</span></div>"+
+                          "</div>"+
+                          "<div class='col-xs-3 center-text'>"+
+                            "<div class='text-right'>"+
+                              "<span class='txtStockOtherStore'>Stock:</span>"+
+                              "<span class='lblStockOtherStore'>"+stockQty+"</span>"+
+                            "</div>"+
+                          "</div>"+
+                          "</li>";
+                    }
+
+                    textStores += "</ul>",
+                    swal({
+                      title: title,
+                      text: textStores,
+                      confirmButtonColor: "#8fbf75",
+                      confirmButtonText: confirmButtonText,          
+                      html: true,        
+                      closeOnConfirm: true
+                    });
+                }              
+
+            },
+            error: function (error) {
+                // alert(error);
+            }
+        });
+
+
+        
     })
 
 	//show or hide main loader
@@ -126,22 +174,46 @@ $(document).ready(function(){
 
     function getProductSelect(){
     	showLoading(true);
-        var tempColorSelected = localStorage.resultsProductColorCodeSelected.replace("/","-");
+        var tempColorSelected;
+        var webServiceURL = "";
+
+        if(localStorage.resultsProductSKUSelected == undefined || localStorage.resultsProductSKUSelected == ''){
+            tempColorSelected = localStorage.resultsProductColorCodeSelected.replace("/","-");
+            webServiceURL = "http://" + localStorage.serverId + "/WS3orlessFiles/S3orLess.svc/NPRODUCT/findProductBySC-Color/" + localStorage.resultsProductStyleCodeSelected + "/" + tempColorSelected +"/" + localStorage.storeNo;
+        }
+        else{
+            webServiceURL = "http://" + localStorage.serverId + "/WS3orlessFiles/S3orLess.svc/NPRODUCT/FindProductBySkuStore/" + localStorage.resultsProductSKUSelected + "/" + localStorage.storeNo;   
+        }
+
         $.ajax({
             type: "GET",
-            url: "http://" + localStorage.serverId + "/WS3orlessFiles/S3orLess.svc/NPRODUCT/findProductBySC-Color/" + localStorage.resultsProductStyleCodeSelected + "/" + tempColorSelected +"/" + localStorage.storeNo ,            
+            url: webServiceURL,
             async: false,
             contentType: "application/json",
             crossdomain: true,
             timeout: 10000,
             success: function (result) {
                 //Product Selected                
-                data = result.findNProductByStyleCodeAndColorResult; 
+                if(localStorage.resultsProductSKUSelected == undefined || localStorage.resultsProductSKUSelected == ''){
+                    data = result.findNProductByStyleCodeAndColorResult; 
+                }
+                else{
+                    data = result.findNProductBySkuStoreResult;    
+                }
                 if (data != null) {
 
                 	//PRODUCT SELECT
                 	//items
                     $(".txtProductDetail").text(data.shortDescr);
+                    /*FJ*/
+                    if (data.shortDescr.length >= 20) {
+                        $(".txtProductDetail").css('font-size','18px');
+                        $(".btn-CheckStores").css('margin-bottom','10px');
+                        $('.productDetail').css('margin','12px 15px');
+                        $('.mainImg').css('margin','12px 0px');
+                        $('.views').css('margin','12px 15px 12px 0');
+                    }
+                    /*FJ*/
                 	$(".txtBrand").text(data.brandName);
                     $(".txtStyleCode").text(data.styleCode);
                 	$(".txtStyle").text(data.styleName);
@@ -202,6 +274,10 @@ $(document).ready(function(){
                 	}
 
                     $(".related-products").addClass("items-"+ countProductItem);
+                }
+                else{
+                    localStorage.removeItem("resultsProductSKUSelected");
+                    window.location = "searchKiosk.html";
                 }              
 
             },

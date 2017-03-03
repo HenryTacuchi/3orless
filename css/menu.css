@@ -5,7 +5,7 @@ body{
 	justify-content: flex-start;
 }
 section {
-    padding: 30px 0;
+    padding: 30px 0 10px;
 }
 .logoArea{
 	text-align: center;
@@ -62,7 +62,7 @@ section {
 	width: 200px;
 	height: 200px;
 	border-radius: 50%;
-	margin: 0 25px;	
+	margin: 0 25px 25px;	
 	font-size: 115%;
 	text-align: center;	
     
@@ -141,7 +141,8 @@ section {
     background-size: cover;
 }
 
-.option1:before,.option2:before,.option3:before{
+.option1:before,.option2:before,.option3:before,
+.option4:before,.option5:before,.option6:before{
 	position: absolute;
 	font-weight: 100;
 	text-shadow: none;        
@@ -151,8 +152,8 @@ section {
     margin: auto;
 }
 .option1:before{
-	content: '\e600';
-	font-size: 80px;
+	content: '\e760';
+	font-size: 72px;
     font-family: 'Scalia User Icons';
 }
 .option2:before{
@@ -165,7 +166,11 @@ section {
 	font-size: 70px;
     font-family: 'Scalia User Icons';
 }
-
+.option4:before{
+	content: '\e755';
+	font-size: 90px;
+    font-family: 'Scalia User Icons';
+}
 
 @media only screen and (min-width: 1280px) {
 	.logoApp{

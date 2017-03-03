@@ -9,6 +9,7 @@ $(document).ready(function(){
 	.blur(function(){
 		$(this).css('border-color','');
 	});
+
 });
 
 //set Color app

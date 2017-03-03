@@ -6,7 +6,7 @@ $(document).ready(function(){
 		$(".lblPasswordOpt").text("Contraseña");
 		$(".lblEmailOpt").text("Correo Electrónico");
 		$(".lblEmailPassword").text("Ingrese su contraseña o correo electrónico");
-		$(".btnDone").text("Listo");
+		$(".btn-access").text("Acceder");
 
 		//Configuration Page
 		$(".lblConfig").text("Configuración");
@@ -38,8 +38,8 @@ $(document).ready(function(){
 		$(".txtSortby").text("Ordenar por ");
 		if(localStorage.flag3orless == 1 && localStorage.threeOrLessOrderResults == "") $(".sort-dropdown").text("Seleccione");
 		if(localStorage.flag3orless == 0 && localStorage.kioskOrderResults == "") $(".sort-dropdown").text("Seleccione");
-		$(".lowToHigh").text("Menor a mayor");
-		$(".highToLow").text("Mayor a menor");
+		// $(".lowToHigh").text("Menor a mayor");
+		// $(".highToLow").text("Mayor a menor");
 
 		$(".txtStyleName").text("Estilo:");
 		$(".appName3orless").text("Tres o menos");
@@ -61,6 +61,7 @@ $(document).ready(function(){
 		$(".btn-back").text("Regresar");
 		$(".btn-add-continue").text("Agregar y continuar");
 		$(".btn-add-finish").text("Agregar y finalizar");
+		$(".btn-CheckStores").text("Ver otras tiendas");
 
 		//Cart Item Page
 		$(".lblCompleteFields").text("Por favor, complete los campos");
@@ -71,6 +72,9 @@ $(document).ready(function(){
 		$(".btn-recover").text("Recuperar Carrito");
 		$(".btn-done").text("Ticket");
 		$(".txtEmail").attr('placeholder',"contacto@email.com");
+		$(".detail-count-text1").text("Usted tiene ");
+		$(".detail-count-text2").text(" producto(s) en su carrito.");
+
 
 		//Registration Page
 		$(".lblInstructions").text("Por favor, complete los campos requeridos para suscribirse");
@@ -84,6 +88,14 @@ $(document).ready(function(){
 		$(".option1").text("Registro Cliente");
 		$(".option2").text("Catálogo Kiosko");
 		$(".option3").text("Tres o menos");
+
+		//Order Page
+		$(".btn-order").html("Ordenar")
+
+		//Scan Product
+		$(".txtSKU").attr('placeholder','Escanear producto');
+		$(".txtScan").attr('placeholder','Escanear producto');
+
 	}
 	else{
 		if(localStorage.flag3orless == 0){

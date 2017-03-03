@@ -102,7 +102,7 @@ span{
 	padding: 0;
 }
 
-.btn-done:before {
+.btnDone:before {
     content: '\e807';
     margin-left: -1em;
     font-size: 100%;

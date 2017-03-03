@@ -525,9 +525,19 @@ function checkPassword(){
 
     if (typeof password == "undefined" || password == "null") {
     	$(".areaOldPass").removeClass("show").addClass("hide");
+
+    	/*FJ*/
+    	$('.areaFinish').css('height', '245px');
+    	$('.iconPass').css('padding', '80px 25px 80px 0');
+    	/*FJ*/
     }
     else{        	
     	$(".areaOldPass").removeClass("hide").addClass("show");
+
+    	/*FJ*/
+    	$('.areaFinish').css('height', '318px');
+    	$('.iconPass').css('padding', '116px 25px 116px 0');
+    	/*FJ*/
     }
 }
 
@@ -674,5 +684,11 @@ function clearSearchPage(){
 		localStorage.removeItem("cartItemProduct" + (i));
 	}
 	localStorage.countProductCartItem = 0;
+	for (var i = 1; i <= localStorage.countScannedItem; i++) {
+		localStorage.removeItem("scannedItem" + (i));
+	}
+	localStorage.countScannedItem = 0;
+	localStorage.totalPrice = 0;
+	localStorage.totalOriginalPrice = 0;
 }
 

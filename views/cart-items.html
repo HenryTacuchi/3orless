@@ -28,7 +28,7 @@
 </head>
 <body>
 
-	<nav class="animated fadeIn setBaColor">
+	<nav class="animated fadeIn setBaColor nav-retailcs">
 
 		<div class="left-options">
 			<div class="icon btn-home">&#xe610;</div>
@@ -38,7 +38,10 @@
 		</div>
 		
 		<ul class="right-options">
-			<li><div class="icon btn-cart">&#xe613;<span class="item-count"></span></div></li>
+			<!--<li><div class="icon btn-cart">&#xe613;<span class="item-count"></span></div></li>-->
+			<li class="li-options"><div class="icon btn-star">&#xe769;<span class="item-count"></span></div></li>
+			<!--<li class="li-options"><div class="icon btn-cart">&#xe613;<span class="item-count"></span></div></li>-->
+			<li class="li-total"><span class="span-total">Total: </span><span class="span-total span-total-price">$0.00</span></li>
 		</ul>
 	</nav>
 
@@ -86,11 +89,23 @@
     			</div>
   				<div class="col-xs-2">
   					<div class="icon btn-trash">&#xe615;</div>	
-  				</div> -->
-  				
+  				</div> -->  				
 	      	</div>
+
+			<!-- FJ - Inicio -->
+			<div class="tfooter">
+				<div class="row">
+					<div class="col-xs-9 footer-text-left"><span class="detail-count-text1">You have </span><span class="detail-count">0</span><span class="detail-count-text2"> product(s) in you cart.</span></div>
+					<div class="col-xs-3 footer-text-right"><span>Total: <span class="detail-total">S0.00</span></span></div>
+				</div>
+			</div>
+			<!-- FJ - Fin -->
+
 	      	<script type="text/template" id="productCartItemTemplate">
                 <div class="row product <%=Class%>">
+	  				<div class="col-xs-1  center-text">
+	  					<div class="icon btn-trash" data-style="<%=styleCode%>" data-color="<%=colorCode%>" data-size="<%=sizeCode%>">&#xe615;</div>	
+	  				</div>
 					<div class="col-xs-3">
 						<div class="img-product">
 			      			<img src="<%=path%>" alt="img">
@@ -106,9 +121,6 @@
 	    			<div class="col-xs-2  center-text">
 	    				<div class="price"><%=price%></div>
 	    			</div>
-	  				<div class="col-xs-1  center-text">
-	  					<div class="icon btn-trash" data-style="<%=styleCode%>" data-color="<%=colorCode%>">&#xe615;</div>	
-	  				</div>
 				</div>
             </script>
 		</article>

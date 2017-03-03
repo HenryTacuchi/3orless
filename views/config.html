@@ -37,7 +37,7 @@
 		</div>
 		<ul class="right-options">
 			<li>
-				<label>Set Color</label>
+				<label class="label-conf">Set Color</label>
 				<input type="text" id="valueNav" class="form-control form-color">
 				<button class="icon btn-setcolor jscolor {valueElement:'valueNav',styleElement:'styleNav', value:'58abb7', hash:true, shadow:false}" id="valueBtn">&nbsp;</button>
 			</li>
@@ -49,7 +49,10 @@
 		<section class="settings-1 animated fadeInDown">
 			
 			<div class="row">
+				<div class="col-xs-12"><h1 class="h1-conf">Configuración de la Tienda</h1></div>
+			</div>
 
+			<div class="row row-conf">
 				<div class="col-xs-3">
 					<div class="form-group areaIcon iconConfig">
 						<div class="icon-circle">
@@ -57,21 +60,20 @@
 								<span>&#xe6d2</span>
 							</div>
 						</div>				    
-				  </div>
+				  	</div>
 				</div>
-
 				<div class="col-xs-6">
-
-					<form>
+					
+					<form class="form-conf">
 						<div class="form-group">
 					    <label class="lblStoreNo">Store No<span>*</span></label>
-					    <input type="text" class="form-control storeNo" placeholder="Enter your store number" value="901">
+					    <input type="text" class="form-control storeNo" placeholder="Enter your store number" value="1">
 					    <span class="no-complete noStoreNo hide">Please fill the required field</span>
 					  </div>
 
 						<div class="form-group">
 					    <label class="lblServerId">Server IP<span>*</span></label>
-					    <input type="text" class="form-control serverId" placeholder="Enter your IP" value="47.149.70.2">
+					    <input type="text" class="form-control serverId" placeholder="Enter your IP" value="192.168.1.41">
 					    <span class="no-complete noServerId hide">Please fill the required field</span>
 					  </div>
 
@@ -105,7 +107,12 @@
 		  <p>Your browser does not support iframes.</p>
 		</iframe> -->
 		<section class="settings-2 hide">
+
 			<div class="row">
+				<div class="col-xs-12"><h1 class="h1-conf">Configuración de la Cuenta</h1></div>
+			</div>
+			
+			<div class="row row-conf">
 
 				<div class="col-xs-3">
 					<div class="form-group areaIcon iconPass">
@@ -119,7 +126,7 @@
 
 				<div class="col-xs-6">
 
-					<form>
+					<form class="form-conf">
 						<div class="form-group user">
 					    <label class="lblEmail">Email<span>*</span></label>
 					    <input type="email" class="form-control emailUser" placeholder="your@email.com" value="gustavo@realcs.com">
@@ -168,8 +175,8 @@
 				<p class="txtMessage">
 					Validation errors occurred. Please confirm the fields and submit it again.
 				</p>	
-			</div>							
-		</div>	
+			</div>
+		</div>
 
 	</div>	
 

@@ -98,7 +98,7 @@ $(document).ready(function () {
   });
 
   $(".btn-home").click(function(){
-        window.location = "index.html";
+        window.location = "menu.html";
     });
 
 //Function to validate  firstName can't be blank

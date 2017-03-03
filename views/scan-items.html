@@ -28,20 +28,34 @@
 </head>
 <body>
 
-	<nav class="animated fadeIn setBaColor">
+	<nav class="animated fadeIn setBaColor nav-retailcs">
 
 		<div class="left-options">
 			<div class="icon btn-home">&#xe610;</div>
-			<label class="appName appName3orless">
-				3orless
+			<label class="appName appNameScanItem">
+				Checkout
 			</label>			
 		</div>
 		
 		<ul class="right-options">
-			<li><div class="icon btn-cart">&#xe613;<span class="item-count"></span></div></li>
+			<!--<li><div class="icon btn-cart">&#xe613;<span class="item-count"></span></div></li>-->
+			<li class="li-options"><div class="icon btn-cart">&#xe755;<span class="item-count"></span></div></li>
+			<li class="li-total"><span class="span-total">Total: </span><span class="span-total span-total-price">$0.00</span></li>
 		</ul>
 	</nav>
-
+	<div class="validations hide">
+		<div class="msg-image">
+			<div class="btn btn-mini-img color3 borderc3">
+				<span>&#xe650</span>
+			</div>			    
+		</div>
+		<div class="msg-txt">
+			<!-- add classes: danger, success beside to txtMessage-->
+			<p class="txtMessage">
+				Validation errors occurred. Please confirm the fields and submit it again.
+			</p>	
+		</div>
+	</div>
 	<section class="section-form-user">
 		<!-- product details -->
 		<article class="form-user">
@@ -75,7 +89,8 @@
 			<div class="thead">
 				<!-- <h3 class="text-center lblCartItems setColor">Cart Items</h3> -->
 				<div class="form-group scan col-xs-4 col-xs-offset-4">	
-					<input type="text" value="" class="form-control txtScan" placeholder="Scan product">
+					<input type="number" value="" class="form-control txtScan" placeholder="Scan product" maxlength="7">
+					<span class="input-group-btn ico-keyboard">&#xe825;</span>
 				</div>
 			</div>
 			
@@ -99,14 +114,32 @@
     			</div>
   				<div class="col-xs-2">
   					<div class="icon btn-trash">&#xe615;</div>	
-  				</div> -->
-  				
+  				</div> -->  				
 	      	</div>
+
+			<!-- FJ - Inicio -->
+			<div class="tfooter">
+				<div class="row">
+					<div class="col-xs-9 footer-text-left">
+						<span class="detail-count-text1">You have </span>
+						<span class="detail-count">0</span>
+						<span class="detail-count-text2"> product(s) in you cart.</span>
+					</div>
+					<div class="col-xs-3 footer-text-right">
+						<span>Total: <span class="detail-total">$0.00</span></span>
+					</div>
+				</div>
+			</div>
+			<!-- FJ - Fin -->
+
 	      	<script type="text/template" id="productCartItemTemplate">
                 <div class="row product <%=Class%>">
+	  				<div class="col-xs-1  center-text">
+	  					<div class="icon btn-trash" data-style="<%=styleCode%>" data-color="<%=colorCode%>" data-size="<%=sizeCode%>" data-sku="<%=sku%>">&#xe615;</div>	
+	  				</div>
 					<div class="col-xs-3">
 						<div class="img-product">
-			      			<img src="<%=path%>" alt="img">
+			      			<img src="<%=path%>" onerror="handleError(this)">
 			      		</div>
 					</div>	
 		      		<div class="col-xs-6 center-text">
@@ -114,14 +147,13 @@
 			      			<span class="txtStyleName">Style:</span><span class="styleName"><%=styleName%></span>
 			      		</div>
 			      		<div class="brand setColor"><%=brandName%></div>
-			      		<div class="size"><%=size%></div>
+			      		<div class="areaStyle">
+			      			<span class="txtSize">Size:</span><span class="size"><%=size%></span>
+			      		</div>
 		      		</div>
 	    			<div class="col-xs-2  center-text">
 	    				<div class="price"><%=price%></div>
 	    			</div>
-	  				<div class="col-xs-1  center-text">
-	  					<div class="icon btn-trash" data-style="<%=styleCode%>" data-color="<%=colorCode%>">&#xe615;</div>	
-	  				</div>
 				</div>
             </script>
 		</article>
@@ -133,7 +165,7 @@
 		<div class="options">
 			<button class="btn btn-back setBaColor">Back</button>
 			<button class="btn btn-clear-cart setBaColor">Clear All</button>
-			<button class="btn btn-done setBaColor">Order</button>
+			<button class="btn btn-order setBaColor">Order</button>
 		</div>
 	</footer>
 
@@ -154,29 +186,21 @@
 
 	<!-- loading block printer -->
 	<div class="loader hide">
-		<div class="container-loader">
-			<div class="loader-principal-printer">
-			  <div class="icon-loader printer">			  	
-			  </div>
-			  <div class="animation signal">	
-			  	<div class="signal-1"></div>
-			  	<div class="signal-2"></div>		  	
-			  	<div class="signal-3"></div>
-			  </div>
-			  <div class="icon-loader tablet">			  	
-			  </div>		
-			</div>
+		<div class="loader-principal setBoColor">
+		  <div class="segment-holder">
+		    <div class="segment one setBaColor"></div>
+		  </div>
+		  <div class="segment-holder">
+		    <div class="segment two setBaColor"></div>
+		  </div>
+		  <div class="segment-holder">
+		    <div class="segment three setBaColor"></div>
+		  </div>
+		  <div class="segment-holder">
+		    <div class="segment four setBaColor"></div>
+		  </div>			
 		</div>
 	</div>
 	
 </body>
-<script language='VBScript'>
-Sub Print()
-       OLECMDID_PRINT = 6
-       OLECMDEXECOPT_DONTPROMPTUSER = 2
-       OLECMDEXECOPT_PROMPTUSER = 1
-       call WB.ExecWB(OLECMDID_PRINT, OLECMDEXECOPT_DONTPROMPTUSER,1)
-End Sub
-document.write "<object ID='WB' WIDTH=0 HEIGHT=0 CLASSID='CLSID:8856F961-340A-11D0-A96B-00C04FD705A2'></object>"
-</script>
 </html>

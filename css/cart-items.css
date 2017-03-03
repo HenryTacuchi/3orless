@@ -6,7 +6,7 @@ body{
 	align-items: stretch;
 }
 nav{
-	height: 54px;
+	/*height: 54px;*/
 	background-color: #58abb7;
 	z-index: 999;
 }
@@ -66,6 +66,42 @@ form{
 	margin: 0;
 	padding: 10px 0;
 }
+
+
+/*FJ*/
+.btn-start {
+	/*background-image: url(../img/catalog/icon-star.svg);*/
+    background-repeat: no-repeat;
+    background-size: 25px;
+    background-position: 17px 7px;
+}
+/*FJ*/
+
+
+/* FJ - Inicio */
+.tfooter {
+	background-color: #f1f5f8;
+	padding: 10px;
+}
+
+.tfooter .footer-text-right {
+	text-align: right;
+	padding-right: 15px;
+}
+
+.tfooter .footer-text-left {
+	padding-left: 15px;
+}
+
+.tfooter .footer-text-right > span {
+	margin-right: 5px;
+}
+
+.tfooter .footer-text-right .detail-total {
+	margin-left: 25px;
+}
+/* FJ - Fin */
+
 .items{
 	overflow-y: auto;
 	height: 333px;
@@ -95,6 +131,7 @@ form{
 	font-family: 'Source Sans Pro';
 	font-weight: normal;	
 	font-size: 160%;
+	text-align: right;
 }
 .center-text{
 	display: flex;

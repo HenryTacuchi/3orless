@@ -188,7 +188,22 @@ $(document).ready(function(){
 		$(".section-cart-items").show();
 	});
 
-	$(".item-count").text(localStorage.countProductCartItem);
+
+    /*FJ*/
+    if (Number(localStorage.totalPrice)>0) {
+        $(".span-precio-total").text('$'+localStorage.totalPrice);
+        $(".detail-total").text('$'+localStorage.totalPrice);
+    }else{
+        $(".span-precio-total").text('$0.00');
+        $(".detail-total").text('$0.00');
+    }
+    $(".detail-count").text(localStorage.countProductCartItem);
+    /*FJ*/
+    if(localStorage.countProductCartItem==null ||  localStorage.countProductCartItem==0){
+        $(".item-count").addClass("hide");
+    }else{
+        $(".item-count").text(localStorage.countProductCartItem);
+    }
 	
 	getProductList();
 
@@ -200,7 +215,7 @@ $(document).ready(function(){
 	//home button redirects to home screen
     $(".btn-home").click(function(){
         localStorage.currentFirstNameClient = $(".txtFirstName").val();
-        window.location = "index.html";
+        window.location = "menu.html";
     });
 
     //clear button redirects to home screen
@@ -221,12 +236,40 @@ $(document).ready(function(){
 				localStorage.removeItem("lastCartItemProduct"+i);
 			}
 		}
-		localStorage.countProductCartItem = localStorage.countProductLastCartItem;
+		
+		if (localStorage.countProductLastCartItem == undefined) {
+			localStorage.countProductCartItem = 0;
+		} else {
+			localStorage.countProductCartItem = localStorage.countProductLastCartItem;	
+		}
+
+		console.log('FJ');
+		console.log(localStorage.countProductCartItem);
+		console.log('FJ');
+
 		// window.location.reload();
 		$(".items").html("");
-		$(".item-count").text(localStorage.countProductCartItem);
+
+		/*FJ*/
+	    if(localStorage.countProductCartItem==null ||  localStorage.countProductCartItem==0){
+	        $(".item-count").addClass("hide");
+	    }else{
+	        $(".item-count").text(localStorage.countProductCartItem);
+	    }
 		getProductList();
 		setColorApp();
+
+	    /*FJ*/
+	    if (Number(localStorage.totalPrice)>0) {
+	        $(".span-precio-total").text('$'+localStorage.totalPrice);
+	        $(".detail-total").text('$'+localStorage.totalPrice);
+	    }else{
+	        $(".span-precio-total").text('$0.00');
+	        $(".detail-total").text('$0.00');
+	    }
+
+	    $(".detail-count").text(localStorage.countProductCartItem);
+	    /*FJ*/
     });
 
     //done button redirects to home screen
@@ -357,29 +400,103 @@ $(document).ready(function(){
 
     });
 
+
+	/* Redondea un Decimal a dos cifras */
+	(function() {
+		/**
+		* Ajuste decimal de un número.
+		*
+		* @param {String}  tipo  El tipo de ajuste.
+		* @param {Number}  valor El numero.
+		* @param {Integer} exp   El exponente (el logaritmo 10 del ajuste base).
+		* @returns {Number} El valor ajustado.
+		*/
+		function decimalAdjust(type, value, exp) {
+			// Si el exp no está definido o es cero...
+			if (typeof exp === 'undefined' || +exp === 0) {
+				return Math[type](value);
+			}
+			value = +value;
+			exp = +exp;
+			// Si el valor no es un número o el exp no es un entero...
+			if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+				return NaN;
+			}
+			// Shift
+			value = value.toString().split('e');
+			value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
+			// Shift back
+			value = value.toString().split('e');
+			return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
+		}
+
+		// Decimal round
+		if (!Math.round10) {
+			Math.round10 = function(value, exp) {
+				return decimalAdjust('round', value, exp);
+			};
+		}
+	})();
+
     $(document).on("click",".btn-trash",function(){
     	removeAnimationFlipIn = true;
-    	var i,indexDelete = localStorage.countProductCartItem;
+    	var i,indexDelete = localStorage.countProductCartItem;    	
     	var styleCode = $(this).attr("data-style");
-    	var colorCode = $(this).attr("data-color");    	
+    	var colorCode = $(this).attr("data-color");
+    	var size = $(this).attr("data-size");
+
     	for (i = 1; i <= localStorage.countProductCartItem; i++) {
 			var productObject = JSON.parse(localStorage["cartItemProduct"+i]);
 			if(productObject.Product.styleCode == styleCode 
-				&& productObject.Product.colorCode == colorCode)
+				&& productObject.Product.colorCode == colorCode 
+				&& productObject.Product.size == size){
 				indexDelete = i;
+
+				/*FJ*/
+				var temPrice = 0, temOriginalPrice = 0;
+			    temPrice = productObject.Product.price.split('$');
+			    temPrice = Number(temPrice[1]);
+			    temOriginalPrice = productObject.Product.originalPrice.split('$');
+			    temOriginalPrice = Number(temOriginalPrice[1]);
+				if (localStorage.totalPrice > 0) {
+					localStorage.totalPrice = Math.round10((Number(localStorage.totalPrice) - Number(temPrice)), -2);
+				}
+				if (localStorage.totalOriginalPrice > 0) {
+					localStorage.totalOriginalPrice = Math.round10((Number(localStorage.totalOriginalPrice) - Number(temOriginalPrice)), -2);
+				}
+				/*FJ*/
+			}
 			if(i>indexDelete){
-				localStorage["cartItemProduct"+(i-1)] = localStorage["cartItemProduct"+i]
+				localStorage["cartItemProduct"+(i-1)] = localStorage["cartItemProduct"+i];
 			}
 		}
-		localStorage.removeItem("cartItemProduct" + localStorage.countProductCartItem--);
+
+		
+		localStorage.removeItem("cartItemProduct" + localStorage.countProductCartItem);
+		if(localStorage.countProductCartItem>0)
+			localStorage.countProductCartItem--;
+
 		$(this).parent().parent().removeClass('animated flipInX').addClass('animated fadeOutLeft');
 		
-		setTimeout(function(){ 
-			$(".items").empty(); 
+		setTimeout(function(){
+			$(".items").empty();
+
+		    /*FJ*/
+		    if (Number(localStorage.totalPrice)>0) {
+		        $(".span-precio-total").text('$'+localStorage.totalPrice);
+		        $(".detail-total").text('$'+localStorage.totalPrice);
+		    }else{
+		        $(".span-precio-total").text('$0.00');
+		        $(".detail-total").text('$0.00');
+		    }
+
+		    $(".detail-count").text(localStorage.countProductCartItem);
+		    /*FJ*/
+
 			$(".item-count").text(localStorage.countProductCartItem);
 			getProductList();
 			setColorApp();}, 500);
-
+		
     });
 
 });
@@ -464,13 +581,35 @@ function loadPrint(){
 }
 
 function getProductList(){
+	/*FJ*/
+	localStorage.totalPrice = 0;
+	localStorage.totalOriginalPrice = 0;
+	/*FJ*/
+
 	for (var i = 1; i <= localStorage.countProductCartItem; i++) {
 		var productObject = JSON.parse(localStorage["cartItemProduct"+i]);
 		var classAnimated = "";
+		
+		/*FJ*/
+		var temPrice = 0, temOriginalPrice = 0;
+	    temPrice = productObject.Product.price.split('$');
+	    temPrice = Number(temPrice[1]);
+	    temOriginalPrice = productObject.Product.originalPrice.split('$');
+	    temOriginalPrice = Number(temOriginalPrice[1]);
+		
+	    if (Number(localStorage.countProductCartItem) > 0) {
+	    	localStorage.totalPrice = Math.round10((Number(localStorage.totalPrice) + Number(temPrice)), -2);
+	    	localStorage.totalOriginalPrice = Math.round10((Number(localStorage.totalOriginalPrice) + Number(temOriginalPrice)), -2);
+	    } else {
+	    	localStorage.totalPrice = Number(temPrice);
+	    	localStorage.totalOriginalPrice = Number(temOriginalPrice);
+	    }
+		/*FJ*/
+
 		if(!removeAnimationFlipIn){
 			classAnimated = "animated flipInX";        	
         }
-		template = _.template($("#productCartItemTemplate").html());                       
+		template = _.template($("#productCartItemTemplate").html());
         html = template({
             Class: "product-" + (i) + " " + classAnimated,
             path: productObject.Product.imageFile,
@@ -479,10 +618,13 @@ function getProductList(){
             colorCode: productObject.Product.colorCode,
             brandName: productObject.Product.brandName,
             size: productObject.Product.size,
-            price: productObject.Product.price
+            price: productObject.Product.price,
+            sizeCode: productObject.Product.size
         });
         $(".items").append(html);
 	}
+    localStorage.totalPrice>0 ? $(".detail-total").html("$"+Math.round10(localStorage.totalPrice,-2)) : $(".detail-total").html("$0.00");
+    localStorage.totalPrice>0 ? $(".span-total-price").html("$"+Math.round10(localStorage.totalPrice,-2)) : $(".span-total-price").html("$0.00");
 }
 
 //remove all variables related to search page from local storage
@@ -507,6 +649,10 @@ function clearSearchPage(){
 		localStorage.removeItem("cartItemProduct" + (i));
 	}
 	localStorage.countProductCartItem = 0;
+	/*FJ*/
+	localStorage.totalPrice = 0;
+	localStorage.totalOriginalPrice = 0;
+	/*FJ*/
 }
 
 //show loader
@@ -579,5 +725,5 @@ $(window).load(function(){
 });
 
 function setSizeCart(){
-	$('.items').height($('.cart-items').height());
+	$('.items').height($('.cart-items').height() - 50);
 }

@@ -83,6 +83,7 @@ $(document).ready(function(){
 	if(localStorage.noImageFromServer == 0){
 		getImagesFromServer();	
 		localStorage.countProductCartItem = 0;
+		localStorage.countscannedItem = 0;
 		localStorage.existOldCartItem = 0;
 	}
 
@@ -229,6 +230,11 @@ function clearSearchPage(){
 		localStorage.removeItem("cartItemProduct" + (i));
 	}
 	localStorage.countProductCartItem = 0;
+
+	for (var i = 1; i <= localStorage.countScannedItem; i++) {
+		localStorage.removeItem("scannedItem" + (i));
+	}
+	localStorage.countScannedItem = 0;
 }
 
 //get language from navigator and saved in local storage

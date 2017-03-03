@@ -155,6 +155,10 @@ main{
 	animation-delay: 0.35s;
 }
 
+.clear-filters {
+    display: inline-block !important;
+}
+
 .btn-filter{
 	position: absolute;
 	bottom: 0;
@@ -167,21 +171,42 @@ main{
 	content: '\e766';
 	font-family: 'Scalia User Icons';
 	font-weight: normal;
-  float: left;
-  margin-left: -1.4em;
-  font-size: 82.6%;
-  vertical-align: middle;
+	float: left;
+	margin-left: -1.4em;
+	font-size: 82.6%;
+	vertical-align: middle;
 }
+
 .btn-clear-search:before{
 	content: '\e777';
 	font-family: 'Scalia User Icons';
 	font-weight: normal;
-  float: left;
-  margin-left: -1.4em;
-  font-size: 82.6%;
-  vertical-align: middle;
+	float: left;
+	margin-left: -1.4em;
+	font-size: 82.6%;
+	vertical-align: middle;
 }
 
+.btn-printer{
+	/*background-image: url('../img/catalog/icon-printer.svg');*/
+	/*background-size: 50%;*/
+	background-repeat: no-repeat;
+	/*background-position: center;*/
+
+	/*FJ*/
+	background-size: 25px;
+	background-position: 14px 12px;
+	/*FJ*/
+}
+
+/*FJ*/
+.btn-start {
+	/*background-image: url(../img/catalog/icon-star.svg);*/
+    background-repeat: no-repeat;
+    background-size: 25px;
+    background-position: 17px 7px;
+}
+/*FJ*/
 
 /*logo area*/
 .notfound {
@@ -269,7 +294,7 @@ main{
 }
 
 .swiper-container-horizontal>.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction{
-	bottom: initial !important;
+	/*bottom: initial !important;*/
 }
 /* one item */
 div[class^="row-product"]:first-child:nth-last-child(1) {
@@ -374,10 +399,17 @@ div[class^="product"]:last-child{
 }
 .brand{
 	font-size: 115%;
-	/*padding-top: 15px;*/
+	padding-top: 4px;
+}
+.stretch .brand{
+	font-size: 135%;
+	padding-top: 15px;
 }
 .areaStyle, .areaPrice{
 	text-align: center;
+}
+.stretch .areaStyle, .stretch .areaPrice{
+	font-size: 120%;
 }
 .areaStyle div{
 	display: inline-block;
@@ -398,7 +430,7 @@ div[class^="product"]:last-child{
 /*clear filters*/
 .float-left{
 	float: left;
-	margin: 15px;
+	margin: 12px;
 }
 .btn-clear{
 	padding: 0 10px;
@@ -408,8 +440,8 @@ div[class^="product"]:last-child{
 .sort-area{
 	width: 100%;
 	height: 58px;
-	-webkit-transition: opacity 0.6s;
-	transition: opacity 0.6s;
+	-webkit-transition: opacity 0.3s;
+	transition: opacity 0.3s;
 }
 .float-right{
 	float: right;
@@ -460,6 +492,18 @@ div[class^="product"]:last-child{
 	display: block;
     padding: 15px 20px;
 }
+
+
+/*FJ*/
+.txtSKUFilter .span-input {
+	display: inline-block;
+	float: left;
+}
+
+.txtSKUFilter .span-input .txtSKU {
+	font-size: 18px !important;
+}
+/*FJ*/
 
 @media only screen and (min-width: 1280px) {
     aside{

@@ -71,7 +71,8 @@ nav,
 }
 
 
-.btn, .appName, nav label{
+.btn, .appName, nav label,
+.btn:hover{
 	color: #ffffff;
 }
 .custom-classname,.eac-cval,.eac-input-wrap{
@@ -93,15 +94,44 @@ input[type=radio]:checked+label:after {
   border-right-color: #ffffff;
 }
 section{
-	background-color: #f1f5f8;
+	/*FJ*/
+	/*background-color: #f1f5f8;*/
 }
+
+/*FJ*/
+.row-conf {
+	background-color: #f1f5f8;	
+}
+/*FJ*/
+
 section.logoSection,section.optionsSection{
 	background-color: transparent;
 }
 aside{
 	background-color: #f1f5f8;
+
+	/*FJ*/
+	/*background-image: url(http://retailcs.com/3orless/PublicImages/Logo/logo-t.png);
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-position: bottom left;
+	opacity: 0.9;*/
+	/*FJ*/
 }
-main{
+
+/*FJ*/
+aside .img-logo-business {
+	display: block;
+    width: 100%;
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    opacity: 0.9;
+}
+/*FJ*/
+
+main,
+.logoApp{
 	background-color: #ffffff;
 }
 .btn:active,.btn:focus{
@@ -127,6 +157,9 @@ main{
 }
 .icon{
 	color: #ffffff;
+}
+.ico-keyboard{
+	color: #ccc;
 }
 .danger{
 	border-color: #D55271;
@@ -241,7 +274,22 @@ footer{
 }
 .form-user{
 	background-color: #f1f5f8;
+
+	/*FJ*/
+	border-color: #d2dae1;
+    border: 1px solid #d2dae1;
+    border-radius: 4px;
+    padding: 15px 0px;
+    /*FJ*/
 }
+
+/*FJ*/
+.form-user h2 {
+	margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+/*FJ*/
+
 .form-control.user{
 	background-color: transparent;
 	border-color: transparent;

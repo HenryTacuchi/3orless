@@ -133,7 +133,9 @@
 
 .messageUser {
     position: absolute;
-    top: 15px;
+    /*top: 15px;*/
+    /*FJ*/
+    top: calc(50% - 15px);
     left: 0;
     right: 0;
     z-index: 10;
@@ -141,4 +143,5 @@
     text-align: center;
     width: 36%;
     display: inline-block;
+    pointer-events:none;
 }

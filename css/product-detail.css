@@ -6,7 +6,7 @@ body{
 	align-items: stretch;
 }
 nav{
-	height: 54px;
+	/*height: 54px;*/
 	z-index: 999;
 }
 section{
@@ -26,7 +26,7 @@ article{
 }
 
 h1, h2, h3 {
-  margin-top: 12px;
+  margin-top: 10px;
   margin-bottom: 5px;
 }
 
@@ -38,11 +38,27 @@ h1, h2, h3 {
 	border-radius: 4px;
 	padding: 0 20px;	
 
+	-webkit-animation-name: productDetail;
+  	-webkit-animation-duration: 1.2s;
+	-webkit-animation-delay: 0s;
     animation-name: productDetail;
   	animation-duration: 1.2s;
 	animation-delay: 0s;
 }
 
+@-webkit-keyframes productDetail{
+	0%{
+		-webkit-transform: translateX(110%);
+    	opacity: 0;
+	}
+	50%{
+		opacity: 0;
+	}
+	100%{
+		-webkit-transform: translateX(0);
+		opacity: 1;
+	}
+}
 @keyframes productDetail{
 	0%{
 		transform: translateX(110%);
@@ -63,7 +79,7 @@ h1, h2, h3 {
 	font-family: 'Roboto Condensed';
 }
 .productDetail div[class*="col"]{
-	line-height: 200%;
+	line-height: 195%;
 }
 .txtRetailPriceRelatedProduct,.txtRetailPrice{
 	display: inline-block;
@@ -204,9 +220,23 @@ h1, h2, h3 {
 }
 
 .animateBehind{
+	-webkit-animation-name: animateBehind;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-delay: 0s;
 	animation-name: animateBehind;
 	animation-duration: 1s;
 	animation-delay: 0s;
+}
+@-webkit-keyframes animateBehind{
+	0%{
+		-webkit-transform: translateX(00px);
+	}
+	50%{
+		-webkit-transform: translateX(150px);
+	}
+	100%{
+		-webkit-transform: translateX(0px);
+	}
 }
 @keyframes animateBehind{
 	0%{
@@ -241,14 +271,17 @@ figure{
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
 
+  -webkit-animation-name: productDetail;
+  -webkit-animation-duration: 1.5s;
+  -webkit-animation-delay: 0.2s;
   animation-name: productDetail;
   animation-duration: 1.5s;
   animation-delay: 0.2s;
 }
 .views img{
 	width: 40%;
-  height: 40%;
-  padding: 10px;
+	height: 40%;
+	padding: 10px;
 }
 
 
@@ -305,27 +338,27 @@ div[class^="product"]{
 	border-radius: 4px;
 	opacity: 0;
 
+	-webkit-transform-origin: 20% 80%;
 	transform-origin: left center;
-	-webikit-transform-origin: 20% 80%;
+
+	-webkit-animation-name: translateProduct;
+	-webkit-animation-duration: 0.5s;
+	-webkit-animation-timing-function: ease-out;
 
 	animation-name: translateProduct;
-  animation-duration: 0.5s;
-  animation-timing-function: ease-out;
+	animation-duration: 0.5s;
+	animation-timing-function: ease-out;
 
-  -webkit-animation-name: translateProduct;
-  -webkit-animation-duration: 0.5s;
-  -webkit-animation-timing-function: ease-out;
-
-  -webkit-animation-fill-mode: forwards; /* Safari 4.0 - 8.0 */
-    animation-fill-mode: forwards;
-}
-@keyframes translateProduct {
-    0%   {transform: translateX(-50px); opacity: 0;}
-    100% {transform: translateX(0px); opacity: 1;}
+	-webkit-animation-fill-mode: forwards; /* Safari 4.0 - 8.0 */
+	animation-fill-mode: forwards;
 }
 @-webkit-keyframes translateProduct {
     0%   {-webkit-transform: translateX(-50px); opacity: 0;}
     100% {-webkit-transform: translateX(0px); opacity: 1;}
+}
+@keyframes translateProduct {
+    0%   {transform: translateX(-50px); opacity: 0;}
+    100% {transform: translateX(0px); opacity: 1;}
 }
 .product.product-1{
 	margin-left: 15px;
@@ -403,7 +436,7 @@ div[class^="product"]{
 
 /*btn Other Stores*/
 .storesArea{
-	max-height: 196px;
+	max-height: 295px;
 	overflow-y: auto;
 }
 .row.store{

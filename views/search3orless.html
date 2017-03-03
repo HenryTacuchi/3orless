@@ -10,11 +10,11 @@
 	<script type="text/javascript" src="../js/plugins/underscore.min.js"></script>		
 
 	<script type="text/javascript" src="../js/scripts/search3orless.js"></script>
+	<script type="text/javascript" src="../js/plugins/sweetalert.min.js" ></script>
 	<script type="text/javascript" src="../js/scripts/captions.js"></script>
 	<script type="text/javascript" src="../js/plugins/swiper.jquery.min.js"></script>
 	<script type="text/javascript" src="../js/scripts/scripts.js"></script>
 	<script type="text/javascript" src="../js/scripts/colorApp.js"></script>
-
 
 
 	<link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -29,19 +29,6 @@
 </head>
 <body>
 
-	<!--<nav class="animated fadeIn setBaColor">
-		<div class="left-options">
-			<div class="icon btn-home">&#xe610;</div>
-			<label class="appName appName3orless">
-				3orless
-			</label>			
-		</div>
-		
-		<ul class="right-options">
-			<li><div class="icon btn-scan">&nbsp;</div></li>
-			<li><div class="icon btn-cart">&#xe613;<span class="item-count"></span></div></li>
-		</ul>
-	</nav>-->
 	<!--FJ-->
 	<nav class="animated fadeIn setBaColor nav-retailcs">
 
@@ -49,13 +36,15 @@
 			<div class="icon btn-home">&#xe610;</div>
 			<label class="appName appName3orless">
 				3orless
-			</label>			
+			</label>
 		</div>
 		
 		<ul class="right-options">
-			<li><div class="icon btn-scan">&nbsp;</div></li>
-			<li class="li-options"><div class="icon btn-cart">&#xe613;<span class="item-count"></span></div></li>
-			<li><span class="span-total">Total: </span><span class="span-total span-precio-total">$789.00</span></li>
+			<li><div class="icon btn-printer">&nbsp;</div></li>
+			<!-- <li><div class="icon btn-cart">&#xe755;</div></li> -->
+			<li class="li-options"><div class="icon  btn-star">&#xe769;<span class="item-count"></span></div></li>
+			<!--<li class="li-options"><div class="icon btn-cart">&#xe613;<span class="item-count"></span></div></li>-->
+			<li class="li-total"><span class="span-total">Total: </span><span class="span-total span-precio-total">$0.00</span></li>
 		</ul>
 	</nav>
 	<!--FJ-->
@@ -108,12 +97,19 @@
 			<!-- clear filters -->
 			<!-- <button class="btn btn-block btn-filter btnFilter animated fadeIn setBaColor" >Apply Filter</button> -->
 			<!-- apply filter -->
+
+			<!--FJ-->
+			<img class="img-logo-business" src="http://retailcs.com/3orless/PublicImages/Logo/logo-t.png" alt="logo">
+			<!--FJ-->
 		</aside>
 
 		<main>
 
 			<!-- filters -->
 			<div class="filters-marked">
+				<div class="clear-filters hide">
+					<button class="lblClearFilters btn btn-clear">Clear filters</button>
+				</div>
 				<!-- <div class="filter filter-1">nike</div> -->
 			</div>
 
@@ -130,9 +126,12 @@
 				<div class="sort-area opaque">
 
 					<div class="float-left">
-						<div class="clear-filters hide">
+						<!-- <div class="clear-filters hide">
 							<button class="lblClearFilters btn btn-clear">Clear filters</button>
-						</div>
+						</div> -->
+						<!--FJ-->
+						<div class="txtSKUFilter"><span class="span-input"><input type="text" value="" class="form-control txtSKU" placeholder="Scan Product"></span></div>
+						<!--FJ-->
 					</div>
 					<div class="float-right hide">
 <!-- 						<span class="setColor">&#xe6f2</span> -->
@@ -140,8 +139,8 @@
 						<div class="dropdown">
 							<div class="btn dropdown-toggle sort-dropdown " data-toggle="dropdown">Choose Filter</div>
 							<ul class="dropdown-menu">
-								<li class="lowToHigh">Low to high</li>
-								<li class="highToLow">High to low</li>
+								<li class="lowToHigh">$ - $$</li>
+								<li class="highToLow">$$ - $</li>
 							</ul>
 						</div>		
 					</div>	

@@ -26,7 +26,7 @@
 </head>
 <body>
 
-	<nav class="animated fadeIn setBaColor">
+	<nav class="animated fadeIn setBaColor nav-retailcs">
 
 		<div class="left-options">
 			<div class="icon btn-home">&#xe610;</div>
@@ -36,14 +36,16 @@
 		</div>
 		
 		<ul class="right-options">
-			<li><div class="icon btn-cart">&#xe613;<span class="item-count"></span></div></li>
+			<!--<li><div class="icon btn-cart">&#xe613;<span class="item-count"></span></div></li>-->
+			<li class="li-options"><div class="icon btn-cart">&#xe755;<span class="item-count"></span></div></li>
+			<li class="li-total"><span class="span-total">Total: </span><span class="span-total span-precio-total">$0.00</span></li>
 		</ul>
 	</nav>
 
 	<section class="section-product-detail">
 		<!-- product details -->
 		<article class="productDetail">
-			<h3 class="lblProductDetail txtProductDetail">Product Detail</h3>
+			<h3 class="lblProductDetail txtProductDetail" id="title-product">Product Detail</h3>
 			<div class="row">
 				<!-- <div class="col-xs-5 lblBrand">Brand</div><div class="col-xs-7 txtBrand"></div> -->
 				<div class="col-xs-12 txtBrand setColor"></div>
