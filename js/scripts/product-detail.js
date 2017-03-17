@@ -1,6 +1,7 @@
 $(document).ready(function(){
     var data;
 
+    setCaptions();
     //show or hide options for 3orless or Kiosk
     if(localStorage.flag3orless == 1){
         $(".right-options").show();
@@ -30,7 +31,7 @@ $(document).ready(function(){
     getProductSelect();    
 
     //cart button redirects to cart items screen
-    $(".btn-cart").click(function(){
+    $(".btn-star").click(function(){
         if(localStorage.countProductCartItem==null ||  localStorage.countProductCartItem==0){
             swal({
               title: "El carrito está vacío",
@@ -52,7 +53,13 @@ $(document).ready(function(){
 
     //home button redirects to home screen
     $(".btn-back").click(function(){
-        window.history.back();
+        localStorage.isComingBack = 1;
+        if (localStorage.flag3orless == 0){
+            window.location = "searchKiosk.html";
+        }else{
+            window.location = "search3orless.html";
+        }
+        // window.history.back();
     });
     $(".btn-add-continue").click(function(){
         //if product has added successfully to cart item, redirects to search screen
@@ -93,17 +100,11 @@ $(document).ready(function(){
                 //Product Selected                
                 data = result; 
                 if (data != null) {
-                    if (localStorage.current_lang == "es") {
-                        title = "Otras Tiendas";            
-                        lblAddress = "Direccion:";
-                        lblPhone = "Teléfono:";
-                        confirmButtonText = "Ok, Genial!";
-                    }else{
-                        title = "Other Stores";
-                        lblAddress = "Address:";
-                        lblPhone = "Phone:";
-                        confirmButtonText = "Ok, Cool!";
-                    }
+
+                    title = localStorage.caption_modalStoreTitle;            
+                    lblAddress = localStorage.caption_lblAddress + ":";
+                    lblPhone = localStorage.caption_lblNumber + ":";
+                    confirmButtonText = localStorage.caption_txtConfirmButton;
 
                     textStores = "<ul class='storesArea'>";
                         
@@ -123,7 +124,7 @@ $(document).ready(function(){
                           "</div>"+
                           "<div class='col-xs-3 center-text'>"+
                             "<div class='text-right'>"+
-                              "<span class='txtStockOtherStore'>Stock:</span>"+
+                              "<span class='txtStockOtherStore'>"+localStorage.caption_lblOnHand+":</span>"+
                               "<span class='lblStockOtherStore'>"+stockQty+"</span>"+
                             "</div>"+
                           "</div>"+
@@ -166,14 +167,8 @@ $(document).ready(function(){
 	    }
 	}
 
-	//when page is loaded hide loaders
-    $(window).on("load", function() {
-       showLoading(false);
-    });
-
 
     function getProductSelect(){
-    	showLoading(true);
         var tempColorSelected;
         var webServiceURL = "";
 
@@ -192,6 +187,12 @@ $(document).ready(function(){
             contentType: "application/json",
             crossdomain: true,
             timeout: 10000,
+            beforeSend: function(){
+                showLoading(true);
+            },
+            complete: function(){
+                showLoading(false);
+            },
             success: function (result) {
                 //Product Selected                
                 if(localStorage.resultsProductSKUSelected == undefined || localStorage.resultsProductSKUSelected == ''){
@@ -274,11 +275,17 @@ $(document).ready(function(){
                 	}
 
                     $(".related-products").addClass("items-"+ countProductItem);
+                    localStorage.removeItem("resultsProductSKUSelected");
                 }
                 else{
                     localStorage.removeItem("resultsProductSKUSelected");
-                    window.location = "searchKiosk.html";
-                }              
+                    if (localStorage.flag3orless == 0) {
+                        window.location = "searchKiosk.html";
+                    }else{
+                        window.location = "search3orless.html";
+                    }
+                }   
+                $(".txtStyleName").text(localStorage.caption_txtStyleName);           
 
             },
             error: function (error) {
@@ -352,10 +359,14 @@ function setSizeImages(){
 }
 
 function handleError(image){
-    image.src = '../img/imNoFound.jpg';
+    if (localStorage.current_lang == "es") {
+        image.src = '../img/imNoFound-es.jpg';
+    }else{
+        image.src = '../img/imNoFound.jpg';
+    }
 }
 
-$(window).load(function(){
+$(window).on("load", function() {
     setSizeImages();
     resizeElement();
 });
@@ -363,4 +374,24 @@ $(window).load(function(){
 function resizeElement(){
     $('.img-product').height($('.product').width()).width($('.product').width());
     // $('.img-product').width( $('.img-product').height());
+}
+
+function setCaptions(){
+    $(".lblStyle").text(localStorage.caption_lblStyle);
+    $(".lblPrice").text(localStorage.caption_lblPrice);
+    $(".lblSize").text(localStorage.caption_lblSize);
+    $(".lblOnHand").text(localStorage.caption_lblOnHand);
+
+    $(".lblRelatedProduct").text(localStorage.caption_lblRelatedProduct);
+    $(".txtNoRelated").text(localStorage.caption_txtNoRelated);
+
+    $(".btn-back").text(localStorage.caption_btnBack);
+    $(".btn-add-continue").text(localStorage.caption_btnAddContinue);
+    $(".btn-add-finish").text(localStorage.caption_btnAddFinish);
+    $(".btn-CheckStores").text(localStorage.caption_btnCheckStores);
+    if(localStorage.flag3orless == 0){
+        $(".appName3orless").text(localStorage.caption_option2);
+    }else{
+        $(".appName3orless").text(localStorage.caption_option3);
+    }
 }

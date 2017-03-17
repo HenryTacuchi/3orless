@@ -6,6 +6,7 @@ body{
 	align-items: stretch;
 }
 nav{
+	/*FJ*/
 	/*height: 54px;*/
 	background-color: #58abb7;
 	z-index: 999;
@@ -20,22 +21,24 @@ section{
 	align-content: stretch;
 }
 article {
-  min-width: 480px;
-  width: 80%;
-  margin: 15px;
+	min-width: 480px;
+	width: 80%;
+	/*margin: 15px;*/
+	/*FJ*/
+	margin: 15px 15px 10px 15px;
 }
 
-.icon.btn-star {
-	-webkit-transform: translate3d(0,1px,0);
-    transform: translate3d(0,1px,0);
-}
+
 /*form*/
 .form-user{
-
+	padding: 10px 0px 20px !important;
 }
 .form-user h2{
 	font-weight: 100;
+	margin-top: 5px !important;
+    margin-bottom: 2px !important;
 }
+
 form{
 	padding: 15px;
   max-width: 480px;
@@ -57,6 +60,7 @@ form{
 
 /*cart items*/
 .cart-items{
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	border-width: 1px;
@@ -70,21 +74,19 @@ form{
 	padding: 10px 0;
 }
 
-
-/*FJ*/
-.btn-start {
-	/*background-image: url(../img/catalog/icon-star.svg);*/
-    background-repeat: no-repeat;
-    background-size: 25px;
-    background-position: 17px 7px;
+.cart-items .thead{
+	border-top-right-radius: 3px;
+	border-top-left-radius: 3px;
 }
-/*FJ*/
-
-
 /* FJ - Inicio */
 .tfooter {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
 	background-color: #f1f5f8;
 	padding: 10px;
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
 }
 
 .tfooter .footer-text-right {
@@ -183,7 +185,8 @@ form{
   display: block;
   float: left;
 }
-.btn-done:before {
+
+.btn-order:before {
   content: '\e744';
   margin-left: -1em;
   font-size: 100%;
@@ -201,7 +204,18 @@ form{
   display: block;
   float: left;
 }
-
+/*FJ*/
+.btn-start {
+	/*background-image: url(../img/catalog/icon-star.svg);*/
+    background-repeat: no-repeat;
+    background-size: 25px;
+    background-position: 17px 12px;
+}
+/*FJ*/
+.ico-keyboard{
+	font-family: 'Scalia User Icons';
+	padding: 4px 10px 3px;
+}
 
 /*loader printer*/
 .loader-principal-printer {
@@ -347,4 +361,9 @@ form{
 
 .loader.show ~ .sweet-alert{
 	opacity: 0;
+}
+
+.form-group.scan{
+	margin-top: 5px;
+	margin-bottom: 5px;
 }

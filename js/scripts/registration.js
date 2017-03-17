@@ -25,25 +25,9 @@ var correctnumberFormat = true;
         $("#fullYear").drum('setIndex', getIndexForValue($("#fullYear")[0], datetime.getFullYear()));
       }
 
-  // //PhoneNumber
-  //   //Function to add a method for USphoneNumber validation
-  //   /*$.validator.addMethod( "phoneUS", function( phone_number, element ){
-  //       phone_number = phone_number.replace( /\s+/g, "" );
-  //       return this.optional( element ) || phone_number.length > 9 &&
-  //       phone_number.match( /^(\+?1-?)?(\([2-9]([02-9]\d|1[02-9])\)|[2-9]([02-9]\d|1[02-9]))-?[2-9]([02-9]\d|1[02-9])-?\d{4}$/ );},
-  //      "Please specify a valid phone number (234) 999 2345" );
-  //   */
-  //   //Function to provide a mask to phoneNumber
-    // $(window).load(function(){
-    //    var phones = [{ "mask": "(###) ###-####"}];
-    //     $('.txtNumber').inputmask({ 
-    //         mask: phones, 
-    //         greedy: false, 
-    //         definitions: { '#': { validator: "[0-9]", cardinality: 1}} });});
-
-
 $(document).ready(function () {
 
+    setCaptions();
     $('.txtEmail').bind('keypress', function(event) {
     if(event.which == 13||event.which == 10) {
       $("input").blur();
@@ -133,78 +117,6 @@ $(document).ready(function () {
       }
     });
 
-//Function to validate phoneNumber can't be blank
-/*  $('.txtNumber').on('input', function () {
-      $('.txtNumber2').focus();
-      var phoneNumber = $('.txtNumber').val();
-      if (phoneNumber) {
-          $('.txtNumber').removeClass("invalid").addClass("valid");
-      }
-      else {
-          $('.txtNumber').removeClass("valid").addClass("invalid");
-      }
-  });
-*/
-//Function to enter numbers for phoneNumber2
-  // $('.txtNumber').on('click',function() {
-  //   $('.txtNumber2').focus();
-  // });
-//Function to enter numbers for phoneNumber2
-  // $('.txtNumber2').on('input',function() {
-  //   var littleNum=$(this).val();
-  //   $('.txtNumber').val(littleNum);
-  // });
-//Function to animate 'tab' on phoneNumber2
-    // $('.txtNumber2').bind('keypress', function(event) {
-    //   if(event.which ==9||event.which == 13||event.which == 10) {
-    //     $('.txtFirstName').blur();
-    //     $('.txtLastName').blur();
-    //     $('.txtNumber').blur();
-    //     $('.txtNumber2').blur();
-    //     $('.txtEmail').blur();
-    //     $('.txtBirthDate').blur();
-    //   }
-    // });
-    // //Function to animate 'tab' on phoneNumber
-    // $('.txtNumber').bind('keypress', function(event) {
-    //   if(event.which ==9||event.which == 13||event.which == 10) {
-    //     $('.txtFirstName').blur();
-    //     $('.txtLastName').blur();
-    //     $('.txtNumber').blur();
-    //     $('.txtNumber2').blur();
-    //     $('.txtEmail').blur();
-    //     $('.txtBirthDate').blur();
-    //   }
-    // });
-
-//Function to animate 'tab' on phoneNumber2
-    // $('.txtNumber2').bind('keydown', function(event) {
-    //   var littleNum=$(this).val();
-    //   if (littleNum > 999999999 && event.which !=8)
-    //     $('.txtNumber2').blur();
-
-    //   if(event.which ==9||event.which == 13||event.which == 10) {
-    //     $('.txtFirstName').blur();
-    //     $('.txtLastName').blur();
-    //     $('.txtNumber').blur();
-    //     $('.txtNumber2').blur();
-    //     $('.txtEmail').blur();
-    //     $('.txtBirthDate').blur();
-    //   }
-    // });
-    // //Function to animate 'tab' on phoneNumber
-    // $('.txtNumber').bind('keydown', function(event) {
-    //   if(event.which ==9||event.which == 13||event.which == 10) {
-    //     $('.txtFirstName').blur();
-    //     $('.txtLastName').blur();
-    //     $('.txtNumber').blur();
-    //     $('.txtNumber2').blur();
-    //     $('.txtEmail').blur();
-    //     $('.txtBirthDate').blur();
-    //   }
-    // });
-
-
 // Function to autocomplete domain of the email
     $('.txtEmail').emailautocomplete({
         suggClass: "custom-classname", //default: "eac-sugg". your custom classname (optional)
@@ -264,7 +176,7 @@ $(document).ready(function () {
             if (email.length==0){
               $(".txtEmail").focus();
               $(".noEmail").removeClass("hide").addClass("show");
-              if (localStorage.current_lang == "es") { $(".noEmail").text("Complete el campo requerido!"); } 
+              $(".noEmail").text(localStorage.caption_msgCompleteRequiredField);
             }else{
               if($(".noEmail").hasClass("show"))
                 $(".noEmail").removeClass("show").addClass("hide");
@@ -272,24 +184,15 @@ $(document).ready(function () {
             if (!correctnumberFormat){
               $(".txtNumber").focus();
               $(".noNumber").removeClass("hide").addClass("show");
-              if (localStorage.current_lang == "es") { $(".noNumber").text("Por favor, ingrese un número válido!"); } 
-              else { $(".noNumber").text("Please enter a valid phone number!"); }    
+              $(".noNumber").text(localStorage.caption_msgInsertValidPhoneNumber);
             }else{
               if($(".noNumber").hasClass("show"))
                 $(".noNumber").removeClass("show").addClass("hide");
             }
-            // if (phoneNumber==0){
-            //   $(".txtNumber").focus();
-            //   $(".noNumber").removeClass("hide").addClass("show");
-            //   if (localStorage.current_lang == "es") { $(".noNumber").text("Complete el campo requerido!"); } 
-            // }else{
-            //   if($(".noNumber").hasClass("show"))
-            //     $(".noNumber").removeClass("show").addClass("hide");
-            // }
             if (lastName.length==0){
               $(".txtLastName").focus();
               $(".noLastName").removeClass("hide").addClass("show");
-              if (localStorage.current_lang == "es") { $(".noLastName").text("Complete el campo requerido!"); } 
+              $(".noLastName").text(localStorage.caption_msgCompleteRequiredField);
             }else{
               if($(".noLastName").hasClass("show"))
                 $(".noLastName").removeClass("show").addClass("hide");
@@ -297,7 +200,7 @@ $(document).ready(function () {
             if (firstName.length==0){
               $(".txtFirstName").focus();
               $(".noFirstName").removeClass("hide").addClass("show");
-              if (localStorage.current_lang == "es") { $(".noFirstName").text("Complete el campo requerido!"); } 
+              $(".noFirstName").text(localStorage.caption_msgCompleteRequiredField);
             }else{
               if($(".noFirstName").hasClass("show"))
                 $(".noFirstName").removeClass("show").addClass("hide");
@@ -312,8 +215,7 @@ $(document).ready(function () {
             }
             $(".validations").removeClass("hide").addClass("animated fadeInLeft");
 
-            if (localStorage.current_lang == "es") { $(".txtMessage").text("Por favor, verifique los campos e inténtelo nuevamente!"); } 
-            else { $(".txtMessage").text("Validation errors occurred. Please confirm the fields and submit it again!"); } 
+            $(".txtMessage").text(localStorage.caption_msgVerifyFields);
 
             $(".validations").delay(delay).queue(function(){
                 $(this).addClass("animated fadeOutLeft").dequeue();
@@ -346,106 +248,52 @@ $(document).ready(function () {
           },
           success: function (result) {
                   if (result == 1) {
-                      //alert(" Now check your email to confirm your subscription!");
-                      // $("#modalSuccessfull").modal("show");
-                      if (localStorage.current_lang == "es") 
-                          swal({
-                          title: "Confirmación de Registro",
-                          text: "Gracias por suscribirse.",
+                      swal({
+                          title: localStorage.caption_modalRegisterConfirmationTitle,
+                          text: localStorage.caption_modalRegisterConfirmationText,
                           type: "success",
                           confirmButtonColor: "#8fbf75",
-                          confirmButtonText: "¡Ok, Genial!",          
+                          confirmButtonText: localStorage.caption_txtConfirmButton,          
                           closeOnConfirm: false
                         },
                         function(isConfirm){
                           showLoading(false);         
                           window.location = "menu.html";
-                        });
-                      else        
-                        swal({
-                          title: "Registry Confirmation",
-                          text: "Thanks for your subscription.",
-                          type: "success",
-                          confirmButtonColor: "#8fbf75",
-                          confirmButtonText: "Ok, Cool!",         
-                          closeOnConfirm: false
-                        },
-                        function(isConfirm){
-                          showLoading(false);         
-                          window.location = "menu.html";
-                        });
+                        });                      
                   }
                   else if (result == 2) {
-                      //alert("Its already registered");
-                      // $("#modalAlreadySubscription").modal("show");
-                      if (localStorage.current_lang == "es") 
-                          swal({
-                          title: "Información de Registro",
-                          text: "El correo ya ha sido registrado.",
+                      swal({
+                          title: localStorage.caption_modalRegisterInformationTitle,
+                          text: localStorage.caption_modalRegisterInformationText,
                           type: "warning",
                           confirmButtonColor: "#8fbf75",
-                          confirmButtonText: "¡Ok, Reintentar!",          
-                          closeOnConfirm: true
-                        });
-                      else        
-                        swal({
-                          title: "Registry Information",
-                          text: "Email it´s already registered.",
-                          type: "warning",
-                          confirmButtonColor: "#8fbf75",
-                          confirmButtonText: "Ok, Retry!",         
+                          confirmButtonText: localStorage.caption_txtConfirmButtonRetry,          
                           closeOnConfirm: true
                         });
                   }
                   else if (result == 3) {
-                      //alert("We couldn't send the email");
-                      // $("#modalIncompleteEmail").modal("show");
-                      if (localStorage.current_lang == "es") 
-                          swal({
-                          title: "Información de Registro",
-                          text: "No hemos podido enviar el correo. Por favor, revise la información ingresada.",
+                      swal({
+                          title: localStorage.caption_modalRegisterInformationTitle,
+                          text: localStorage.caption_modalMailNotSendText,
                           type: "warning",
                           confirmButtonColor: "#8fbf75",
-                          confirmButtonText: "¡Ok, Reintentar!",          
+                          confirmButtonText: localStorage.caption_txtConfirmButtonRetry,          
                           closeOnConfirm: true
-                        });
-                      else        
-                        swal({
-                          title: "Registry Information",
-                          text: "We couldn't send the email. Please, check your information.",
-                          type: "warning",
-                          confirmButtonColor: "#8fbf75",
-                          confirmButtonText: "Ok, Retry!",         
-                          closeOnConfirm: true
-                        });
+                        });                      
                   }
                   else {
-                      //alert("ERROR" + result);
-                      // $("#modalNoConection").modal("show");
-                      if (localStorage.current_lang == "es") 
-                          swal({
-                          title: "Información de Registro",
-                          text: "Error de conexión. Por favor, inténtelo nuevamente.",
+                      swal({
+                          title: localStorage.caption_modalRegisterInformationTitle,
+                          text: localStorage.caption_modalConnectionErrorText,
                           type: "warning",
                           confirmButtonColor: "#8fbf75",
-                          confirmButtonText: "¡Ok, Reintentar!",          
-                          closeOnConfirm: true
-                        });
-                      else        
-                        swal({
-                          title: "Registry Information",
-                          text: "Connection error. Please, try again.",
-                          type: "warning",
-                          confirmButtonColor: "#8fbf75",
-                          confirmButtonText: "Ok, Retry!",         
+                          confirmButtonText: localStorage.caption_txtConfirmButtonRetry,          
                           closeOnConfirm: true
                         });
                   }
               
           },
           error: function (error) {
-                  // $(".loader").css('display', 'none');
-              //alert("Web Service was not consumed.\n" + "error = " + error.status + " " + error.statusText);
               $("#modalNoConection").modal("show");
           },
       });
@@ -490,6 +338,11 @@ $('.txtBirthDate').click(function(){
 
 });
 
+//when page is loaded hide loaders
+$(window).on("load", function() {
+  showLoading(false);
+});
+
 //show or hide main loader
 function showLoading(option){
     if(option){  
@@ -506,33 +359,47 @@ function showLoading(option){
 }
 
 function validatePhone(phoneField, format) {
-    var num = phoneField.replace(/[^\d]/g,'');
-    if(num.length != 10 && num.length != 0) {
-        //Alert the user that the phone number entered was invalid.
-        // alert('Please enter a valid phone number including area code'); 
-        // $(".txtNumber").focus();
-        correctnumberFormat = false;
-        $(".noNumber").removeClass("hide").addClass("show");
-        if (localStorage.current_lang == "es") { $(".noNumber").text("Por favor, ingrese un número válido!"); } 
-        else { $(".noNumber").text("Please enter a valid phone number!"); }                  
-    } else if (num.length == 0){
-      $(".txtNumber").val("");
-      $(".placeholder").show();
-    } else{
-      correctnumberFormat = true;
-      $(".noNumber").removeClass("show").addClass("hide");
-        //Email was valid.  If format type is set, format the Phone to the desired style.
-       switch(format) {
-            case '(xxx)-xxx-xxxx': //Format (xxx)-xxx-xxxx
-                $(".txtNumber").val("(" + num.substring(0,3) + ") " + num.substring(3, 6) + "-" + num.substring(6));
-                break;
-            case '1': //Format xxx-xxx-xxxx
-                $(".txtNumber").val(num.substring(0,3) + "-" + num.substring(3, 6) + "-" + num.substring(6));
-                break;
-            default: //Format xxxxxxxxxx
-                $(".txtNumber").val(num);
-                break;
-        }
-    }
+  var num = phoneField.replace(/[^\d]/g,'');
+  if(num.length != 10 && num.length != 0) {
+      //Alert the user that the phone number entered was invalid.
+      // alert('Please enter a valid phone number including area code'); 
+      // $(".txtNumber").focus();
+      correctnumberFormat = false;
+      $(".noNumber").removeClass("hide").addClass("show");
+      if (localStorage.current_lang == "es") { $(".noNumber").text("Por favor, ingrese un número válido!"); } 
+      else { $(".noNumber").text("Please enter a valid phone number!"); }                  
+  } else if (num.length == 0){
+    $(".txtNumber").val("");
+    $(".placeholder").show();
+  } else{
+    correctnumberFormat = true;
+    $(".noNumber").removeClass("show").addClass("hide");
+      //Email was valid.  If format type is set, format the Phone to the desired style.
+     switch(format) {
+          case '(xxx)-xxx-xxxx': //Format (xxx)-xxx-xxxx
+              $(".txtNumber").val("(" + num.substring(0,3) + ") " + num.substring(3, 6) + "-" + num.substring(6));
+              break;
+          case '1': //Format xxx-xxx-xxxx
+              $(".txtNumber").val(num.substring(0,3) + "-" + num.substring(3, 6) + "-" + num.substring(6));
+              break;
+          default: //Format xxxxxxxxxx
+              $(".txtNumber").val(num);
+              break;
+      }
   }
+}
 
+function setCaptions(){
+  $(".lblCreateAccount").text(localStorage.caption_lblCreateAccount);
+  $(".lblName").html(localStorage.caption_lblNameRequired);
+  $(".lblLastName").html(localStorage.caption_lblLastNameRequired);
+  $(".lblInstructions").text(localStorage.caption_lblInstructions);
+  $(".lblNumber").html(localStorage.caption_lblNumber);
+  $(".lblBirthDate").html(localStorage.caption_lblBirthDate);
+  $(".appNameRegistration").text(localStorage.caption_option1);
+  $(".btnSubmit").text(localStorage.caption_btnSubmit);  
+  $(".btnModalDone").text(localStorage.caption_btnModalDone);
+  $(".modalTitle").text(localStorage.caption_modalBirthdayTitle);  
+  $(".txtEmail").attr('placeholder',localStorage.caption_emailUser);
+  $(".lblEmail").html(localStorage.caption_lblEmailRequired);
+}

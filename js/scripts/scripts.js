@@ -37,29 +37,6 @@ $(document).ready(function(){
 
 	});
 
-	// $('.menu-item').click(function(){
-	// 	// if($(".filters-marked").hasClass("hide"))
-	// 	// 	$(".filters-mark ed").removeClass("hide").addClass("show");
-	// 	// else
-	// 	// 	$(".filters-marked").addClass("show");	
-	// 	if($(".results").hasClass("hide"))
-	// 		$(".results").removeClass("hide").addClass("show");
-	// 	else
-	// 		$(".results").addClass("show");		
-	// 	// add or remove selected class when you click a filter from any category
-
-	// 	if($(this).hasClass('selected')){
-	// 		removeFilter($(this));
-	// 		$(this).removeClass('selected');
-	// 	}else{
-	// 		addFilter($(this));
-	// 		$(this).addClass('selected');			
-	// 	}
-
-	// 	checkFiltersMarked();
-
-	// });
-
 	$('.dropdown-menu li').click(function(){
 		// add or remove selected class when you click a filter from any category
 		if($('.sort-dropdown').hasClass('lowToHigh')){
@@ -67,6 +44,13 @@ $(document).ready(function(){
 		}else{
 			$('.sort-dropdown').removeClass('highToLow').addClass($(this).attr('class')).text($(this).text());
 		}		
+	});
+
+	$('.checkbox-control').click(function(){
+		if(!$(this).find('.checkbox').hasClass('checked'))
+			$(this).find('.checkbox').addClass('checked');
+		else
+			$(this).find('.checkbox').removeClass('checked');
 	});
 
 
@@ -91,7 +75,9 @@ $(window).load(function(){
 	//set colorPicker color
 	var pathName = location.href.substring(location.href.lastIndexOf("/")+1);
 	if(pathName == "config.html"){
+		if (localStorage.colorBackground != undefined && localStorage.colorBackground != "") {
 		document.getElementById('valueBtn').jscolor.fromString(localStorage.colorBackground);	
+		}
 	}
 })
 
@@ -185,25 +171,15 @@ function addProductCartItem(){
 	    return true;
 	}
 	else{
-		if (localStorage.current_lang == "es")
-			swal({
-				title: "Mensaje",
-				text:  "El producto ya ha sido agregado!",
+		swal({
+				title: localStorage.caption_modalProductAlreadyInsertedTitle,
+				text:  localStorage.caption_modalProductAlreadyInsertedText,
 				type: "warning",
 				confirmButtonColor: "#DD6B55",
-				confirmButtonText: "¡Ok, Gracias!"
-			});
-		else{
-			swal({
-				title: "Message",
-				text:  "Product has been already added!",
-				type: "warning",
-				confirmButtonColor: "#DD6B55",
-				confirmButtonText: "Ok, Thanks!"
+				confirmButtonText: localStorage.caption_txtConfirmButton
 			});
 		}
-		return false;
-	}
+	return false;
 }
 
 //validate if a product has been added to cart

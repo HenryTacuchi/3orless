@@ -32,11 +32,11 @@ $(document).ready(function(){
     });
 
     $(".section-form-user input").focus(function(){
-		$(".section-cart-items").hide();
+		$(".cart-items").hide();
 	});
 
 	$(".section-form-user input").blur(function(){
-		$(".section-cart-items").show();
+		$(".cart-items").show();
 	});
 
     $(".section-cart-items input").focus(function(){
@@ -89,7 +89,7 @@ $(document).ready(function(){
 		localStorage.currentFirstNameClient = $(".txtFirstName").val();
         localStorage.currentLastNameClient = $(".txtLastName").val();
         localStorage.currentEmailClient = $(".txtEmail").val();
-		window.location = "menu.html";
+		window.history.back();
 	});
 
 	//home button redirects to home screen
@@ -107,107 +107,7 @@ $(document).ready(function(){
 
     //order button redirects to home screen
     $(".btn-order").click(function(){
-    	sendOrder();
-    });
-
-    $(document).on("click",".btn-trash",function(){
-    	removeAnimationFlipIn = true;
-    	var i,indexDelete = localStorage.countScannedItem;
-    	// var styleCode = $(this).attr("data-style");
-    	// var colorCode = $(this).attr("data-color");    	
-    	// var size = $(this).attr("data-size");
-    	var sku = $(this).attr("data-sku");
-    	var found = false;
-    	for (i = 1; i <= localStorage.countScannedItem; i++) {
-			var productObject = JSON.parse(localStorage["scannedItem"+i]);
-			// if(productObject.Product.styleCode == styleCode 
-			// 	&& productObject.Product.colorCode == colorCode
-			// 	&& productObject.Product.size == size)
-			if(productObject.Product.sku == sku && found == false){
-				found = true;
-				indexDelete = i;
-			}
-			if(i>indexDelete){
-				localStorage["scannedItem"+(i-1)] = localStorage["scannedItem"+i]
-			}
-		}
-		localStorage.removeItem("scannedItem" + localStorage.countScannedItem--);
-		$(this).parent().parent().removeClass('animated flipInX').addClass('animated fadeOutLeft');
-		$(".items").delay(2000,function() { $(".items").empty(); });
-		
-		setTimeout(function(){ 
-			$(".items").empty();
-			getProductList();
-			setColorApp();}, 500);
-    });
-
-
-    /* INICIO FJ */
-    $(document).on('click', '.btn-tecla', function(){
-
-    	var tecla = $(this).attr('valor');    	
-    	switch(tecla){
-    		case 'bkspc':
-    			if ($('.txtScan').val()!='') {
-    				var txtScan = $('.txtScan').val();
-    				txtScan = txtScan.split('');
-    				txtScan.pop();
-    				txtScan = txtScan.join('');
-		    		$('.txtScan').val(txtScan);
-		    	}
-    			break;
-    		case 'clr':
-    			if ($('.txtScan').val()!='') {
-    				$('.txtScan').val('');
-		    	}
-    			break;
-    		case 'enter':
-    			if ($('.txtScan').val().length == 7) {
-    				searchProduct($('.txtScan').val());
-    			} else {
-    				// alert('Codigo incorrecto');
-    				if($(".txtMessage").hasClass("success")){
-						$(".txtMessage").removeClass("success").addClass("danger");
-						$(".btn-mini-img").removeClass("success").addClass("danger").find('span').empty().html('&#xe645');
-					}
-					else{
-						$(".txtMessage").addClass("danger");
-						$(".btn-mini-img").addClass("danger").find('span').empty().html('&#xe645');
-					}
-
-					$(".validations").removeClass("hide").addClass("animated fadeInLeft");
-
-					$(".txtMessage").html(localStorage.caption_notfound);
-					$(".validations").delay(delay).queue(function(){
-					    $(this).addClass("animated fadeOutLeft").dequeue();
-					});
-    			}
-    			break;
-    		default:
-    			if (!isNaN(tecla)) {
-			    	if ($('.txtScan').val()=='') {
-			    		$('.txtScan').val(tecla);
-			    	} else {
-			    		if ($('.txtScan').val().length < 7) {
-			    			$('.txtScan').val($('.txtScan').val()+tecla);
-			    		}
-			    	}
-			    }
-    			break;
-    	}
-    });
-    /* FIN FJ */
-
-
-});
-
-$(window).load(function(){
-    setSizeCart();
-    setColorApp();
-});
-
-function sendOrder(){
-	showLoading(true);
+    	showLoading(true);
     	var bodyJson;
     	localStorage.currentFirstNameClient = $(".txtFirstName").val();
         localStorage.currentLastNameClient = $(".txtLastName").val();
@@ -221,12 +121,6 @@ function sendOrder(){
     	var email = $(".txtEmail").val();
     	var checkEmail = validateEmail();
     	var orderNumber = "";
-    	var urlWebService = "";
-    	if (localStorage.transactionType == "salesorder"){
-    		urlWebService = "http://" + localStorage.serverId + "/WS3orlessFiles/S3orLess.svc/NPRODUCT/CreateSO/" + localStorage.storeNo + "/" + firstName + "/" + lastName + "/" + email;
-    	}else{
-    		urlWebService = "http://" + localStorage.serverId + "/WS3orlessFiles/S3orLess.svc/NPRODUCT/CreateReceipt/" + localStorage.storeNo + "/" + firstName + "/" + lastName + "/" + email;
-    	}
 
     	//if name and email has correct format
 		if (firstName.length > 0 && lastName.length > 0 && checkEmail != -1 && localStorage.countScannedItem > 0) { 
@@ -247,7 +141,7 @@ function sendOrder(){
 						"}"
 			$.ajax({
 		        type: "POST",
-		        url: urlWebService,
+		        url: "http://" + localStorage.serverId + "/WS3orlessFiles/S3orLess.svc/NPRODUCT/CreateSO/" + localStorage.storeNo + "/" + firstName + "/" + lastName + "/" + email,
 		        async: true,
         		data: bodyJson,
 		        contentType: "application/json",
@@ -279,27 +173,7 @@ function sendOrder(){
 		            }
 		        },
 		        error: function (error) {
-					console.log(error);    
-					swal({
-						title: localStorage.caption_modalOrderTitle,
-						text:  localStorage.caption_modalOrderError,
-						type: "warning",
-						showCancelButton: true,
-						confirmButtonColor: "#8fbf75",
-						confirmButtonText: localStorage.caption_txtConfirmButtonRetry,
-						cancelButtonColor: "#b9b9b9",
-						cancelButtonText: localStorage.caption_txtCancelButtonFinish,
-						closeOnConfirm: false,
-						closeOnCancel: false
-						},
-						function(isConfirm){
-						  if (isConfirm) {
-						    sendOrder();
-						  } else {						    
-							clearPage();
-							showLoading(false);			  	
-						  }
-					});
+		        	       console.log(error);    	
 		        }
 		    });
 		}    
@@ -362,7 +236,89 @@ function sendOrder(){
 
 		}	
 		$(".btn-order").prop("disabled",false);
-}
+
+    });
+
+    $(document).on("click",".btn-trash",function(){
+    	removeAnimationFlipIn = true;
+    	var i,indexDelete = localStorage.countScannedItem;
+    	// var styleCode = $(this).attr("data-style");
+    	// var colorCode = $(this).attr("data-color");    	
+    	// var size = $(this).attr("data-size");
+    	var sku = $(this).attr("data-sku");
+    	var found = false;
+    	for (i = 1; i <= localStorage.countScannedItem; i++) {
+			var productObject = JSON.parse(localStorage["scannedItem"+i]);
+			// if(productObject.Product.styleCode == styleCode 
+			// 	&& productObject.Product.colorCode == colorCode
+			// 	&& productObject.Product.size == size)
+			if(productObject.Product.sku == sku && found == false){
+				found = true;
+				indexDelete = i;
+			}
+			if(i>indexDelete){
+				localStorage["scannedItem"+(i-1)] = localStorage["scannedItem"+i]
+			}
+		}
+		localStorage.removeItem("scannedItem" + localStorage.countScannedItem--);
+		$(this).parent().parent().removeClass('animated flipInX').addClass('animated fadeOutLeft');
+		$(".items").delay(2000,function() { $(".items").empty(); });
+		
+		setTimeout(function(){ 
+			$(".items").empty();
+			getProductList();
+			setColorApp();}, 500);
+
+    });
+
+    /* INICIO FJ */
+    $(document).on('click', '.btn-tecla', function(){
+
+    	var tecla = $(this).attr('valor');    	
+    	switch(tecla){
+    		case 'bkspc':
+    			if ($('.txtScan').val()!='') {
+    				var txtScan = $('.txtScan').val();
+    				txtScan = txtScan.split('');
+    				txtScan.pop();
+    				txtScan = txtScan.join('');
+		    		$('.txtScan').val(txtScan);
+		    	}
+    			break;
+    		case 'clr':
+    			if ($('.txtScan').val()!='') {
+    				$('.txtScan').val('');
+		    	}
+    			break;
+    		case 'enter':
+    			if ($('.txtScan').val().length == 7) {
+    				searchProduct($('.txtScan').val());
+    			} else {
+    				alert('Codigo incorrecto');
+    			}
+    			break;
+    		default:
+    			if (!isNaN(tecla)) {
+			    	if ($('.txtScan').val()=='') {
+			    		$('.txtScan').val(tecla);
+			    	} else {
+			    		if ($('.txtScan').val().length < 7) {
+			    			$('.txtScan').val($('.txtScan').val()+tecla);
+			    		}
+			    	}
+			    }
+    			break;
+    	}
+    });
+    /* FIN FJ */
+
+});
+
+$(window).load(function(){
+    setSizeCart();
+    setColorApp();
+});
+
 //check email format
 function validateEmail(){
     var email=$(".txtEmail").val();
@@ -447,10 +403,10 @@ function showLoading(option){
 function setSizeCart(){
 	// $('.items').height(0);
 	setTimeout(function() {
-        $(".items").animate({
-            height: $('.cart-items').height(),
-            'padding-bottom':$('.tfooter').outerHeight()
-        }, 500);
+        // $(".items").animate({
+        //     height: $('.cart-items').height(),
+        //     'padding-bottom':$('.tfooter').outerHeight()
+        // }, 500);
     }, 100 );
 	// setTimeout(function(){ $('.items').height($('.cart-items').height() - 50); }, 100);	
 }

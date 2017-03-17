@@ -11,7 +11,7 @@
 
 	<script type="text/javascript" src="../js/scripts/search3orless.js"></script>
 	<script type="text/javascript" src="../js/plugins/sweetalert.min.js" ></script>
-	<script type="text/javascript" src="../js/scripts/captions.js"></script>
+	<!-- <script type="text/javascript" src="../js/scripts/captions.js"></script> -->
 	<script type="text/javascript" src="../js/plugins/swiper.jquery.min.js"></script>
 	<script type="text/javascript" src="../js/scripts/scripts.js"></script>
 	<script type="text/javascript" src="../js/scripts/colorApp.js"></script>
@@ -42,7 +42,8 @@
 		<ul class="right-options">
 			<li><div class="icon btn-printer">&nbsp;</div></li>
 			<!-- <li><div class="icon btn-cart">&#xe755;</div></li> -->
-			<li class="li-options"><div class="icon  btn-star">&#xe769;<span class="item-count"></span></div></li>
+			<li class="li-options"><div class="icon btn-recovery">&nbsp;</div></li>
+			<li class="li-options"><div class="icon btn-star">&#xe769;<span class="item-count"></span></div></li>
 			<!--<li class="li-options"><div class="icon btn-cart">&#xe613;<span class="item-count"></span></div></li>-->
 			<li class="li-total"><span class="span-total">Total: </span><span class="span-total span-precio-total">$0.00</span></li>
 		</ul>
@@ -108,7 +109,7 @@
 			<!-- filters -->
 			<div class="filters-marked">
 				<div class="clear-filters hide">
-					<button class="lblClearFilters btn btn-clear">Clear filters</button>
+					<button class="lblClearFilters btn btn-clear setColor">Clear filters</button>
 				</div>
 				<!-- <div class="filter filter-1">nike</div> -->
 			</div>
@@ -126,18 +127,17 @@
 				<div class="sort-area opaque">
 
 					<div class="float-left">
-						<!-- <div class="clear-filters hide">
-							<button class="lblClearFilters btn btn-clear">Clear filters</button>
-						</div> -->
-						<!--FJ-->
-						<div class="txtSKUFilter"><span class="span-input"><input type="text" value="" class="form-control txtSKU" placeholder="Scan Product"></span></div>
-						<!--FJ-->
+						<div class="txtSKUFilter input-group sku-input">
+							<input type="text" value="" class="form-control txtSKU" placeholder="Scan Product">
+							<span class="input-group-btn">
+								<button class="btn btn-scanner ico-keyboard setBaColor">&#xe640;</button>
+							</span>
+						</div>
 					</div>
 					<div class="float-right hide">
-<!-- 						<span class="setColor">&#xe6f2</span> -->
 						<label class="txtSortby setColor">Sort By </label>					
 						<div class="dropdown">
-							<div class="btn dropdown-toggle sort-dropdown " data-toggle="dropdown">Choose Filter</div>
+							<div class="btn dropdown-toggle sort-dropdown " data-toggle="dropdown">Select</div>
 							<ul class="dropdown-menu">
 								<li class="lowToHigh">$ - $$</li>
 								<li class="highToLow">$$ - $</li>
@@ -174,9 +174,9 @@
 	            </script>
 	            <!-- template for div img. Every div item has 2 div img	-->
 	            <script type="text/template" id="productItemTemplate">
-	                <div class="product <%=Class%>">
+	                <div class="product <%=Class%>" data-value='<%=productId%>'>
 	            		<div class="img-product">
-	            			<img src="<%=path%>" onerror="handleError(this)">
+	            			<img src="<%=path%>" class="swiper-lazy" onerror="handleError(this)"/>
 	            		</div>
 	            		<div class="brand setColor" data-value="<%=brandCode%>"><%=brandName%></div>
 	            		<div class="areaStyle">	            		

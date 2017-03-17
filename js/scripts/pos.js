@@ -198,6 +198,10 @@ $(document).ready(function(){
     });
     /* FIN FJ */
 
+    $('.btn-payment').click(function(){
+    	$('#modalPayment').modal('show');
+    });
+
 
 });
 
@@ -447,10 +451,10 @@ function showLoading(option){
 function setSizeCart(){
 	// $('.items').height(0);
 	setTimeout(function() {
-        $(".items").animate({
-            height: $('.cart-items').height(),
-            'padding-bottom':$('.tfooter').outerHeight()
-        }, 500);
+        // $(".items").animate({
+        //     height: $('.cart-items').height(),
+        //     'padding-bottom':$('.tfooter').outerHeight()
+        // }, 500);
     }, 100 );
 	// setTimeout(function(){ $('.items').height($('.cart-items').height() - 50); }, 100);	
 }

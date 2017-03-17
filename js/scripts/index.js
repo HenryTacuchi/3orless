@@ -1,80 +1,10 @@
-// var app = {
-//     // Application Constructor
-//     initialize: function() {
-//         this.bindEvents();
-//     },
-//     // Bind Event Listeners
-//     //
-//     // Bind any events that are required on startup. Common events are:
-//     // 'load', 'deviceready', 'offline', and 'online'.
-//     bindEvents: function() {
-//         document.addEventListener('deviceready', this.onDeviceReady, false);
-//     },
-//     // deviceready Event Handler
-//     //
-//     // The scope of 'this' is the event. In order to call the 'receivedEvent'
-//     // function, we must explicitly call 'app.receivedEvent(...);'
-//     onDeviceReady: function() {
-//         app.receivedEvent('deviceready');
-
-// 		   BTPrinter.connect(function(data){
-// 			    console.log("Success");
-// 			    console.log(data);
-// 			 //    BTPrinter.printText(function(data){
-// 				//     console.log("Success");
-// 				//     console.log(data)
-// 				// },function(err){
-// 				//     console.log("Error printText");
-// 				//     console.log(err)
-// 				// }, "String to Print")
-// 			},function(err){
-// 			    console.log("Error Connect");
-// 			    console.log(err)
-// 			}, "Mobile Printer")
-		 		
-// 			// BTPrinter.print(function(data){
-// 			//     console.log("Success");
-// 			//     console.log(data)
-// 			// },function(err){
-// 			//     console.log("Error printText");
-// 			//     console.log(err)
-// 			// }, imgData)
-
-// 			 BTPrinter.printText(function(data){
-// 			    console.log("Success");
-// 			    console.log(data)
-// 			},function(err){
-// 			    console.log("Error printText");
-// 			    console.log(err)
-// 			}, "String test\nHoli boli\t\tHoli boli Holi boli Holi boli \nHoli boli\n")
-
-// 		 //   BTPrinter.printPOSCommand(function(data){
-// 			//     console.log("Success");
-// 			//     console.log(data)
-// 			// },function(err){
-// 			//     console.log("Error");
-// 			//     console.log(err)
-// 			// }, "0C")
-//     },
-//     // Update DOM on a Received Event
-//     receivedEvent: function(id) {
-//         // var parentElement = document.getElementById(id);
-//         // var listeningElement = parentElement.querySelector('.listening');
-//         // var receivedElement = parentElement.querySelector('.received');
-
-//         // listeningElement.setAttribute('style', 'display:none;');
-//         // receivedElement.setAttribute('style', 'display:block;');
-
-//         // console.log('Received Event: ' + id);
-//     }
-// };
-
 $(document).ready(function(){
 
 	getLanguage();	
 	checkConfiguration();
 	showLoading(true);
-
+	getCaptions();
+	setCaptions();
 
     
 	// if(localStorage.noSettings == 0){
@@ -83,7 +13,7 @@ $(document).ready(function(){
 	if(localStorage.noImageFromServer == 0){
 		getImagesFromServer();	
 		localStorage.countProductCartItem = 0;
-		localStorage.countscannedItem = 0;
+		localStorage.countScannedItem = 0;
 		localStorage.existOldCartItem = 0;
 	}
 
@@ -123,6 +53,7 @@ $(document).ready(function(){
 		localStorage.removeItem("logo");
 		
 		getImagesFromServer();
+		getCaptions();
 		clearSearchPage();
 	});
 
@@ -146,7 +77,7 @@ $(document).ready(function(){
 		//validate input text
 		if(emailPassConfig.length>0){
 			if($(".noEmailPassConfig").hasClass("show"))
-							$(".noEmailPassConfig").removeClass("show").addClass("hide");
+				$(".noEmailPassConfig").removeClass("show").addClass("hide");
 			//validate password
 			if(opt == "password" ){
 				if(password==emailPassConfig){
@@ -155,8 +86,7 @@ $(document).ready(function(){
 				else{
 					$(".emailPassConfig").focus();
 					$(".noEmailPassConfig").removeClass("hide").addClass("show");
-					if (localStorage.current_lang == "es") { $(".noEmailPassConfig").text("La contrasena no es correcta!"); } 
-					else { $(".noEmailPassConfig").text("Please, check your password again!"); }
+					$(".noEmailPassConfig").text(localStorage.caption_msgWrongPassword);
 				}
 			}
 			//validate email
@@ -167,32 +97,27 @@ $(document).ready(function(){
 				else{
 					$(".emailPassConfig").focus();
 					$(".noEmailPassConfig").removeClass("hide").addClass("show");
-					if (localStorage.current_lang == "es") { $(".noEmailPassConfig").text("El email no es correcto!"); } 
-					else { $(".noEmailPassConfig").text("Please, check your email again!"); }
+					$(".noEmailPassConfig").text(localStorage.caption_msgWrongEmail);
 				}
 			}
 		}
 		else{
 			$(".emailPassConfig").focus();
 			$(".noEmailPassConfig").removeClass("hide").addClass("show");
-			if (localStorage.current_lang == "es") { $(".noEmailPassConfig").text("Complete el campo requerido!"); } 
-			else { $(".noEmailPassConfig").text("Please fill the required field!"); }
+			$(".noEmailPassConfig").text(localStorage.caption_msgCompleteRequiredField);
 		}
 	});
 
-    //when pages is loaded clear items from local storage
-    $(window).on("load", function() {
-		showLoading(false);
-		// clearSearchPage();
-		if(localStorage.threeOrLessOrderResults == undefined) localStorage.threeOrLessOrderResults = "";		
-		if(localStorage.kioskOrderResults == undefined) localStorage.kioskOrderResults = "";		
-    });
-
-    // adding animation to message
-    setTimeout(function(){ 
-    	$('.messageUser').removeClass('slideInDown').addClass('zoomOut');
-    }, 5000);
 });
+
+//when pages is loaded clear items from local storage
+$(window).on("load", function() {
+	showLoading(false);
+	// clearSearchPage();
+	if(localStorage.threeOrLessOrderResults == undefined) localStorage.threeOrLessOrderResults = "";		
+	if(localStorage.kioskOrderResults == undefined) localStorage.kioskOrderResults = "";		
+});
+
 
 //remove all variables related to search page from local storage
 function clearSearchPage(){
@@ -235,6 +160,9 @@ function clearSearchPage(){
 		localStorage.removeItem("scannedItem" + (i));
 	}
 	localStorage.countScannedItem = 0;
+	localStorage.totalPrice = 0;
+	localStorage.totalOriginalPrice = 0;
+	
 }
 
 //get language from navigator and saved in local storage
@@ -354,6 +282,42 @@ function getImagesFromServer(){
         	window.location = "config.html";            	
         }
     });
+}
+
+function getCaptions(){
+	$.ajax({
+        type: "GET",
+        url: "http://" + localStorage.serverId + "/WS3orlessFiles/S3orLess.svc/NPRODUCT/GetCaptions/"+localStorage.current_lang,
+        async: false,
+        contentType: "application/json",
+        crossdomain: true,
+        beforeSend: function(){
+        	showLoading(true);
+        },
+        complete: function(){
+        	showLoading(false);
+        },
+        success: function (result) {
+
+            var data = result.getCaptionsResult;                
+            if (data != null) {
+            	$.each(data, function (index, value) {
+            		localStorage["caption_"+value.ObjectName] = value.CaptionText; 
+                });      
+            }
+        },
+        error: function (error) {
+
+        }
+    });
+}
+
+function setCaptions(){
+	$(".txtTouchToContinue").text(localStorage.caption_txtTouchToContinue);
+	$(".lblPasswordOpt").text(localStorage.caption_lblPasswordOpt);
+	$(".lblEmailOpt").text(localStorage.caption_lblEmailOpt);
+	$(".lblEmailPassword").text(localStorage.caption_lblEmailPassword);
+	$(".btnAccess").text(localStorage.caption_btnAccess);
 }
 
 

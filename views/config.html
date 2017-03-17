@@ -13,8 +13,8 @@
 	<script type="text/javascript" src="../js/scripts/scripts.js"></script>
 	<script type="text/javascript" src="../js/plugins/jquery.email-autocomplete.min.js"></script>
 	<!-- <script type="text/javascript" src="../js/plugins/async.min.js"></script> -->
+	<!-- <script type="text/javascript" src="../js/scripts/captions.js"></script> -->
 	<script type="text/javascript" src="../js/scripts/configuration.js"></script>
-	<script type="text/javascript" src="../js/scripts/captions.js"></script>
 	<script type="text/javascript" src="../js/scripts/colorApp.js"></script>
 	
 	<link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -37,9 +37,9 @@
 		</div>
 		<ul class="right-options">
 			<li>
-				<label class="label-conf">Set Color</label>
+				<label class="label-conf lblSetColor">Set Color</label>
 				<input type="text" id="valueNav" class="form-control form-color">
-				<button class="icon btn-setcolor jscolor {valueElement:'valueNav',styleElement:'styleNav', value:'58abb7', hash:true, shadow:false}" id="valueBtn">&nbsp;</button>
+				<button class="icon btn-setcolor jscolor {valueElement:'valueNav',styleElement:'styleNav', value:'000066', hash:true, shadow:false}" id="valueBtn">&nbsp;</button>
 			</li>
 		</ul>	
 	</nav>
@@ -49,7 +49,7 @@
 		<section class="settings-1 animated fadeInDown">
 			
 			<div class="row">
-				<div class="col-xs-12"><h1 class="h1-conf">Configuración de la Tienda</h1></div>
+				<div class="col-xs-12"><h1 class="h1-conf lblStoreSettings">Store Settings</h1></div>
 			</div>
 
 			<div class="row row-conf">
@@ -67,13 +67,13 @@
 					<form class="form-conf">
 						<div class="form-group">
 					    <label class="lblStoreNo">Store No<span>*</span></label>
-					    <input type="text" class="form-control storeNo" placeholder="Enter your store number" value="1">
+					    <input type="text" class="form-control storeNo" placeholder="Enter your store number">
 					    <span class="no-complete noStoreNo hide">Please fill the required field</span>
 					  </div>
 
 						<div class="form-group">
 					    <label class="lblServerId">Server IP<span>*</span></label>
-					    <input type="text" class="form-control serverId" placeholder="Enter your IP" value="192.168.1.41">
+					    <input type="text" class="form-control serverId" placeholder="Enter your IP">
 					    <span class="no-complete noServerId hide">Please fill the required field</span>
 					  </div>
 
@@ -89,6 +89,21 @@
 					  <script type="text/template" id="listPrinterTemplate">
 			               <li class="printer-item" ><%=printerName%></li>
 		            	</script>
+
+		            	<div class="form-group">
+						  	<div class="checkbox-control">
+								<label class="lblShow3orless">Activate THREE OR LESS module</label>
+							    <div class="checkbox check-3orless"><div></div></div>
+							</div>				
+					    </div>
+					    <div class="form-group">
+						  	<div class="radio-control">
+						  		<label class="lblTransactionType">Transaction type: </label>
+								<input type="radio" name="opt" value="salesorder" id="saleorder" checked> <label for="saleorder" class="lblSalesorder">Sales Order</label>
+						  		<input type="radio" name="opt" value="receipt" id="receipt"> <label for="receipt" class="lblReceipt">Receipt</label>	
+							</div>	
+							<span class="no-complete noRadioSelected hide">There is no connection to printer</span>					
+					    </div>
 					</form>
 
 				</div>
@@ -109,7 +124,7 @@
 		<section class="settings-2 hide">
 
 			<div class="row">
-				<div class="col-xs-12"><h1 class="h1-conf">Configuración de la Cuenta</h1></div>
+				<div class="col-xs-12"><h1 class="h1-conf lblAccountSettings">Account Settings</h1></div>
 			</div>
 			
 			<div class="row row-conf">
@@ -129,7 +144,7 @@
 					<form class="form-conf">
 						<div class="form-group user">
 					    <label class="lblEmail">Email<span>*</span></label>
-					    <input type="email" class="form-control emailUser" placeholder="your@email.com" value="gustavo@realcs.com">
+					    <input type="email" class="form-control emailUser" placeholder="your@email.com">
 					    <span class="no-complete noEmailUser hide">Please fill the required field</span>
 					  </div>
 
@@ -141,13 +156,13 @@
 
 						<div class="form-group">
 					    <label class="lblPassword">New Password<span>*</span></label>
-					    <input type="password" class="form-control passUser" value="1">
+					    <input type="password" class="form-control passUser">
 					    <span class="no-complete noPassUser hide">Please fill the required field</span>
 					  </div>
 
 					  <div class="form-group">
 					    <label class="lblConfirmPassword">Confirm Password<span>*</span></label>
-					    <input type="password" class="form-control confirmPassUser" value="1">
+					    <input type="password" class="form-control confirmPassUser">
 					    <span class="no-complete noConfirmPassUser hide">Please fill the required field</span>
 					  </div>
 					</form>

@@ -15,13 +15,16 @@ $(document).ready(function(){
 		$(".lblServerId").html("IP del Servidor<span>*</span>");
 		$(".serverId").attr('placeholder',"Ingrese la IP del servidor");
 		$(".lblPrinter").html("Impresora<span>*</span>");
-		$(".btn-save").text("Guardar");
+		$(".btnSave").text("Guardar");
 		$(".lblEmail").html("Correo Electrónico<span>*</span>");
 		$(".emailUser").attr('placeholder',"contacto@email.com");
 		$(".lblOldPassword").html("Contraseña anterior<span>*</span>");
 		$(".lblPassword").html("Nueva Contraseña<span>*</span>");
 		$(".lblConfirmPassword").html("Confirmar Contraseña<span>*</span>");
-		$(".btn-finish").text("Finalizar");
+		$(".btnFinish").text("Finalizar");
+		$(".lblSetColor").text("Establecer Color");
+		$(".lblStoreSettings").text("Configuración de la Tienda");
+		$(".lblAccountSettings").text("Configuración de la Cuenta");
 
 		//Search page
 		$(".txtGenderFilter").text("Género");
@@ -88,6 +91,7 @@ $(document).ready(function(){
 		$(".option1").text("Registro Cliente");
 		$(".option2").text("Catálogo Kiosko");
 		$(".option3").text("Tres o menos");
+		$(".option4").text("Ordenar");
 
 		//Order Page
 		$(".btn-order").html("Ordenar")

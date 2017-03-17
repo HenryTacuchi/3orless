@@ -32,6 +32,7 @@ main{
 }
 .results{
 	position: relative;
+	width: 100%;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
@@ -199,15 +200,38 @@ main{
 	/*FJ*/
 }
 
-/*FJ*/
 .btn-start {
 	/*background-image: url(../img/catalog/icon-star.svg);*/
     background-repeat: no-repeat;
     background-size: 25px;
     background-position: 17px 7px;
 }
-/*FJ*/
-
+.btn-recovery {
+	font-size: 170%; 
+	position: relative;
+}
+.btn-recovery:after {
+    position: absolute;
+    left: 23%;
+    top: 6%;
+    content: '';
+    width: 50px;
+    background-image: url(../img/catalog/icon-recovery.svg);
+    height: 50px;
+    background-repeat: no-repeat;
+    background-size: 69%;
+}
+.icon.btn-star {
+	-webkit-transform: translate3d(0,1px,0);
+    transform: translate3d(0,1px,0);
+}
+.ico-keyboard{
+	font-family: 'Scalia User Icons';
+	padding: 4px 10px 3px;
+}
+.sku-input{
+	max-width: 244px;
+}
 /*logo area*/
 .notfound {
 	font-family: 'Roboto Condensed';
@@ -403,7 +427,11 @@ div[class^="product"]:last-child{
 }
 .stretch .brand{
 	font-size: 135%;
-	padding-top: 15px;
+    padding-top: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -1px;
 }
 .areaStyle, .areaPrice{
 	text-align: center;
@@ -584,7 +612,18 @@ div[class^="product"]:last-child{
 	    margin: 7px 13px;
 	}
 	.float-left {
-	    margin: 13px;
+	    margin: 5px;
+	}
+	.dropdown .btn:after {
+	    right: 7px;
+	    top: 3px;
+	    font-size: 90%;
+	}
+	.sku-input{
+		max-width: 300px;
+	}
+	.ico-keyboard {
+	    font-size: 105%;
 	}
 }
 

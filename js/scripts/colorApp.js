@@ -9,7 +9,19 @@ $(document).ready(function(){
 	.blur(function(){
 		$(this).css('border-color','');
 	});
+	$('.focus').css('border-color',localStorage.colorBackground);
 
+	$('.checkbox-control').click(function(){
+		if(!$(this).find('.checkbox').hasClass('checked'))
+			$(this).find('.checkbox').css('background-color','#ffffff');
+		else	{
+			if (localStorage.colorBackground == undefined){
+				$(this).find('.checkbox').css('background-color','#000066');
+			}else{
+				$(this).find('.checkbox').css('background-color',localStorage.colorBackground);
+			}
+		}		
+	});
 });
 
 //set Color app

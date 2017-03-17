@@ -22,28 +22,6 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
 
-    		//Wifi Printer        
-   //      if(cordova.platformId = 'android'){
-
-			// // cordova.plugins.printer.check(function (avail, count) {
-		 // //    	alert(avail ? 'Found ' + count + ' services' : 'No');
-			// // });
-			// var uri = "192.168.1.53";
-			// // cordova.plugins.printer.pick(function (uri) {
-			// //     // alert(uri ? uri : 'Canceled');
-			// //     cordova.plugins.printer.print(page, { printerId: uri });
-			// // });
-			// cordova.plugins.printer.print(page, {printerId: uri }, function (res) {
-			//     if(res){
-			//     	clearSearchPage();				  	
-			// 		window.location = "search3orless.html";
-			//     }
-			//     else{
-			//     	alert('Canceled');
-			//     }			    
-			// });
-   //      }
-
 		   showLoading(true); 		   
 		   BTPrinter.connect(function(data){
 			    console.log("Success Connect");
@@ -72,88 +50,29 @@ var app = {
 			},function(err){
 			    console.log("Error Connect");
 			    console.log(err);
-			    if (localStorage.current_lang == "es") 
-			    	swal({
-					  title: "Confirmación de Impresión",
-					  text: "Se ha perdido la conexión con la impresora. Por favor, inténtelo de nuevo!",
-					  type: "warning",
-					  showCancelButton: true,
-					  confirmButtonColor: "#8fbf75",
-					  confirmButtonText: "Ok, reintentar!",
-					  cancelButtonColor: "#b9b9b9",
-					  cancelButtonText: "No, finalizar!",
-					  closeOnConfirm: false,
-					  closeOnCancel: false
-					},
-					function(isConfirm){
-					  if (isConfirm) {
-					    printTicket();
-					  } else {
-					    clearSearchPage();	
-						showLoading(false);			  	
-						window.location = "search3orless.html";
-					  }
-					});
-				else				
-					swal({
-					  title: "Print confirm",
-					  text: "Printer conection is lost. Please, try again!",
-					  type: "warning",
-					  showCancelButton: true,
-					  confirmButtonColor: "#8fbf75",
-					  confirmButtonText: "Ok, retry!",
-					  cancelButtonColor: "#b9b9b9",
-					  cancelButtonText: "No, finish!",
-					  closeOnConfirm: false,
-					  closeOnCancel: false
-					},
-					function(isConfirm){
-					  if (isConfirm) {
-					    printTicket();
-					  } else {
-					    clearSearchPage();	
-						showLoading(false);			  	
-						window.location = "search3orless.html";
-					  }
-					});
+			    swal({
+				  title: localStorage.caption_modalPrintTitle,
+				  text: localStorage.caption_modalPrintText,
+				  type: "warning",
+				  showCancelButton: true,
+				  confirmButtonColor: "#8fbf75",
+				  confirmButtonText: localStorage.caption_txtConfirmButtonRetry,
+				  cancelButtonColor: "#b9b9b9",
+				  cancelButtonText: localStorage.caption_txtCancelButtonFinish,
+				  closeOnConfirm: false,
+				  closeOnCancel: false
+				},
+				function(isConfirm){
+				  if (isConfirm) {
+				    printTicket();
+				  } else {
+				    clearSearchPage();	
+					showLoading(false);			  	
+					window.location = "search3orless.html";
+				  }
+				});
 			    showLoading(false);
-			}, localStorage.printerName)	 
-			// cordova.plugins.bixolonPrint.settings = {
-			//   lineFeed: 3,
-			//   formFeed: false,      // enable\disable jump to next position, in black marker and label modes
-			//   autoConnect: false,    // Android only: if this is set to false displays a dialog box for selecting the printer
-			//   toastMessage: true,   // Android only: show a printer message
-			//   separator: '=',
-			//   codePage: cordova.plugins.bixolonPrint.CodePage.CP_1252_LATIN1 // define code page, default value is set to CP_1252_LATIN1.
-			// };
-			// cordova.plugins.bixolonPrint.getStatus(function(){alert("success");}, function(){alert("error");printTicket()}, true);
-		
-			// 	cordova.plugins.bixolonPrint.addHr();
-			// 	cordova.plugins.bixolonPrint.addLine("#@*èòçìàé€");
-			// 	// finally print
-			// 	cordova.plugins.bixolonPrint.printText(
-			// 	    function (response) {
-			// 	  //       setTimeout(function(){
-			// 			// 	BTPrinter.disconnect(function(data){
-			// 			// 	    console.log("Success Disconnect");
-			// 			// 	    console.log(data);		
-			// 			// 		clearSearchPage();	
-			// 			// 		showLoading(false);			  	
-			// 			// 		window.location = "search3orless.html";
-			// 			// 	},function(err){
-			// 			// 	    console.log("Error Disconnect");
-			// 			// 	    console.log(err);
-			// 			// 	    showLoading(false);
-			// 			// 	}, localStorage.printerName)
-			// 			// },3000);
-			// 	    },
-			// 	    function (error) {
-			// 	        alert("print failure: " + error)
-			// 	    },
-			// 	    {
-			// 	        codePage: cordova.plugins.bixolonPrint.CodePage.CP_1252_LATIN1
-			// 	    }
-			// 	);				 
+			}, localStorage.printerName)
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -162,6 +81,7 @@ var app = {
 
 
 $(document).ready(function(){
+	setCaptions();
 
 	if(localStorage.currentFirstNameClient != undefined && localStorage.currentFirstNameClient != "")
 		$(".txtFirstName").val(localStorage.currentFirstNameClient);
@@ -243,10 +163,6 @@ $(document).ready(function(){
 			localStorage.countProductCartItem = localStorage.countProductLastCartItem;	
 		}
 
-		console.log('FJ');
-		console.log(localStorage.countProductCartItem);
-		console.log('FJ');
-
 		// window.location.reload();
 		$(".items").html("");
 
@@ -276,8 +192,7 @@ $(document).ready(function(){
     $(".btn-done").click(function(){
     	localStorage.currentFirstNameClient = $(".txtFirstName").val();
     	$(".btn-done").prop("disabled",true);
-    	if (localStorage.current_lang == "es") { $(".txtMessage").text("Por favor, verifique los campos e inténtelo nuevamente!"); }
-    	else{$(".txtMessage").text("Validation errors occurred. Please confirm the fields and submit it again.!");}
+    	$(".txtMessage").text(localStorage.caption_msgVerifyFields);
 		$(".validations").addClass("hide");
 		$(".validations").removeClass("animated fadeOutLeft");
     	var firstName = $(".txtFirstName").val();
@@ -313,52 +228,28 @@ $(document).ready(function(){
 		    });
 		    var messageorder = "";
 		    if(orderNumber != ""){
-		    	if(localStorage.current_lang == "es")
-		    		messageorder = "N° Orden:"+orderNumber+"\n";
-		    	else
-		    		messageorder = "N° Order:"+orderNumber+"\n";
+		    	messageorder = localStorage.caption_modalOrderNumber.replace("orderNumber",orderNumber) + "\n";
 		    }
 			saveLastCartItem();
-	    	if (localStorage.current_lang == "es") 
-	   			swal({
-				  title: "Confirmación de Orden",
-				  text: messageorder + "Gracias "+ firstName +",\nPor favor, espere que traigamos su orden.",
-				  type: "success",
-				  confirmButtonColor: "#8fbf75",
-				  confirmButtonText: "¡Ok, Genial!",				  
-				  closeOnConfirm: false
-				},
-				function(){
-					if (!(localStorage.printerName == undefined || localStorage.printerName =='')){
-						loadPrint();
-						printTicket();
-					}
-					else{
-					    clearSearchPage();	
-						showLoading(false);			  	
-						window.location = "search3orless.html";
-					}
-				});
-			else				
-				swal({
-				  title: "Order Confirmation",
-				  text: messageorder + "Thank you "+ firstName +",\nPlease wait, we are getting your order.",
-				  type: "success",
-				  confirmButtonColor: "#8fbf75",
-				  confirmButtonText: "Ok, Cool!",				  
-				  closeOnConfirm: false
-				},
-				function(){
-					if (!(localStorage.printerName == undefined || localStorage.printerName =='')){
-						loadPrint();
-						printTicket();
-					}
-					else{
-					    clearSearchPage();	
-						showLoading(false);			  	
-						window.location = "search3orless.html";
-					}
-				});
+			swal({
+			  title: localStorage.caption_modalTicketTitle,
+			  text: messageorder + localStorage.caption_modalTicketText1.replace("firstName",firstName) + "\n" + localStorage.caption_modalTicketText2,
+			  type: "success",
+			  confirmButtonColor: "#8fbf75",
+			  confirmButtonText: localStorage.caption_txtConfirmButton,				  
+			  closeOnConfirm: false
+			},
+			function(){
+				if (!(localStorage.printerName == undefined || localStorage.printerName =='')){
+					loadPrint();
+					printTicket();
+				}
+				else{
+				    clearSearchPage();	
+					showLoading(false);			  	
+					window.location = "search3orless.html";
+				}
+			});	    	
 		}    
 		//if name or email format is wrong 			
 	    else{
@@ -373,7 +264,7 @@ $(document).ready(function(){
 
 			$(".validations").removeClass("hide").addClass("animated fadeInLeft");
 
-			if (localStorage.current_lang == "es") { $(".txtMessage").html("Verifique los campos e inténtelo nuevamente!"); }
+			$(".txtMessage").html(localStorage.caption_msgVerifyFields);
 			$(".validations").delay(delay).queue(function(){
 			    $(this).addClass("animated fadeOutLeft").dequeue();
 			});
@@ -381,15 +272,14 @@ $(document).ready(function(){
 			if (firstName.length==0){
 				$(".txtFirstName").focus();
 				$(".noFirstName").removeClass("hide").addClass("show");
-				if (localStorage.current_lang == "es") { $(".noFirstName").text("Complete el campo requerido!"); }
+				$(".noFirstName").text(localStorage.caption_msgCompleteRequiredField);
 			}else{
 				if($(".noFirstName").hasClass("show"))
 					$(".noFirstName").removeClass("show").addClass("hide");
 			}
 
 			if(localStorage.countProductCartItem == 0){
-				if (localStorage.current_lang == "es") { $(".txtMessage").html("No hay productos agregados.!"); }
-				else { $(".txtMessage").html("There are no cart items!"); }
+				$(".txtMessage").html(caption_modalProductDetailTitle);
 				$(".validations").delay(delay).queue(function(){
 				    $(this).addClass("animated fadeOutLeft").dequeue();
 				});
@@ -501,50 +391,6 @@ $(document).ready(function(){
 
 });
 
-// function loadPrintHTML(){
-// 	page = '<html '+
-// 				'<head>'+
-// 					'<meta http-equiv="content-type" content="text/html; charset=UTF-8">'+
-// 					'<title>Order</title>'+	
-// 				'</head>'+
-// 				'<body>'+
-// 					'<div class="headOrder">'+
-// 						// '<div class="logo"><img src="' +localStorage.logo+'" alt="logo" width=300  class="logo-company"></div>'+
-// 						'<div class="ordernumber">Order No: ' + localStorage.orderNumber+'</div>'+
-// 						'<div class="clientname">'+localStorage.currentFirstNameClient + " " + localStorage.currentLastNameClient+'</div>'+
-// 						'<div class="date">'+datetime+'</div>'+
-// 					'</div>'+
-// 					'<div class="cart-items">'+
-// 						'<h4 class="lblCart">Cart</h4>'+
-// 						'<ul class="list-items">';
-
-// 	var totalMont=0;
-//    	var totalRealMont =0;
-
-//    	for (var i = 1; i <= localStorage.countProductCartItem; i++) {
-// 		var productObject = JSON.parse(localStorage["cartItemProduct"+i]);
-		
-// 		var mont = Number(productObject.Product.price.substring(1));
-// 		var montOriginal = Number(productObject.Product.originalPrice.substring(1));
-// 		totalMont = totalMont + mont;
-// 		totalRealMont = totalRealMont + montOriginal;
-// 		var elementCartItem = '<li class="item  '+"item-" + (i)+'">'+
-// 									'<div class="brandName">'+productObject.Product.brandName+'</div>'+
-// 									'<div class="styleName">'+productObject.Product.styleName+'</div>'+
-// 									'<div class="color">'+productObject.Product.colorCode+'</div>'+
-// 									'<div class="size">'+productObject.Product.size+'</div>'+
-// 									'<div class="price">'+productObject.Product.price+'</div>'+
-// 								'</li>';
-// 		page = page + elementCartItem;
-// 	}			
-// 	page = page + 	'</ul>'+
-// 				'</div>'+
-// 				'<div class="footerOrder">'+
-// 					'<div class="total">'+totalMont.toFixed(2)+'</div>'+
-// 					'<div class="saving">'+(totalRealMont-totalMont).toFixed(2)+'</div>'+
-// 				'</div>';	
-// }
-
 function loadPrint(){
 	var currentdate = new Date(); 
 	var datetime = currentdate.getDate() + "/"
@@ -554,8 +400,8 @@ function loadPrint(){
 	           + currentdate.getMinutes() + ":" 
 	           + currentdate.getSeconds();
 	page = "           NICEKICKS\n"+
-						'Order No: ' + localStorage.orderNumber+'\n'+
-						localStorage.currentFirstNameClient +
+						'Ticket N°: ' + localStorage.orderNumber+'\n'+
+						localStorage.currentFirstNameClient +'\n'+
 						datetime+'\n\n'+
 						'Cart Items\n';
 
@@ -622,6 +468,8 @@ function getProductList(){
             sizeCode: productObject.Product.size
         });
         $(".items").append(html);
+        $(".txtSize").text(localStorage.caption_lblSize + ":");
+        $(".txtStyleName").text(localStorage.caption_txtStyleName + ":");
 	}
     localStorage.totalPrice>0 ? $(".detail-total").html("$"+Math.round10(localStorage.totalPrice,-2)) : $(".detail-total").html("$0.00");
     localStorage.totalPrice>0 ? $(".span-total-price").html("$"+Math.round10(localStorage.totalPrice,-2)) : $(".span-total-price").html("$0.00");
@@ -726,4 +574,19 @@ $(window).load(function(){
 
 function setSizeCart(){
 	$('.items').height($('.cart-items').height() - 50);
+}
+
+function setCaptions(){
+	$(".lblCompleteFields").text(localStorage.caption_lblCompleteFields);
+	$(".lblName").html(localStorage.caption_lblNameRequired);
+	$(".lblLastName").html(localStorage.caption_lblLastNameRequired);
+	$(".lblCartItems").text(localStorage.caption_lblCartItems);
+	$(".btn-back").text(localStorage.caption_btnBack);
+	$(".btn-clear-cart").text(localStorage.caption_btnClearCart);
+	$(".btn-recover").text(localStorage.caption_btnRecover);
+	$(".btn-done").text(localStorage.caption_btnDone);
+	$(".txtEmail").attr('placeholder',localStorage.caption_txtEmail);
+	$(".detail-count-text1").text(localStorage.caption_detailCountBagText1);
+	$(".detail-count-text2").text(localStorage.caption_detailCountBagText2);
+	$(".appName3orless").text(localStorage.caption_option3);
 }

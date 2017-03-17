@@ -1,95 +1,18 @@
 // overall delay for disappearance of animations
 var delay=2500;
-// var printerConnection = false;
-var loadCboPrinters = {
-    // Application Constructor
-    initialize: function() {
-        this.bindEvents();
-    },
-    // Bind Event Listeners
-    //
-    // Bind any events that are required on startup. Common events are:
-    // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
-    },
-    // deviceready Event Handler
-    //
-    // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicitly call 'loadCboPrinters.receivedEvent(...);'
-    onDeviceReady: function() {
-        loadCboPrinters.receivedEvent('deviceready');    
-
-   			//Bluetooth Printer
-		   BTPrinter.list(function(data){
-		        console.log("Success");
-		        console.log(data); //list of printer in data array
-		        
-				if(data.length>0){
-					if(localStorage.printerName == undefined || localStorage.printerName ==''){
-						$(".printer-dropdown").text(data[0]);					
-						localStorage.printerName = data[0];
-					}					
-				    for (var i=0; i<data.length; i++) {
-						var template = _.template($("#listPrinterTemplate").html());
-					    var html = template({
-					       printerName:data[i]
-					    });
-					    $(".listPrinter").append(html);
-					}
-				}
-		    },function(err){
-		        console.log("Error");
-		        console.log(err);
-		    })	 					 
-    },
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-    }
-};
-
-// var checkPrinterConnection = {
-//     // Application Constructor
-//     initialize: function() {
-//         this.bindEvents();
-//     },
-//     // Bind Event Listeners
-//     //
-//     // Bind any events that are required on startup. Common events are:
-//     // 'load', 'deviceready', 'offline', and 'online'.
-//     bindEvents: function() {
-//         document.addEventListener('deviceready', this.onDeviceReady, false);
-//     },
-//     // deviceready Event Handler
-//     //
-//     // The scope of 'this' is the event. In order to call the 'receivedEvent'
-//     // function, we must explicitly call 'loadCboPrinters.receivedEvent(...);'
-//     onDeviceReady: function() {
-//         checkPrinterConnection.receivedEvent('deviceready');
-
-//    			//Bluetooth Printer
-// 		   	BTPrinter.connect(function(data){
-// 			    console.log("Success");
-// 			    console.log(data);
-// 			    printerConnection = true;
-// 			},function(err){
-// 			    console.log("Error Connect");
-// 			    console.log(err)
-// 			    printerConnection = false;
-// 			}, localStorage.printerName)					 
-//     },
-//     // Update DOM on a Received Event
-//     receivedEvent: function(id) {
-//     }
-// };
 
 $(document).ready(function(){
-	// localStorage.clear();
+	document.addEventListener("deviceready", onDeviceReady, false);
 
-    // $(".emailUser").emailautocomplete({
-    //     suggClass: "custom-classname", 
-    //     domains: ["realcs.com"] 
-    // });
+    function onDeviceReady() {
+        loadCboPrinters();
+    }
+
+	if (localStorage.serverId == undefined || localStorage.serverId == ""){
+		setLocalCaptions();
+	}else{
+		setCaptions();
+	}
      
     $('.storeNo').bind('keypress', function(event) {
     if(event.which == 13||event.which == 10) {
@@ -127,16 +50,28 @@ $(document).ready(function(){
     	navigator.app.exitApp();
     });
 
-	$(".storeNo").focus();
-	//fill dropdown with all available bluetooth printers
-	loadCboPrinters.initialize();
+	$(".storeNo").focus();	
+
+	if (localStorage.flagActivate3orless == 1){
+    	$(".check-3orless").addClass("checked");
+    	$('.checkbox-control').find('.checkbox').css('background-color',localStorage.colorBackground);
+    }else{
+    	if ($(".check-3orless").hasClass("checked")) {
+    		$(".check-3orless").removeClass("checked");
+    	}    	
+    }
+
+    if (localStorage.transactionType == undefined || localStorage.transactionType == "salesorder") {
+    	$('input:radio[name=opt]').val(['salesorder']);
+    }else{
+    	$('input:radio[name=opt]').val(['receipt']);
+    }
 
 	//check if exists images for home in server
 	if(localStorage.imageServerError == 1){
 		$(".serverId").focus();
 		$(".noServerId").removeClass("hide").addClass("show");
-		if (localStorage.current_lang == "es") { $(".noServerId").text("Por favor, revise la IP del servidor!"); } 
-		else { $(".noServerId").text("Please, check server IP!"); }
+		$(".noServerId").text(localStorage.caption_msgNoServerId);
 		if($(".txtMessage").hasClass("success")){
 			$(".txtMessage").removeClass("success").addClass("danger");
 			$(".btn-mini-img").removeClass("success").addClass("danger").find('span').empty().html('&#xe645');
@@ -149,10 +84,7 @@ $(document).ready(function(){
 		    $(this).delay(delay).addClass("animated fadeInLeft").dequeue();
 		});
 		// $(".validations").removeClass("hide").addClass("animated fadeInLeft");
-		if (localStorage.current_lang == "es") 
-			{ $(".txtMessage").text("Error de conexión con el servidor. Por favor, verifique la IP!"); } 
-		else
-			{{ $(".txtMessage").text("Server connection error. Please, check Server IP!"); } }
+		$(".txtMessage").text(localStorage.caption_msgServerConnectionError);
 		$(".validations").delay(delay).queue(function(){
 		    $(this).addClass("animated fadeOutLeft").dequeue();
 		});
@@ -174,107 +106,57 @@ $(document).ready(function(){
 		var serverId = $(".serverId").val();
 		var checkIP = validateIP();
 
-		// $.ajax({
-		// 	type: "GET",
-	 //        // url: "http://" + serverId + "/WS3orlessFiles/S3orLess.svc/NPRODUCT/Test",
-	 //        url: "http://" + serverId + "/WS3orlessFiles/S3orLess.svc/NPRODUCT/GetFilter/" + storeNo,
-	 //        // async: false,
-	 //        contentType: "application/json",
-	 //        crossdomain: true,
-	 //        timeout: 10000,
-	 //        beforeSend: function(){
-	 //            showLoading(true);
-	 //        },
-	 //        complete: function(){
-	 //            showLoading(false);
-	 //        },
-	 //        success:function(result){
-	 //        	checkPrinterConnection.initialize()
-	        	if(storeNo.length>0 && checkIP != -1){
-				    saveConfiguration(storeNo.trim(),serverId.trim());
-				    $(".settings-1").removeClass('fadeInDown').addClass("fadeOutLeft");
-				    $(".settings-2").removeClass("hide").addClass("animated fadeInLeft");
-				    $(".emailUser").focus();
+    	if(storeNo.length>0 && checkIP != -1){
+		    saveConfiguration(storeNo.trim(),serverId.trim());
+		    $(".settings-1").removeClass('fadeInDown').addClass("fadeOutLeft");
+		    $(".settings-2").removeClass("hide").addClass("animated fadeInLeft");
+		    $(".emailUser").focus();
+		}
+		else {
+			if (checkIP==-1){
+				$(".serverId").focus();
+				$(".noServerId").removeClass("hide").addClass("show");
+
+				if (serverId.length==0){
+					$(".noServerId").text(localStorage.caption_msgCompleteRequiredField); 
+				}else{
+					$(".noServerId").text(localStorage.caption_msgIncorrectIPFormat);
 				}
-				else {
-					// if (printerConnection == false){
-					// 	$(".noPrinter").removeClass("hide").addClass("show");
-					// 	if (localStorage.current_lang == "es") { $(".noPrinter").text("No hay conexión con la impresora!"); } 
-					// }else{
-					// 	if($(".noPrinter").hasClass("show"))
-					// 		$(".noPrinter").removeClass("show").addClass("hide");
-					// }
-					if (checkIP==-1){
-						$(".serverId").focus();
-						$(".noServerId").removeClass("hide").addClass("show");
+			}else{
+				if($(".noServerId").hasClass("show"))
+					$(".noServerId").removeClass("show").addClass("hide");
+			}
+			if (storeNo.length==0){
+				$(".storeNo").focus();
+				$(".noStoreNo").removeClass("hide").addClass("show");
+				$(".noStoreNo").text(localStorage.caption_msgCompleteRequiredField);
+			}else{
+				if($(".noStoreNo").hasClass("show"))
+					$(".noStoreNo").removeClass("show").addClass("hide");
+			}
+			if($(".txtMessage").hasClass("success")){
+				$(".txtMessage").removeClass("success").addClass("danger");
+				$(".btn-mini-img").removeClass("success").addClass("danger").find('span').empty().html('&#xe645');
+			}
+			else{
+				$(".txtMessage").addClass("danger");
+				$(".btn-mini-img").addClass("danger").find('span').empty().html('&#xe645');
+			}
+			$(".validations").removeClass("hide").addClass("animated fadeInLeft");
 
-						if (serverId.length==0){
-							if (localStorage.current_lang == "es") { $(".noServerId").text("Complete el campo requerido!"); } 
-						}else{
-							if (localStorage.current_lang == "es") { $(".noServerId").text("El formato de IP del servidor es incorrecto!"); } 
-							else { $(".noServerId").text("Server IP format is wrong!"); }
-						}
-					}else{
-						if($(".noServerId").hasClass("show"))
-							$(".noServerId").removeClass("show").addClass("hide");
-					}
-					if (storeNo.length==0){
-						$(".storeNo").focus();
-						$(".noStoreNo").removeClass("hide").addClass("show");
-						if (localStorage.current_lang == "es") { $(".noStoreNo").text("Complete el campo requerido!"); } 
-					}else{
-						if($(".noStoreNo").hasClass("show"))
-							$(".noStoreNo").removeClass("show").addClass("hide");
-					}
-					if($(".txtMessage").hasClass("success")){
-						$(".txtMessage").removeClass("success").addClass("danger");
-						$(".btn-mini-img").removeClass("success").addClass("danger").find('span').empty().html('&#xe645');
-					}
-					else{
-						$(".txtMessage").addClass("danger");
-						$(".btn-mini-img").addClass("danger").find('span').empty().html('&#xe645');
-					}
-					$(".validations").removeClass("hide").addClass("animated fadeInLeft");
+			$(".txtMessage").text(localStorage.caption_msgVerifyFields);
 
-					if (localStorage.current_lang == "es") { $(".txtMessage").text("Por favor, verifique los campos e inténtelo nuevamente!"); } 
-					else { $(".txtMessage").text("Validation errors occurred. Please confirm the fields and submit it again!"); } 
-
-					$(".validations").delay(delay).queue(function(){
-					    $(this).addClass("animated fadeOutLeft").dequeue();
-					});
-				}
-    //     	},
-	   //      error:function(error) {
-	   //      	if($(".txtMessage").hasClass("success")){
-				// 	$(".txtMessage").removeClass("success").addClass("danger");
-				// 	$(".btn-mini-img").removeClass("success").addClass("danger").find('span').empty().html('&#xe645');
-				// }
-				// else{
-				// 	$(".txtMessage").addClass("danger");
-				// 	$(".btn-mini-img").addClass("danger").find('span').empty().html('&#xe645');
-				// }
-	   //          $(".validations").removeClass("hide").addClass("animated fadeInLeft");
-
-				// if (localStorage.current_lang == "es") { $(".txtMessage").text("No hay conexión con el servidor!"); } 
-				// else { $(".txtMessage").text("There is no server conection!"); } 
-				// $(".validations").delay(delay).queue(function(){
-				//     $(this).addClass("animated fadeOutLeft").dequeue();
-				// });
-	   //      }
-    //     });
-
-  // 			}
-		// ], function(err, results) {
-		//     // optional callback
-		// });
+			$(".validations").delay(delay).queue(function(){
+			    $(this).addClass("animated fadeOutLeft").dequeue();
+			});
+		}
 		
     });
 
 	//Save email and password
     $(".btnFinish").click(function(){
-    	localStorage.colorBackground = $(".form-color").val();    	
-    	if (localStorage.current_lang == "es") { $(".txtMessage").text("Por favor, verifique los campos e inténtelo nuevamente!"); }
-    	else{$(".txtMessage").text("Validation errors occurred. Please confirm the fields and submit it again.!");}
+    	localStorage.colorBackground = $(".form-color").val();    
+    	$(".txtMessage").text(localStorage.caption_msgVerifyFields);	
 		$(".validations").addClass("hide");
 		$(".validations").removeClass("animated fadeOutLeft");	
 		var checkEmail= validateEmail();
@@ -313,25 +195,22 @@ $(document).ready(function(){
 					}
 
 					$(".validations").removeClass("hide").addClass("animated fadeInLeft");
-
-					if (localStorage.current_lang == "es") { $(".txtMessage").text("Por favor, verifique los campos e inténtelo nuevamente!"); }
-					else { $(".txtMessage").text("Validation errors occurred. Please confirm the fields and submit it again!"); } 
+					$(".txtMessage").text(localStorage.caption_msgVerifyFields);
 					$(".validations").delay(delay).queue(function(){
 					    $(this).addClass("animated fadeOutLeft").dequeue();
 					});
 					$(".noConfirmPassUser").removeClass("hide").addClass("show");
-					if (localStorage.current_lang == "es") { $(".noConfirmPassUser").text("La confirmaci\u00f3n de la contrasena no es correcta!"); } 
-								else { $(".noConfirmPassUser").text("Please, check your password and confirmation again!"); }
+					$(".noConfirmPassUser").text(localStorage.caption_msgWrongPasswordConfirmation);
 				    $(".confirmPassUser").focus();
 				    if (repPass.length==0){
 						$(".confirmPassUser").focus();
 						$(".noConfirmPassUser").removeClass("hide").addClass("show");
-						if (localStorage.current_lang == "es") { $(".noConfirmPassUser").text("Complete el campo requerido!"); } 
+						$(".noConfirmPassUser").text(localStorage.caption_msgCompleteRequiredField);
 					}
 					if (newPass.length==0){
 						$(".passUser").focus();
 						$(".noPassUser").removeClass("hide").addClass("show");
-						if (localStorage.current_lang == "es") { $(".noPassUser").text("Complete el campo requerido!"); }
+						$(".noPassUser").text(localStorage.caption_msgCompleteRequiredField);
 					}else{
 						if($(".noPassUser").hasClass("show"))
 							$(".noPassUser").removeClass("show").addClass("hide");
@@ -339,17 +218,16 @@ $(document).ready(function(){
 					if (oldPass.length==0){
 						$(".oldPass").focus();
 						$(".noOldPassword").removeClass("hide").addClass("show");
-						if (localStorage.current_lang == "es") { $(".noOldPassword").text("Complete el campo requerido!"); } 
+						$(".noOldPassword").text(localStorage.caption_msgCompleteRequiredField);
 					}
 					if (checkEmail==-1){
 						$(".emailUser").focus();
 						$(".noEmailUser").removeClass("hide").addClass("show");
 
 						if (emailUser.length==0){
-							if (localStorage.current_lang == "es") { $(".noEmailUser").text("Complete el campo requerido!"); } 
+							$(".noEmailUser").text(localStorage.caption_msgCompleteRequiredField);
 						}else{
-							if (localStorage.current_lang == "es") { $(".noEmailUser").text("El formato de email es incorrecto!"); } 
-							else { $(".noEmailUser").text("Email format is wrong!"); }
+							$(".noEmailUser").text(localStorage.caption_msgWrongEmailFormat);
 						}
 					}else{
 						if($(".noEmailUser").hasClass("show"))
@@ -369,20 +247,18 @@ $(document).ready(function(){
 				}
 	      		$(".validations").removeClass("hide").addClass("animated fadeInLeft");
 
-				if (localStorage.current_lang == "es") { $(".txtMessage").text("Por favor, verifique los campos e inténtelo nuevamente!"); }
-				else { $(".txtMessage").text("Validation errors occurred. Please confirm the fields and submit it again!"); } 
+	      		$(".txtMessage").text(localStorage.caption_msgVerifyFields);
 				$(".validations").delay(delay).queue(function(){
 				    $(this).addClass("animated fadeOutLeft").dequeue();
 				});
 				$(".noOldPassword").removeClass("hide").addClass("show");
-				if (localStorage.current_lang == "es") { $(".noOldPassword").text("La contrasena no es correcta!"); } 
-							else { $(".noOldPassword").text("Please, check your old password again!"); }
+				$(".noOldPassword").text(localStorage.caption_msgWrongPassword);
 			    $(".oldPass").focus();
 
 			    if (repPass.length==0){
 					$(".confirmPassUser").focus();
 					$(".noConfirmPassUser").removeClass("hide").addClass("show");
-					if (localStorage.current_lang == "es") { $(".noConfirmPassUser").text("Complete el campo requerido!"); } 
+					$(".noConfirmPassUser").text(localStorage.caption_msgCompleteRequiredField); 
 				}else{
 					if($(".noConfirmPassUser").hasClass("show"))
 						$(".noConfirmPassUser").removeClass("show").addClass("hide");
@@ -390,7 +266,7 @@ $(document).ready(function(){
 				if (newPass.length==0){
 					$(".passUser").focus();
 					$(".noPassUser").removeClass("hide").addClass("show");
-					if (localStorage.current_lang == "es") { $(".noPassUser").text("Complete el campo requerido!"); } 
+					$(".noPassUser").text(localStorage.caption_msgCompleteRequiredField);
 				}else{
 					if($(".noPassUser").hasClass("show"))
 						$(".noPassUser").removeClass("show").addClass("hide");
@@ -398,17 +274,16 @@ $(document).ready(function(){
 				if (oldPass.length==0){
 					$(".oldPass").focus();
 					$(".noOldPassword").removeClass("hide").addClass("show");
-					if (localStorage.current_lang == "es") { $(".noOldPassword").text("Complete el campo requerido!"); } 
+					$(".noOldPassword").text(localStorage.caption_msgCompleteRequiredField);
 				}
 				if (checkEmail==-1){
 					$(".emailUser").focus();
 					$(".noEmailUser").removeClass("hide").addClass("show");
 
 					if (emailUser.length==0){
-						if (localStorage.current_lang == "es") { $(".noEmailUser").text("Complete el campo requerido!"); }
+						$(".noEmailUser").text(localStorage.caption_msgCompleteRequiredField);
 					}else{
-						if (localStorage.current_lang == "es") { $(".noEmailUser").text("El formato de email es incorrecto!"); } 
-						else { $(".noEmailUser").text("Email format is wrong!"); }
+						$(".noEmailUser").text(localStorage.caption_msgWrongEmailFormat);
 					}
 				}else{
 					if($(".noEmailUser").hasClass("show"))
@@ -439,25 +314,23 @@ $(document).ready(function(){
 
 				$(".validations").removeClass("hide").addClass("animated fadeInLeft");
 
-				if (localStorage.current_lang == "es") { $(".txtMessage").text("Por favor, verifique los campos e inténtelo nuevamente!"); } 
-				else { $(".txtMessage").text("Validation errors occurred. Please confirm the fields and submit it again!"); } 
+				$(".txtMessage").text(localStorage.caption_msgVerifyFields);
 				$(".validations").delay(delay).queue(function(){
 				    $(this).addClass("animated fadeOutLeft").dequeue();
 				});
 				$(".noConfirmPassUser").removeClass("hide").addClass("show");
-				if (localStorage.current_lang == "es") { $(".noConfirmPassUser").text("La confirmaci\u00f3n de la contrasena no es correcta!"); } 
-							else { $(".noConfirmPassUser").text("Please, check your password and confirmation again!"); }
+				$(".noConfirmPassUser").text(localStorage.caption_msgWrongPasswordConfirmation);
 			    $(".confirmPassUser").focus();
 
 			    if (repPass.length==0){
 					$(".confirmPassUser").focus();
 					$(".noConfirmPassUser").removeClass("hide").addClass("show");
-					if (localStorage.current_lang == "es") { $(".noConfirmPassUser").text("Complete el campo requerido!"); } 
+					$(".noConfirmPassUser").text(localStorage.caption_msgCompleteRequiredField);
 				}
 				if (newPass.length==0){
 					$(".passUser").focus();
 					$(".noPassUser").removeClass("hide").addClass("show");
-					if (localStorage.current_lang == "es") { $(".noPassUser").text("Complete el campo requerido!"); } 
+					$(".noPassUser").text(localStorage.caption_msgCompleteRequiredField);
 				}else{
 					if($(".noPassUser").hasClass("show"))
 						$(".noPassUser").removeClass("show").addClass("hide");
@@ -467,10 +340,9 @@ $(document).ready(function(){
 					$(".noEmailUser").removeClass("hide").addClass("show");
 
 					if (emailUser.length==0){
-						if (localStorage.current_lang == "es") { $(".noEmailUser").text("Complete el campo requerido!"); } 
+						$(".noEmailUser").text(localStorage.caption_msgCompleteRequiredField);
 					}else{
-						if (localStorage.current_lang == "es") { $(".noEmailUser").text("El formato de email es incorrecto!"); } 
-						else { $(".noEmailUser").text("Email format is wrong!"); }
+						$(".noEmailUser").text(localStorage.caption_msgWrongEmailFormat);
 					}
 				}else{
 					if($(".noEmailUser").hasClass("show"))
@@ -479,7 +351,7 @@ $(document).ready(function(){
 			}
 		}	
 
-		clearSearchPage();
+		// clearSearchPage();
 		
     });
 
@@ -488,18 +360,47 @@ $(document).ready(function(){
         localStorage.printerName = $(this).text();        
     });
 
-
-	//when page is loaded hide loaders
-    $(window).on("load", function() {
-       showLoading(false);
-    });
-
 });
+
+//when page is loaded hide loaders
+$(window).on("load", function() {
+   	showLoading(false);
+});
+
+function loadCboPrinters(){
+	BTPrinter.list(function(data){
+        console.log("Success");
+        console.log(data); //list of printer in data array
+        
+		if(data.length>0){
+			if(localStorage.printerName == undefined || localStorage.printerName ==''){
+				$(".printer-dropdown").text(data[0]);					
+				localStorage.printerName = data[0];
+			}					
+		    for (var i=0; i<data.length; i++) {
+				var template = _.template($("#listPrinterTemplate").html());
+			    var html = template({
+			       printerName:data[i]
+			    });
+			    $(".listPrinter").append(html);
+			}
+		}
+    },function(err){
+        console.log("Error");
+        console.log(err);
+    })	 
+}
 
 //store data in local storage: StoreNo and ServerId
 function saveConfiguration(storeNo, serverId) {
     localStorage.storeNo = storeNo;
     localStorage.serverId = serverId;
+    localStorage.transactionType = $('input[name="opt"]:checked').val();    
+    if ($(".check-3orless").hasClass("checked")){
+    	localStorage.flagActivate3orless = 1;
+    }else{
+    	localStorage.flagActivate3orless = 0;	
+    }
     if($(".validations").hasClass("hide")){
 		$(".validations").removeClass("hide").addClass("animated fadeInLeft");
 	}
@@ -511,8 +412,7 @@ function saveConfiguration(storeNo, serverId) {
 		$(".txtMessage").addClass("success");
 		$(".btn-mini-img").addClass("success").find('span').empty().html('&#xe650');
 	}
-    if (localStorage.current_lang == "es") { $(".txtMessage").text("Configuraci\u00f3n realizada exitosamente!"); } 
-    else { $(".txtMessage").text("Configuration set up successfully!"); }
+	$(".txtMessage").text(localStorage.caption_msgConfigurationSuccess);
 
     $(".validations").removeClass("show").delay(delay).queue(function(){
 	    $(this).addClass("animated fadeOutLeft").dequeue();
@@ -558,8 +458,7 @@ function savePassword(password,emailUser){
 		$(".txtMessage").addClass("success");
 		$(".btn-mini-img").addClass("success").find('span').empty().html('&#xe650');
 	}
-    if (localStorage.current_lang == "es") { $(".txtMessage").text("Asignaci\u00f3n de contrase\u00f1a exitosa!"); } 
-    else { $(".txtMessage").text("Password set up successfully!"); }
+	$(".txtMessage").text(localStorage.caption_msgPasswordSetUpSuccessfully);
 
     $(".validations").removeClass("show").delay(delay).queue(function(){
 	    $(this).addClass("animated fadeOutLeft").dequeue();
@@ -630,24 +529,6 @@ function showLoading(option){
     }
 }
 
-// var w;
-// function startWorker() {
-//     if (typeof(Worker) !== "undefined") {
-// 	    if(typeof(w) == "undefined") {
-//             w = new Worker("../js/scripts/printFunctions.js");
-//         }
-//         // w.onmessage = function(event) {
-//         //     printerConnection = event.data;
-//         // };
-//         // w.terminate();
-//         // w = undefined;
-//         // showLoading(false);
-// 	} else {
-// 	    alert("Sorry! No Web Worker support..");
-// 	}
-// }
-
-
 //remove all variables related to search page from local storage
 function clearSearchPage(){
 	localStorage.removeItem("threeOrLessListBrandFilter");
@@ -674,7 +555,7 @@ function clearSearchPage(){
 	localStorage.removeItem("kioskOrderResults");
 	localStorage.removeItem("indexProductSelected");
 	localStorage.removeItem("resultsProductColorCodeSelected");
-	localStorage.removeItem("resultsProductStyleCodeSelected");
+	localStorage.removeItem("resultsProductStyleCodeSelected");	
 
 	localStorage.removeItem("currentFirstNameClient");
 	localStorage.removeItem("currentLastNameClient");
@@ -692,3 +573,65 @@ function clearSearchPage(){
 	localStorage.totalOriginalPrice = 0;
 }
 
+function setCaptions(){
+	$(".lblConfig").text(localStorage.caption_lblConfig);
+	$(".lblStoreNo").html(localStorage.caption_lblStoreNo);
+	$(".storeNo").attr('placeholder',localStorage.caption_storeNo);
+	$(".lblServerId").html(localStorage.caption_lblServerId);
+	$(".serverId").attr('placeholder',localStorage.caption_serverId);
+	$(".lblPrinter").html(localStorage.caption_lblPrinter);
+	$(".btnSave").text(localStorage.caption_btnSave);
+	$(".lblEmail").html(localStorage.caption_lblEmail);
+	$(".emailUser").attr('placeholder',localStorage.caption_emailUser);
+	$(".lblOldPassword").html(localStorage.caption_lblOldPassword);
+	$(".lblPassword").html(localStorage.caption_lblPassword);
+	$(".lblConfirmPassword").html(localStorage.caption_lblConfirmPassword);
+	$(".btnFinish").text(localStorage.caption_btnFinish);
+	$(".lblSetColor").text(localStorage.caption_lblSetColor);
+	$(".lblStoreSettings").text(localStorage.caption_lblStoreSettings);
+	$(".lblAccountSettings").text(localStorage.caption_lblAccountSettings);
+	$(".lblShow3orless").text(localStorage.caption_lblActivateThreeOrLess);
+	$(".lblTransactionType").text(localStorage.caption_lblTransactionType);
+	$(".lblSalesorder").text(localStorage.caption_lblSO);
+	$(".lblReceipt").text(localStorage.caption_lblReceipt);
+}
+
+function setLocalCaptions(){
+	if (localStorage.current_lang == "es"){
+		$(".lblConfig").text("Configuración");
+		$(".lblStoreNo").html("N° Tienda<span>*</span>");
+		$(".storeNo").attr('placeholder',"Ingrese el número de tienda");
+		$(".lblServerId").html("IP del Servidor<span>*</span>");
+		$(".serverId").attr('placeholder',"Ingrese la IP del servidor");
+		$(".lblPrinter").html("Impresora<span>*</span>");
+		$(".btnSave").text("Guardar");
+		$(".lblEmail").html("Correo Electrónico<span>*</span>");
+		$(".emailUser").attr('placeholder',"contacto@email.com");
+		$(".lblOldPassword").html("Contraseña anterior<span>*</span>");
+		$(".lblPassword").html("Nueva Contraseña<span>*</span>");
+		$(".lblConfirmPassword").html("Confirmar Contraseña<span>*</span>");
+		$(".btnFinish").text("Finalizar");
+		$(".lblSetColor").text("Establecer Color");
+		$(".lblStoreSettings").text("Configuración de la Tienda");
+		$(".lblAccountSettings").text("Configuración de la Cuenta");
+		$(".lblShow3orless").text("Activar módulo TRES O MENOS");
+		$(".lblTransactionType").text("Tipo de Transacción");
+		$(".lblSalesorder").text("Orden de Venta");
+		$(".lblReceipt").text("Factura");
+		localStorage.caption_msgCompleteRequiredField = "Complete el campo requerido!";
+		localStorage.caption_msgIncorrectIPFormat = "El formato de IP del servidor es incorrecto!";
+		localStorage.caption_msgVerifyFields = "Por favor, verifique los campos e inténtelo nuevamente!";
+		localStorage.caption_msgWrongPasswordConfirmation = "La confirmación de la contrasena no es correcta!";
+		localStorage.caption_msgWrongEmailFormat = "El formato de email es incorrecto!";
+		localStorage.caption_msgWrongPassword = "La contrasena no es correcta!";
+		localStorage.caption_msgConfigurationSuccess = "Configuración realizada exitosamente!";
+		localStorage.caption_msgPasswordSetUpSuccessfully = "Asignación de contraseña exitosa!";
+	}else{
+		localStorage.caption_msgIncorrectIPFormat = "Server IP format is wrong!";
+		localStorage.caption_msgWrongPasswordConfirmation = "Password confirmation is wrong!";
+		localStorage.caption_msgWrongEmailFormat = "Wrong email format!";
+		localStorage.caption_msgWrongPassword = "Password is incorrect!";
+		localStorage.caption_msgConfigurationSuccess = "Successfully configuration!";
+		localStorage.caption_msgPasswordSetUpSuccessfully = "Successfully password assign!";
+	}
+}

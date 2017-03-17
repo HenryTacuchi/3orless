@@ -172,6 +172,13 @@ section {
     font-family: 'Scalia User Icons';
 }
 
+.footer-menu{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+	background-color: transparent;
+}
+
 @media only screen and (min-width: 1280px) {
 	.logoApp{
 		width: 230px;

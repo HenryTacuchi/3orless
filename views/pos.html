@@ -13,7 +13,7 @@
 	<script type="text/javascript" src="../js/plugins/sweetalert.min.js" ></script>
 	<script type="text/javascript" src="../js/scripts/scripts.js"></script>
 	<script type="text/javascript" src="../js/plugins/jquery.email-autocomplete.min.js"></script>
-	<script type="text/javascript" src="../js/scripts/scan-items.js"></script>
+	<script type="text/javascript" src="../js/scripts/pos.js"></script>
 	<!-- <script type="text/javascript" src="../js/scripts/captions.js"></script> -->
 	<script type="text/javascript" src="../js/scripts/colorApp.js"></script>
 
@@ -23,7 +23,7 @@
 	<link href="../css/colors.css" rel="stylesheet">
 	<link href="../css/animate.css" rel="stylesheet">
 
-	<link rel="stylesheet" type="text/css" href="../css/scan-items.css">
+	<link rel="stylesheet" type="text/css" href="../css/pos.css">
 </head>
 
 <body>
@@ -32,7 +32,13 @@
 			<div class="icon btn-home">&#xe610;</div>
 			<label class="appName appNameScanItem">
 				Checkout
-			</label>			
+			</label>
+			<label class="cashierName">
+				Cashier
+			</label>	
+			<label class="storeName">
+				Store 001
+			</label>		
 		</div>
 		<ul class="right-options">
 			<!--<li><div class="icon btn-cart">&#xe613;<span class="item-count"></span></div></li>-->
@@ -154,9 +160,9 @@
 		<section class="section-cart-items">		
 			<article class="cart-opciones">
 				<ul class="flex-higher nav nav-tabs">
-					<li class="active"><a data-toggle="tab" href="#items" class="btn-flex lblItems">Items</a></li>
-					<li><a data-toggle="tab" href="#transaction" class="btn-flex lblTransaction">Transaction</a></li>
-					<li><a data-toggle="tab" href="#payment" class="btn-flex lblPayment">Payment</a></li>
+					<li class="active"><a data-toggle="tab" href="#items" class="btn-flex btn-items lblItems">Items</a></li>
+					<li><a data-toggle="tab" href="#transaction" class="btn-flex btn-transaction lblTransaction">Transaction</a></li>
+					<li><a href="#payment" class="btn-flex btn-payment lblPayment">Payment</a></li>
 					<!--<li><a data-toggle="tab" href="#otro" class="btn-flex">&nbsp;</a></li>-->
 				</ul>
 				<div class="flex-central tab-content">
@@ -174,7 +180,7 @@
 					</div>
 					<div id="transaction" class="tab-pane fade">
 						<ul class="nav nav-tabs">
-							<li><button>Void</button></li>
+							<li><button class="btn-clear-cart">Void</button></li>
 							<li><button>Return Receipt</button></li>
 							<li><button>Tax</button></li>
 							<li><button>Hold</button></li>
@@ -220,14 +226,63 @@
 
 	</div>
 
-	<footer>
+	<!-- <footer>
 		<div class="options">
 			<button class="btn btn-back setBaColor">Back</button>
 			<button class="btn btn-clear-cart setBaColor">Clear All</button>
 			<button class="btn btn-order setBaColor">Order</button>
 		</div>
-	</footer>
+	</footer> -->
 
+	<!-- modal payment -->
+	<div class="modal fade" id="modalPayment" role="dialog" data-backdrop="static">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">          
+					<h2 class="modal-title modalTitle lblPayment">Payment</h2>
+				</div>
+				<div class="modal-body flex-sections">
+					<section class="actions">
+						<div class="actions-body">
+							<ul class="payment-buttons">
+								<li><button class="btn-cash">Cash</button></li>
+								<li><button class="btn-credit-card">Credit Card</button></li>
+								<li><button class="btn-pin-debit">Pin Debit</button></li>
+								<li><button class="btn-redeem-gift">Redeem Gift</button></li>
+								<li><button class="btn-by-debit">By Gift</button></li>
+							</ul>
+						</div>
+					</section>
+					<section class="totalBalance">
+						<div class="totalBalance-body">
+							a
+						</div>
+					</section>
+					<section class="keypad">
+						<ul class="nav nav-tabs">
+							<li class="btn-number"><button class="btn-tecla" valor="7">7</button></li>
+							<li class="btn-number"><button class="btn-tecla" valor="8">8</button></li>
+							<li class="btn-number"><button class="btn-tecla" valor="9">9</button></li>
+							<li class="btn-bkspc-clr"><button class="btn-tecla" valor="bkspc">Bkspc</button></li>
+							<li class="btn-number"><button class="btn-tecla" valor="4">4</button></li>
+							<li class="btn-number"><button class="btn-tecla" valor="5">5</button></li>
+							<li class="btn-number"><button class="btn-tecla" valor="6">6</button></li>
+							<li class="btn-bkspc-clr"><button class="btn-tecla" valor="clr">Clear</button></li>
+							<li class="btn-number"><button class="btn-tecla" valor="1">1</button></li>
+							<li class="btn-number"><button class="btn-tecla" valor="2">2</button></li>
+							<li class="btn-number"><button class="btn-tecla" valor="3">3</button></li>
+							<li class="btn-bkspc-clr btn-enter"><button class="btn-tecla" valor="enter">Enter</button></li>
+							<li class="btn-cero"><button class="btn-tecla" valor="0">0</button></li>
+						</ul>
+					</section>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btnCancel" data-dismiss="modal" id="btnCancel">Cancel</button>
+					<button class="btn btnCompleteSale" data-dismiss="modal" id="btnCompleteSale">Complete Sale</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div class="validations hide">
 		<div class="msg-image">
