@@ -3,82 +3,6 @@ var delay=2500;
 var removeAnimationFlipIn = false;
 
 var page = '';
-var app = {
-    // Application Constructor
-    initialize: function() {
-        this.bindEvents();
-    },
-    // Bind Event Listeners
-    //
-    // Bind any events that are required on startup. Common events are:
-    // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
-    },
-    // deviceready Event Handler
-    //
-    // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicitly call 'app.receivedEvent(...);'
-    onDeviceReady: function() {
-        app.receivedEvent('deviceready');
-
-		   showLoading(true); 		   
-		   BTPrinter.connect(function(data){
-			    console.log("Success Connect");
-			    console.log(data);
-				BTPrinter.printText(function(data){
-					console.log("Success PrintText");
-					console.log(data);
-					setTimeout(function(){
-						BTPrinter.disconnect(function(data){
-						    console.log("Success Disconnect");
-						    console.log(data);		
-							clearSearchPage();	
-							showLoading(false);			  	
-							window.location = "search3orless.html";
-						},function(err){
-						    console.log("Error Disconnect");
-						    console.log(err);
-						    showLoading(false);
-						}, localStorage.printerName)
-					},3000); 	
-				},function(err){
-					console.log("Error printText");
-					console.log(err);					
-					showLoading(false);
-				}, page);				
-			},function(err){
-			    console.log("Error Connect");
-			    console.log(err);
-			    swal({
-				  title: localStorage.caption_modalPrintTitle,
-				  text: localStorage.caption_modalPrintText,
-				  type: "warning",
-				  showCancelButton: true,
-				  confirmButtonColor: "#8fbf75",
-				  confirmButtonText: localStorage.caption_txtConfirmButtonRetry,
-				  cancelButtonColor: "#b9b9b9",
-				  cancelButtonText: localStorage.caption_txtCancelButtonFinish,
-				  closeOnConfirm: false,
-				  closeOnCancel: false
-				},
-				function(isConfirm){
-				  if (isConfirm) {
-				    printTicket();
-				  } else {
-				    clearSearchPage();	
-					showLoading(false);			  	
-					window.location = "search3orless.html";
-				  }
-				});
-			    showLoading(false);
-			}, localStorage.printerName)
-    },
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-    }
-};
-
 
 $(document).ready(function(){
 	setCaptions();
@@ -95,7 +19,9 @@ $(document).ready(function(){
 
 	$('.txtFirstName').bind('keypress', function(event) {
     if(event.which == 13||event.which == 10) {
-      $(".section-cart-items").show();
+    	event.preventDefault();
+    	$('.txtFirstName').blur();
+		$(".section-cart-items").show();
     }
     });
 
@@ -239,10 +165,10 @@ $(document).ready(function(){
 			  confirmButtonText: localStorage.caption_txtConfirmButton,				  
 			  closeOnConfirm: false
 			},
-			function(){
+			function(){			
 				if (!(localStorage.printerName == undefined || localStorage.printerName =='')){
 					loadPrint();
-					printTicket();
+					document.addEventListener("deviceready", printTicket, false);
 				}
 				else{
 				    clearSearchPage();	
@@ -393,17 +319,25 @@ $(document).ready(function(){
 
 function loadPrint(){
 	var currentdate = new Date(); 
-	var datetime = currentdate.getDate() + "/"
-	           + (currentdate.getMonth()+1)  + "/" 
-	           + currentdate.getFullYear() + " "  
-	           + currentdate.getHours() + ":"  
-	           + currentdate.getMinutes() + ":" 
-	           + currentdate.getSeconds();
-	page = "           NICEKICKS\n"+
-						'Ticket N°: ' + localStorage.orderNumber+'\n'+
-						localStorage.currentFirstNameClient +'\n'+
-						datetime+'\n\n'+
-						'Cart Items\n';
+	var year = currentdate.getFullYear();
+	var month = (1 + currentdate.getMonth()).toString();
+	month = month.length > 1 ? month : '0' + month;
+	var day = currentdate.getDate().toString();
+	day = day.length > 1 ? day : '0' + day;
+	var hours = currentdate.getHours().toString();
+	hours = hours.length > 1 ? hours : '0' + hours;
+	var minutes = currentdate.getMinutes().toString();
+	minutes = minutes.length > 1 ? minutes : '0' + minutes;
+	var seconds = currentdate.getSeconds().toString();
+	seconds = seconds.length > 1 ? seconds : '0' + seconds;
+	var datetime = day + "/" + month + "/" + year + " " + hours + ":" + minutes + ":" + seconds;
+	page = "{center}{b}{h}NICEKICKS{/h}{/b}{br}{br}"+
+						'{center}Ticket No: ' + localStorage.orderNumber+'{br}'+
+						'{b}' + localStorage.currentFirstNameClient +'{/b}{br}'+
+						datetime+'{br}{br}'+
+						'--------------------------------{br}'+
+						'Cart Items{br}{br}';
+	page = page + "{left}";						
 
 	var totalMont=0;
    	var totalRealMont =0;
@@ -415,15 +349,15 @@ function loadPrint(){
 		var montOriginal = Number(productObject.Product.originalPrice.substring(1));
 		totalMont = totalMont + mont;
 		totalRealMont = totalRealMont + montOriginal;
-		var elementCartItem = 	'- Brand: '+productObject.Product.brandName+'\n'+
-								'  Style: '+productObject.Product.styleName+'\n'+
-								'  Color: '+productObject.Product.colorCode+'\n'+
-								'  Size : '+productObject.Product.size+'\n'+
-								'  Price: '+productObject.Product.price+'\n\n';
+		var elementCartItem = 	'- Brand: '+productObject.Product.brandName+'{br}'+
+								'  Style: '+productObject.Product.styleName+'{br}'+
+								'  Color: '+productObject.Product.colorCode+'{br}'+
+								'  Size : '+productObject.Product.size+'{br}'+
+								'  Price: '+productObject.Product.price+'{br}{br}';
 		page = page + elementCartItem;
 	}			
-	page = page +   'Total : '+totalMont.toFixed(2)+'\n'+
-					'Saving: '+(totalRealMont-totalMont).toFixed(2)+'\n\n\n\n\n';
+	page = page +   '{b} Total : $'+totalMont.toFixed(2)+'{/b}{br}'+
+					'{b} Saving: $'+(totalRealMont-totalMont).toFixed(2)+'{/b}{br}{br}{br}{br}{br}{br}{br}{br}';
 }
 
 function getProductList(){
@@ -560,7 +494,70 @@ function printTicket(){
         	// showLoading(false);
         },
         success: function (result) { 
-            app.initialize()
+            // app.initialize()
+            DatecsPrinter.connect(localStorage.printerAddress, 
+		      function() {
+		        var image = new Image();
+				image.src = '../img/Logo.png';
+				image.onload = function() {
+				var canvas = document.createElement('canvas');
+				canvas.height = 172;
+				canvas.width = 344;
+				var context = canvas.getContext('2d');
+				context.drawImage(image, 0, 0);
+				var imageData = canvas.toDataURL('image/jpeg').replace(/^data:image\/(png|jpg|jpeg);base64,/, ""); //remove mimetype
+				DatecsPrinter.printImage(
+				  imageData, //base64
+				  canvas.width, 
+				  canvas.height, 
+				  1, 
+				  function() {
+				    DatecsPrinter.printText(page, 'ISO-8859-1', 
+					    function() {
+					      	clearSearchPage();	
+							showLoading(false);			  	
+							window.location = "search3orless.html";				      
+					    },
+					    function(error) {
+					      alert(JSON.stringify(error));
+					    }
+					  );
+				  },
+				  function(error) {
+				      alert(JSON.stringify(error));
+				  }
+				)
+				};
+				image.onerror = function(error){
+				alert(JSON.stringify(error));
+				}
+		      },
+		      function(error) {
+		        // alert(JSON.stringify(error));
+		        swal({
+				  title: localStorage.caption_modalPrintTitle,
+				  text: localStorage.caption_modalPrintText,
+				  type: "warning",
+				  showCancelButton: true,
+				  confirmButtonColor: "#8fbf75",
+				  confirmButtonText: localStorage.caption_txtConfirmButtonRetry,
+				  cancelButtonColor: "#b9b9b9",
+				  cancelButtonText: localStorage.caption_txtCancelButtonFinish,
+				  closeOnConfirm: false,
+				  closeOnCancel: false
+				},
+				function(isConfirm){
+				  if (isConfirm) {
+				    printTicket();
+				  } else {
+				    clearSearchPage();	
+					showLoading(false);			  	
+					window.location = "search3orless.html";
+				  }
+				});
+			    showLoading(false);
+		      }
+		    );
         },
         error: function (error) {    	
         }

@@ -53,6 +53,7 @@ $(document).ready(function(){
     	$('#txtScan').focus();
     }else{
 		searchProduct(localStorage.SKUCodeScan);
+		localStorage.SKUCodeScan="";
     }
 
 	$(".txtEmail").emailautocomplete({
@@ -138,7 +139,8 @@ $(document).ready(function(){
 		setTimeout(function(){ 
 			$(".items").empty();
 			getProductList();
-			setColorApp();}, 500);
+			setColorApp();
+		}, 500);
     });
 
 
@@ -198,11 +200,36 @@ $(document).ready(function(){
     });
     /* FIN FJ */
 
+
     $('.btn-payment').click(function(){
     	$('#modalPayment').modal('show');
     });
 
 
+    $('.scrollbar-pos').scrollbar({
+        "showArrows": true,
+        "scrollStep": 80,
+        "scrollx": "advanced",
+        "scrolly": "advanced",
+        "autoUpdate": true
+    });
+
+
+    $(document).on('click', '.product', function(){
+    	$(this).addClass('selected');
+    });
+    
+	alert($(".product-1").scrollTop());
+	alert($(".product-2").scrollTop());
+	alert($(".product-3").scrollTop());
+	alert($(".product-4").scrollTop());
+	alert($(".product-5").scrollTop());
+	alert($(".product-6").scrollTop());
+	alert($(".product-7").scrollTop());
+	alert($(".product-8").scrollTop());
+	alert($(".product-9").scrollTop());
+	alert($(".product-10").scrollTop());
+	alert($(".product-11").scrollTop());
 });
 
 $(window).load(function(){
@@ -387,7 +414,7 @@ function getProductList(){
 		var productObject = JSON.parse(localStorage["scannedItem"+i]);
 		var classAnimated = "";
 		if(!removeAnimationFlipIn){
-			classAnimated = "animated flipInX";        	
+			classAnimated = "animated fadeIn";        	
         }
 		template = _.template($("#productCartItemTemplate").html());                       
         html = template({
@@ -520,7 +547,10 @@ function searchProduct(txtSKU){
 		    			setTimeout(function(){ 
 							$(".items").empty();
 							getProductList();
-							setColorApp();}, 500);
+    						$(".product-" + (localStorage.countScannedItem)).addClass("selected");
+    						// alert($(".product-" + (localStorage.countScannedItem)).scrollTop());
+    						// $(".items-section").animate({ scrollTop: $(".product-" + (localStorage.countScannedItem)).scrollTop() }, 1000, 'swing',function() { alert("Finished animating");});
+							setColorApp();}, 1000);
 		        	}
 		        	else{
 		        		if($(".txtMessage").hasClass("success")){

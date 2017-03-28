@@ -5,11 +5,7 @@ $(document).ready(function(){
 	showLoading(true);
 	getCaptions();
 	setCaptions();
-
     
-	// if(localStorage.noSettings == 0){
-	// 	window.location = "config.html";
-	// }
 	if(localStorage.noImageFromServer == 0){
 		getImagesFromServer();	
 		localStorage.countProductCartItem = 0;
@@ -113,7 +109,6 @@ $(document).ready(function(){
 //when pages is loaded clear items from local storage
 $(window).on("load", function() {
 	showLoading(false);
-	// clearSearchPage();
 	if(localStorage.threeOrLessOrderResults == undefined) localStorage.threeOrLessOrderResults = "";		
 	if(localStorage.kioskOrderResults == undefined) localStorage.kioskOrderResults = "";		
 });

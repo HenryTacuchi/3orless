@@ -5,7 +5,19 @@ $(document).ready(function(){
 	document.addEventListener("deviceready", onDeviceReady, false);
 
     function onDeviceReady() {
-        loadCboPrinters();
+    	
+    	cordova.plugins.diagnostic.setBluetoothState(function(){
+        	cordova.plugins.diagnostic.registerBluetoothStateChangeHandler(function(state){
+			   if(state === cordova.plugins.diagnostic.bluetoothState.POWERED_ON){
+			       console.log("Bluetooth is able to connect");
+			       loadCboPrinters();
+			   }
+			});
+		}, function(error){
+			alert(error);
+		    console.error("The following error occurred: "+error);
+		},
+		true);
     }
 
 	if (localStorage.serverId == undefined || localStorage.serverId == ""){
@@ -46,7 +58,6 @@ $(document).ready(function(){
     });
 
     $('.btn-exit').click(function(){
-    	// KioskPlugin.exitKiosk();
     	navigator.app.exitApp();
     });
 
@@ -349,15 +360,13 @@ $(document).ready(function(){
 						$(".noEmailUser").removeClass("show").addClass("hide");
 				}
 			}
-		}	
-
-		// clearSearchPage();
-		
+		}			
     });
 
     $(document).on("click",".printer-item",function(){
     	$(".printer-dropdown").text($(this).text());
-        localStorage.printerName = $(this).text();        
+        localStorage.printerName = $(this).text();      
+        localStorage.printerAddress = $(this).attr("data-address")  
     });
 
 });
@@ -368,27 +377,28 @@ $(window).on("load", function() {
 });
 
 function loadCboPrinters(){
-	BTPrinter.list(function(data){
-        console.log("Success");
-        console.log(data); //list of printer in data array
-        
-		if(data.length>0){
-			if(localStorage.printerName == undefined || localStorage.printerName ==''){
-				$(".printer-dropdown").text(data[0]);					
-				localStorage.printerName = data[0];
-			}					
-		    for (var i=0; i<data.length; i++) {
-				var template = _.template($("#listPrinterTemplate").html());
-			    var html = template({
-			       printerName:data[i]
-			    });
-			    $(".listPrinter").append(html);
+ 	DatecsPrinter.listBluetoothDevices(
+		function (devices) {
+			if(devices.length>0){
+				if(localStorage.printerName == undefined || localStorage.printerName ==''){
+					$(".printer-dropdown").text(devices[0].name);					
+					localStorage.printerName = devices[0].name;
+					localStorage.printerAddress = devices[0].address;
+				}					
+			    for (var i=0; i<devices.length; i++) {
+					var template = _.template($("#listPrinterTemplate").html());
+				    var html = template({
+				       printerName:devices[i].name,
+				       printerAddress:devices[i].address
+				    });
+				    $(".listPrinter").append(html);
+				}
 			}
+		},
+		function (error) {
+			alert(JSON.stringify(error));
 		}
-    },function(err){
-        console.log("Error");
-        console.log(err);
-    })	 
+	)
 }
 
 //store data in local storage: StoreNo and ServerId

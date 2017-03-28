@@ -11,6 +11,7 @@
 
 	<script type="text/javascript" src="../js/plugins/underscore.min.js"></script>
 	<script type="text/javascript" src="../js/plugins/sweetalert.min.js" ></script>
+	<script type="text/javascript" src="../js/plugins/jquery.scrollbar.js" ></script>
 	<script type="text/javascript" src="../js/scripts/scripts.js"></script>
 	<script type="text/javascript" src="../js/plugins/jquery.email-autocomplete.min.js"></script>
 	<script type="text/javascript" src="../js/scripts/pos.js"></script>
@@ -19,31 +20,47 @@
 
 	<link href="../css/bootstrap.min.css" rel="stylesheet">
 	<link href="../css/sweetalert.css" rel="stylesheet">
+	<link href="../css/scrollbar.css" rel="stylesheet">
 	<link href="../css/core-style.css" rel="stylesheet">
 	<link href="../css/colors.css" rel="stylesheet">
-	<link href="../css/animate.css" rel="stylesheet">
+	<link href="../css/animate.css" rel="stylesheet">	
 
 	<link rel="stylesheet" type="text/css" href="../css/pos.css">
+
 </head>
 
 <body>
 	<nav class="animated fadeIn setBaColor nav-retailcs">
 		<div class="left-options">
 			<div class="icon btn-home">&#xe610;</div>
-			<label class="appName appNameScanItem">
-				Checkout
+			<label class="appName appNamePOS">
+				POS
 			</label>
-			<label class="cashierName">
-				Cashier
-			</label>	
-			<label class="storeName">
-				Store 001
-			</label>		
+			<div class="info-pos">
+				<div class="row">
+					<label class="icon-systemdate systemDate">
+						03/02/17 10:54
+					</label>	
+					<label class="icon-workstation workStation">
+						WS1
+					</label>	
+				</div>
+				<div class="row">					
+					<label class="icon-storename storeName">
+						Store 001
+					</label>	
+					<label class="icon-cashiername cashierName">
+						Cashier
+					</label>	
+				</div>
+			</div>				
 		</div>
 		<ul class="right-options">
 			<!--<li><div class="icon btn-cart">&#xe613;<span class="item-count"></span></div></li>-->
-			<li class="li-options"><div class="icon btn-cart">&#xe755;<span class="item-count"></span></div></li>
-			<li class="li-total"><span class="span-total">Total: </span><span class="span-total span-total-price">$0.00</span></li>
+			<!-- <li class="li-options"><div class="icon btn-cart">&#xe755;<span class="item-count"></span></div></li> -->
+			<!-- <li class="li-total"><span class="span-total">Total: </span><span class="span-total span-total-price">$0.00</span></li> -->
+			<li class="li-options"><button class="icon icon-clock lblClockinout">Clock in/out</button></li>
+			<li class="li-options"><button class="icon icon-settings lblClockinout">Settings</button></li>
 		</ul>
 	</nav>
 
@@ -66,41 +83,103 @@
 		<!-- INICIO HENRY -->
 		<section class="section-form-user">		
 			<article class="form-user">
-				<h2 class="text-center lblCompleteFields">Please complete the fields</h2>
+				<!-- <h2 class="text-center lblCompleteFields">Please complete the fields</h2> -->
 				<!-- <div class="form-group user col-xs-12 col-md-12">	
 					<input type="text" value="" class="form-control txtFirstName" value="Gustavo">
 					<span class="no-complete noFirstName hide">Please fill the required field</span>
 				</div> -->
-				<form>
-					<div class="form-inline row">
-						<div class="form-group user col-xs-12 col-md-6">
-							<label class="lblName">Firstname<span>*</span></label>		
-							<input type="text" value="" class="form-control txtFirstName" value="Gustavo">								
-							<span class="no-complete noFirstName hide">Please fill the required field</span>
-						</div>
-						<div class="form-group user col-xs-12 col-md-6">
-							<label class="lblLastName">Lastname<span>*</span></label>		
-							<input type="text" value="" class="form-control txtLastName" value="Coronado">								
-							<span class="no-complete noLastName hide">Please fill the required field</span>
-						</div>
-					</div>					
-					<div class="form-group user">
+				<!-- <div class="form-inline row"> -->
+					<div class="form-group user col-xs-12 col-md-12">
+
+						<!-- <label class="lblName">Firstname<span>*</span></label>		
+						<input type="text" value="" class="form-control txtFirstName" value="Gustavo">			
+						<span class="no-complete noFirstName hide">Please fill the required field</span>
+
+						<label class="lblLastName">Lastname<span>*</span></label>		
+						<input type="text" value="" class="form-control txtLastName" value="Coronado">			
+						<span class="no-complete noLastName hide">Please fill the required field</span>
+
 						<label class="lblEmail">E-mail<span>*</span></label>		
 						<input type="email" value="" class="form-control txtEmail" placeholder="your@email.com" value="gustavo@realcs.com">								
-						<span class="no-complete noEmail hide">Please fill the required field</span>
+						<span class="no-complete noEmail hide">Please fill the required field</span> -->
+
+						<ul class="customer-nav nav nav-tabs">
+							<li class="active"><a data-toggle="tab" href="#billto" class="btn-flex btn-billto lblBillTo">Bill to</a></li>
+							<li><a data-toggle="tab" href="#shipto" class="btn-flex btn-shipto lblShipTo">Ship to</a></li>
+							<li><div class="dropdown justique drop-left">
+									<div class="btn dropdown-toggle sort-dropdown " data-toggle="dropdown">Customer</div>
+									<ul class="dropdown-menu">
+										<li class="item"><button class="btn icon-search btnSearchcustomer">Search</button></li>
+										<li class="item"><button class="btn icon-new btnNewcustomer">New</button></li>
+										<li class="item"><button class="btn icon-edit btnEditcustomer">Edit</button></li>
+										<li class="item"><button class="btn icon-remove btnRemovecustomer">Remove</button></li>
+										<li class="item"><button class="btn icon-history btnHistorycustomer">History</button></li>
+									</ul>
+								</div>
+							</li>
+						</ul>
+						<div class="flex-central tab-content">
+							<div id="billto" class="tab-pane fade in billto active">
+								<div class="row">
+									<div class="col-sm-8">
+										<h4><strong class="lblCustomername">Gino Reynoso</strong></h4>
+									</div>
+									<div class="col-sm-4">
+										<div class="customerInfo"><span class="lblSc">S/C</span><span class="text-left txtSc">0.00</span></div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-8">
+										<p class="lblCustomerphone">987-654-321</p>
+									</div>
+									<div class="col-sm-4">
+										<div class="customerInfo"><span class="lblReward">Reward</span><span class="text-left txtReward">0</span></div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-8">
+										<p class="lblCustomeremail">gino.reynoso@retailcs.com</p>
+									</div>
+									<div class="col-sm-4">
+										<div class="customerInfo"><span class="lblVisit">Visit</span><span class="text-left txtVisit">0</span></div>
+									</div>
+								</div>
+							</div>
+							<div id="shipto" class="tab-pane fade shipto">
+								<div class="row">
+									<div class="col-sm-12">
+										<h4><strong class="lblCustomername">Gino Reynoso</strong></h4>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<p class="lblCustomerphone">987-654-321</p>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<p class="lblCustomeremail">gino.reynoso@retailcs.com</p>
+									</div>
+								</div>
+							</div>		
+						</div>							
+
 					</div>
-				</form>
+				<!-- </div>					 -->
 			</article>
 			<article class="cart-items">
-				<div class="thead">
+				<div class="thead">					
 					<div class="col-xs-2 text-left center-text">
-						<label class="actions">&nbsp;</label>
+						<span><strong class="lblImg">&nbsp;</strong></span>
 					</div>
-					<div class="col-xs-7 text-left center-text">
-						<label class="lblDescription">Description</label>
+					<div class="col-xs-5 text-left center-text">
+						<span><strong class="lblDescription">Description</strong></span>
 					</div>
 					<div class="col-xs-3 text-right center-text">
-						<label class="lbltotal">Total</label>
+						<span><strong class="lbltotal">&nbsp;</strong></span>
+					</div>
+					<div class="col-xs-2 text-left center-text">
+						<span><strong class="actions">&nbsp;</strong></span>
 					</div>
 					<!-- <div class="form-group scan col-xs-4 col-xs-offset-4 input-group">	
 						<input type="number" value="" class="form-control txtScan" placeholder="Scan product" maxlength="7">
@@ -110,17 +189,32 @@
 					</div> -->
 				</div>
 
-				<div class="items"></div>
+				<div class="items-section scrollbar-pos">
+					<div class="items"></div>
+				</div>
 				<div class="tfooter">
-					<div class="row">
-						<div class="col-xs-8 footer-text-left">
+					<!-- <div class="row">
+						<div class="col-xs-7 footer-text-left">
 							<span class="detail-count-text1">You have </span>
 							<span class="detail-count">0</span>
 							<span class="detail-count-text2"> product(s) in you cart.</span>
 						</div>
-						<div class="col-xs-4 footer-text-right">
-							<span>Total: <span class="detail-total">$0.00</span></span>
+						<div class="col-xs-3 footer-text-right">
+							<strong><span class="detail-total">$0.00</span></strong>
 						</div>
+						<div class="col-xs-2">
+							<span>&nbsp;</span>
+						</div>
+					</div> -->
+					<div class="row payment-detail">	
+						<div class="col-sm-5">
+							<div class="payment-detail-field"><span class="lblSubtotal">SubTotal</span><span class="text-right lead"><strong class="txtSubtotal">$839.84</strong></span></div>
+							<div class="payment-detail-field"><span class="lblDiscount">Discount</span><span class="text-right lead"><strong class="txtDiscount">$50.00</strong></span></div>
+							<div class="payment-detail-field"><span class="lblTax">Tax</span><span class="text-right lead"><strong class="txtTax">$10.00</strong></span></div>
+						</div>	
+						<div class="col-sm-7 center-text">
+							<div class="payment-detail-field"><span class="bigger text-right lblTotal">Total</span><span class="text-right lead bigger"><strong class="detail-total"></strong></span></div>
+						</div>	
 					</div>
 				</div>
 				<!-- <div class="col-xs-3">
@@ -130,15 +224,13 @@
 						</div> -->
 		      	<script type="text/template" id="productCartItemTemplate">
 	                <div class="row product <%=Class%>">
-		  				<div class="col-xs-1  center-text">
-		  					<div class="icon btn-trash" data-style="<%=styleCode%>" data-color="<%=colorCode%>" data-size="<%=sizeCode%>" data-sku="<%=sku%>">&#xe615;</div>	
-		  				</div>
+		  				
 						<div class="col-xs-2 center-text">
 							<div class="img-product">
 				      			<img src="<%=path%>" onerror="handleError(this)">
 				      		</div>
 						</div>
-			      		<div class="col-xs-6 center-text">
+			      		<div class="col-xs-5 center-text">
 			      			<div class="areaStyle">
 				      			<span class="txtStyleName">Style:</span>&nbsp;<span class="styleName"><%=styleName%></span>
 				      		</div>
@@ -150,9 +242,23 @@
 		    			<div class="col-xs-3  center-text">
 		    				<div class="price"><%=price%></div>
 		    			</div>
+		    			<div class="col-xs-2  center-text">
+		  					<div class="icon btn-trash" data-style="<%=styleCode%>" data-color="<%=colorCode%>" data-size="<%=sizeCode%>" data-sku="<%=sku%>">&#xe6CB;</div>	
+		  				</div>
 					</div>
 	            </script>
-			</article>			
+			</article>	
+			<article class="actions">
+				<div id="payment-section" class="payment-section">
+					<ul class="nav nav-tabs nav-payment">
+						<!-- btn-clear-cart -->
+						<li><button class="btn btn-void">Void</button></li>
+						<li><button class="btn btn-note">Note</button></li>
+						<li><button class="btn btn-discount">Discount</button></li>
+						<li class="area-btn-payment"><button class="btn btn-payment">Payment</button></li>
+					</ul>
+				</div>
+			</article>		
 		</section>
 		<!-- FIN HENRY -->
 
@@ -162,7 +268,7 @@
 				<ul class="flex-higher nav nav-tabs">
 					<li class="active"><a data-toggle="tab" href="#items" class="btn-flex btn-items lblItems">Items</a></li>
 					<li><a data-toggle="tab" href="#transaction" class="btn-flex btn-transaction lblTransaction">Transaction</a></li>
-					<li><a href="#payment" class="btn-flex btn-payment lblPayment">Payment</a></li>
+					<li><a href="#payment" class="btn-flex btn-promotions lblPromotions">Promotions</a></li>
 					<!--<li><a data-toggle="tab" href="#otro" class="btn-flex">&nbsp;</a></li>-->
 				</ul>
 				<div class="flex-central tab-content">
@@ -170,7 +276,6 @@
 						<ul class="nav nav-tabs">
 							<li><button>Price</button></li>
 							<li><button>Sales Person</button></li>
-							<li><button>Promotions</button></li>
 							<li><button>Redeem Reward</button></li>
 							<li><button>Lookup</button></li>
 							<li><button>&nbsp;</button></li>
@@ -244,21 +349,29 @@
 				<div class="modal-body flex-sections">
 					<section class="actions">
 						<div class="actions-body">
-							<ul class="payment-buttons">
+							<ul class="payment-method-buttons">
 								<li><button class="btn-cash">Cash</button></li>
 								<li><button class="btn-credit-card">Credit Card</button></li>
 								<li><button class="btn-pin-debit">Pin Debit</button></li>
 								<li><button class="btn-redeem-gift">Redeem Gift</button></li>
-								<li><button class="btn-by-debit">By Gift</button></li>
+								<li><button class="btn-by-debit">Buy Gift</button></li>
 							</ul>
 						</div>
 					</section>
 					<section class="totalBalance">
-						<div class="totalBalance-body">
-							a
+						<div class="container totalBalance-body">
+							<div class="row">
+								<div class="col-xs-6"><label>Total</label></div><div class="col-xs-6 text-right"><label>2.00</label></div>
+							</div>
+							<div class="row">
+								<div class="col-xs-6"><label>Balance</label></div><div class="col-xs-6 text-right"><label>-2.00</label></div>
+							</div>
 						</div>
 					</section>
 					<section class="keypad">
+						<div class="form-group">
+							<input type="text" id="" name="" class="form-control txtSelectPayment focus" disabled placeholder="Select Payment Type">
+						</div>
 						<ul class="nav nav-tabs">
 							<li class="btn-number"><button class="btn-tecla" valor="7">7</button></li>
 							<li class="btn-number"><button class="btn-tecla" valor="8">8</button></li>

@@ -59,7 +59,6 @@ $(document).ready(function(){
         }else{
             window.location = "search3orless.html";
         }
-        // window.history.back();
     });
     $(".btn-add-continue").click(function(){
         //if product has added successfully to cart item, redirects to search screen
@@ -303,31 +302,15 @@ $(document).ready(function(){
     }
 
     $(".view").click(function(){
-        // if($(".main-img").hasClass('flipInX')){
-
-            $(".main-img").remove();
-            $('.figureMainImg').append("<img src='"+this.src+"' alt='Main Img' class='main-img ' onerror='handleError(this)'>");
-            setSizeImages();
-
-            // $('.list-clones li').removeClass('animateBehind');
-            // var mainView = $('.list-clones li.front');
-            // setTimeout(function(){
-            //     mainView.removeClass('front').addClass('animateBehind');          
-            //     $('.list-clones li').addClass('behind');            
-            //     var viewToChanges = $(this).attr('class').split(' ')[1];
-            //     $('.list-clones .'+viewToChanges).addClass('front').removeClass('behind');
-            // },1000);
-
-
-        // }else
-        //     $(".main-img").addClass('animated flipInX'); 
-
+        $(".main-img").remove();
+        $('.figureMainImg').append("<img src='"+this.src+"' alt='Main Img' class='main-img ' onerror='handleError(this)'>");
+        setSizeImages();
     });
 
 $(".size-item").click(function(){
-		//  $(".sort-dropdown").text($(this).attr("data-value"));
-        $(".size-dropdown").text($(this).text());
-        $(".txtOnHand").text(data.listStock[$(this).attr("data-value")]);
+	//  $(".sort-dropdown").text($(this).attr("data-value"));
+    $(".size-dropdown").text($(this).text());
+    $(".txtOnHand").text(data.listStock[$(this).attr("data-value")]);
 });
 
 

@@ -5,7 +5,7 @@ $(document).ready(function(){
     
 	$(".opt4").click(function(){
 		localStorage.flag3orless = 0;
-		window.location.href = "scan-items.html";
+		window.location.href = "pos.html";
 	});
     
 	$(".opt3").click(function(){

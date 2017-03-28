@@ -10,7 +10,7 @@ $(document).ready(function () {
     }
 
     function onBackKeyDown() {
-        window.location.href = "scan-items.html";     
+        window.location.href = "pos.html";     
     }
 });
 
@@ -21,10 +21,10 @@ $(window).load(function(){
 function beforeScan(){
     cordova.plugins.barcodeScanner.scan(function(result){
         localStorage.SKUCodeScan=result.text;
-        window.location.href = "scan-items.html";
+        window.location.href = "pos.html";
     },function(error){
         console.log(JSON.stringify(error));
-        window.location.href = "scan-items.html";
+        window.location.href = "pos.html";
     });
 }
 
@@ -47,7 +47,7 @@ function requestCameraAuthorization(){
         if (status == cordova.plugins.diagnostic.permissionStatus.GRANTED){
             beforeScan();
         }else if(status == cordova.plugins.diagnostic.permissionStatus.DENIED){
-            window.location.href = "scan-items.html";
+            window.location.href = "pos.html";
         }
     }, function(error){
         console.error(error);

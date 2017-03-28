@@ -13,7 +13,7 @@ $(document).ready(function(){
 
 	$('.checkbox-control').click(function(){
 		if(!$(this).find('.checkbox').hasClass('checked'))
-			$(this).find('.checkbox').css('background-color','#ffffff');
+			$(this).find('.checkbox').css('background-color','#d2dae1');
 		else	{
 			if (localStorage.colorBackground == undefined){
 				$(this).find('.checkbox').css('background-color','#000066');

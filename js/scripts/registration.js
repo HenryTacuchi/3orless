@@ -35,16 +35,6 @@ $(document).ready(function () {
       $(".btn-submit").click();
     }
     });
-
-    // $('.txtEmail').on('keyup', function(e) {
-    //             var theEvent = e || window.event;
-    //             var keyPressed = theEvent.keyCode || theEvent.which;
-    //             if (keyPressed == 13) {
-    //                 $("input").blur();
-    //                 $(".options").show();
-    //             }
-    //             return true;
-    //         });
   
   //load years for brithday modal datepicker
   var dateModal = new Date();
@@ -136,8 +126,6 @@ $(document).ready(function () {
 
 //Function to recieve inputs as contact-info
   $(".btn-submit").click(function () {
-      // $(".loader").css('display', 'block');
-      //alert("antes");
         
         //obligatory
         var firstName = $('.txtFirstName').val();

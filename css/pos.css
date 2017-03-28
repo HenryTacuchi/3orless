@@ -26,7 +26,7 @@ article {
 
 /*form*/
 .form-user{
-	padding: 10px 0px 20px !important;
+	padding: 10px 0px 0px !important;
 }
 .form-user h2{
 	font-weight: 100;
@@ -35,9 +35,9 @@ article {
 }
 
 form{
-	padding: 15px;
-  max-width: 480px;
-  margin: 0 auto;
+	padding: 0 15px;
+	max-width: 480px;
+	margin: 0 auto;
 }
 
 /*FJ*/
@@ -67,6 +67,16 @@ form{
 
 /* INICIO FJ*/
 
+.info-pos {
+    float: right;
+    padding: 0 25px;
+}
+.info-pos label{
+	font-size: 130%;
+	padding: 4px 5px 2px;
+}
+
+
 .section-cart-items{
 	/*background: blue;*/
 }
@@ -79,18 +89,40 @@ form{
 	border: 1px solid #d2dae1;*/
 }
 
-.section-cart-items .cart-opciones .flex-higher {
-	/*flex-grow: 1;*/
+.section-cart-items .cart-opciones .flex-higher,
+.customer-nav {
+	flex-grow: 0;
 	border: 0px;
 	margin-bottom: 10px;
 }
 
-.section-cart-items .cart-opciones .flex-higher li {
+.section-cart-items .cart-opciones .flex-higher li,
+.customer-nav li {
     /*width: calc(100% / 4);*/
     width: calc(100% / 3);
 }
-
-.section-cart-items .cart-opciones .flex-higher li .btn-flex {
+.actions{
+	margin-top: 0;
+}
+.nav-payment{
+	display: flex;
+	flex-direction: row;
+}
+.nav-payment li{
+	float: none;
+	flex-grow: 1;
+}
+.area-btn-payment{
+	flex-grow: 3 !important;
+}
+.payment-section button{
+	width: 100%;
+	padding: 15px 5px !important;
+	text-transform: capitalize;
+}
+.section-cart-items .cart-opciones .flex-higher li .btn-flex,
+.customer-nav li .btn-flex,
+.payment-section button {
 	padding: 10px 5px;
 	text-align: center;
 	border-radius: 5px;
@@ -101,15 +133,15 @@ form{
 
 .section-cart-items .cart-opciones .flex-central,
 .actions-body {
-	/* flex-grow: 4; */
+	 flex-grow: 2; 
 	border: 1px solid #d2dae1;
 	border-radius: 4px;
-	height: 48%;
+	/*height: 48%;*/
 	margin-bottom: 10px;
 }
 
 .section-cart-items .cart-opciones .flex-central #items .nav-tabs,
-.payment-buttons {
+.payment-method-buttons {
 	border: 0px;
 	margin: 5px 0px;
 }
@@ -121,14 +153,14 @@ form{
 }
 
 .section-cart-items .cart-opciones .flex-central .tab-pane button,
-.payment-buttons button
+.payment-method-buttons button
  {
 	width: 100%;
-	padding: 12px 0px;
+	padding: 15px 0px;
 	border-radius: 5px;
-	border: 1px solid #d2dae1;
-	background: #eee;
-	color: #777;
+	border-style: solid;
+    font-family: 'Roboto Condensed';
+    font-size: 18px;
 }
 
 .section-cart-items .cart-opciones .flex-central .tab-pane button:hover {
@@ -137,11 +169,11 @@ form{
 }
 
 .section-cart-items .cart-opciones .flex-lower {
-	/*flex-grow: 5;*/
+	flex-grow: 5;
 	/*height: 52%;*/
 	border: 1px solid #d2dae1;
     border-radius: 4px;
-    padding: 10px 40px;
+    padding: 10px 40px 0px;
 }
 
 .section-cart-items .cart-opciones .flex-lower ul,
@@ -187,6 +219,42 @@ form{
     margin-top: -64px;
 }
 
+
+.customer-nav .dropdown-menu .item{
+	width: 100%;
+}
+.customer-nav .dropdown-menu .item button:after{
+	content: '';
+}
+.billto h4,
+.shipto h4{
+	margin-top: 4px;
+}
+.billto p,
+.shipto p{
+	margin-bottom: 4px;
+}
+.payment-detail{
+	display: flex;
+    margin-left: 0;
+    margin-right: 0;
+}
+.customerInfo span:nth-child(2){
+	padding-left: 15px;
+    font-size: 200%;
+    font-weight: 400;
+	vertical-align: baseline;
+}
+.customerInfo span,
+.payment-detail span{
+	width: calc(100% / 2);
+	display:inline-block;
+}
+.payment-detail-field{
+	height: 28px;
+}
+
+
 /* FIN FJ*/
 
 
@@ -194,6 +262,7 @@ form{
 .cart-items{
 	position: relative;
 	display: flex;
+	height: 100%;
 	flex-direction: column;
 	border-width: 1px;
 	border-style: solid;	
@@ -216,7 +285,7 @@ form{
 	bottom: 0;
 	width: 100%;
 	background-color: #f1f5f8;
-	padding: 10px;
+	padding: 5px 10px;
 	border-bottom-right-radius: 3px;
 	border-bottom-left-radius: 3px;
 }
@@ -239,10 +308,57 @@ form{
 }
 /* FJ - Fin */
 
-.items{
-	overflow-y: auto;
-	height: 333px;
+.items-section{
+	flex:1 1 auto;
+	/*overflow-y: visible;
+	overflow-x: hidden;
+	min-height: 0px;*/
+	-webkit-overflow-scrolling:touch;
+    overflow-scrolling:touch;
 }
+/*.items:before,
+.items:after{
+	position: absolute;
+	z-index: 100;
+	font-size: 280%;
+	font-family: 'Scalia User Icons';
+    pointer-events: none;
+}
+.items:before{
+	content: '\e6a4';
+	top: 23px;
+	right: -2px;
+	transform: rotate(-90deg);
+}*/
+/*.items:after{
+	content: '\e6a4';
+	bottom: 39px;
+	right: -6px;
+	transform: rotate(90deg);
+}
+.items::-webkit-scrollbar{
+	-webkit-appearance: none;
+}
+.items::-webkit-scrollbar:vertical{
+	-webkit-appearance: none;
+	width: 26px;
+}
+.items::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+	-webkit-border-radius: 10px;
+	border-radius: 5px;
+	border: 1px solid #D2DAE1;
+}
+.items::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+    background-color: #2d434e;
+    border-color: #2d434e;
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5)
+}
+.items::-webkit-scrollbar-button {
+  width: 26px;
+  height: 30px;
+}*/
 .img-product {
     margin: 5px;
 }
@@ -508,7 +624,7 @@ form{
 	/*align-content: column;*/
 }
 .section-form-user article{
-	width: 96%;
+	width: 97%;
 	/*margin: 10px;*/
 }
 .section-form-user .tfooter{
@@ -518,9 +634,6 @@ form{
 	/*height: 200px;*/
 }
 
-.section-form-user .cart-items{
-	align-content: stretch;
-}
 .section-form-user .detail-count-text1,
 .section-form-user .detail-count,
 .section-form-user .detail-count-text2{
@@ -566,7 +679,7 @@ form{
     border: 1px solid #d2dae1;
     border-radius: 5px;
 }
-.payment-buttons>li{
+.payment-method-buttons>li{
 	float: left;
 }
 .actions-body{
@@ -574,16 +687,31 @@ form{
 }
 .totalBalance-body,
 .actions-body{
-	height: 263px;
-	max-height: 263px;
+	height: 310px;
+	max-height: 310px;
 }
-.payment-buttons li
+.totalBalance-body{
+  display: flex;
+  padding: 0;
+  flex-direction: column;
+}
+.totalBalance-body .row {
+  margin: 0;
+}
+.totalBalance-body .row:nth-last-child(2) {
+  flex-grow: 1;
+}
+.payment-method-buttons button {
+    padding: 24px 0px;
+}
+.payment-method-buttons li
 {
 	width: calc(100% / 2);
     padding: 4px 8px;
 }
 .totalBalance-body{
 	width: 200px;
+	justify-content: flex-start;
 }
 .keypad .btn-number {
     width: calc((100%/3) - 25px);
@@ -595,7 +723,9 @@ form{
     width: calc(100% - 75px);
     margin-top: -64px;
 }
-
+.txtSelectPayment {
+    margin-top: 11px;
+}
 .modal {
   text-align: center;
   padding: 0!important;
@@ -605,6 +735,10 @@ form{
 }
 .modal-body {
     padding: 10px;
+}
+.modal-footer {
+    padding: 10px 20px 20px;
+    margin-top: 0;
 }
 .modal:before {
   content: '';
@@ -619,10 +753,25 @@ form{
   text-align: left;
   vertical-align: middle;
 }
+
 @media screen and (min-width: 1024px) and (orientation: landscape){
 	.modal-dialog {
 	    width: 768px;
 	    padding-top: 30px;
 	    padding-bottom: 30px;
+	}
+}
+
+@media screen and (min-width: 1280px) and (orientation: landscape){
+	.modal-dialog {
+	    width: 967px;
+	    padding-top: 30px;
+	    padding-bottom: 30px;
+	}
+	.totalBalance-body,
+	.actions-body,
+	.flex-sections .keypad{
+		max-width: 300px;
+		width: 300px;
 	}
 }

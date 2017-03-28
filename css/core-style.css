@@ -129,6 +129,24 @@ nav li label{
   font-size: 82.6%;
   vertical-align: middle;
 }
+.btnCancel:before{
+  content: '\e796';
+  font-family: 'Scalia User Icons';
+  font-weight: normal;
+  float: left;
+  margin-left: -1.4em;
+  font-size: 82.6%;
+  vertical-align: middle;
+}
+.btnCompleteSale:before{
+  content: '\e6f2';
+  font-family: 'Scalia User Icons';
+  font-weight: normal;
+  float: left;
+  margin-left: -1.4em;
+  font-size: 82.6%;
+  vertical-align: middle;
+}
 .btn-img{
 	position: relative;
   width: 86px;
@@ -169,6 +187,9 @@ nav li label{
   background-size: 25px;
   background-position: 20px 10px;
   font-size: 280% !important;
+}
+.form-group {
+    margin-bottom: 5px;
 }
 .form-group label{
 	margin-bottom: 0;
@@ -250,8 +271,77 @@ span.no-complete{
   font-family: 'Scalia';
   right: 8px;
 }
+.dropdown.justique .btn{
+  width: 100%;
+  padding: 12px 48px 12px 5px;
+  height: 47px;
+}
+.dropdown.justique .btn:not(.sort-dropdown){
+  font-size: 100%;
+  border:none;
+  text-align: left; 
+  padding: 12px 48px 12px 15px;
+}
+.btn.dropdown-toggle.sort-dropdown {
+    font-size: 140%;
+}
+.dropdown li.item .btn:before{
+  top: inherit;
+}
 
-
+/*icons*/
+button.icon{
+  width: auto;
+  line-height: inherit;
+}
+button.icon:before {
+  padding-right: 4px;
+  padding-left: 10px;
+}
+.icon-clock:before{
+  content: '\e77a' !important;
+  font-family: 'Scalia User Icons';
+}
+.icon-settings:before{
+  content: '\e776' !important;
+  font-family: 'Scalia User Icons';
+}
+.icon-search:before{
+  content: '\e766' !important;
+  font-family: 'Scalia User Icons';
+}
+.icon-new:before{
+  content: '\e631' !important;
+  font-family: 'Scalia User Icons';
+}
+.icon-edit:before{
+  content: '\e790' !important;
+  font-family: 'Scalia User Icons';
+}
+.icon-remove:before{
+  content: '\e630' !important;
+  font-family: 'Scalia User Icons';
+}
+.icon-history:before{
+  content: '\e691' !important;
+  font-family: 'Scalia User Icons';
+}
+.icon-storename:before{
+  content: '\e6D1' !important;
+  font-family: 'Scalia User Icons';
+}
+.icon-systemdate:before{
+  content: '\e6ef' !important;
+  font-family: 'Scalia User Icons';
+}
+.icon-workstation:before{
+  content: '\e685' !important;
+  font-family: 'Scalia User Icons';
+}
+.icon-cashiername:before{
+  content: '\e6C7' !important;
+  font-family: 'Scalia User Icons';
+}
 /*nav*/
 .appName{
   /*height: 90%;*/
@@ -281,14 +371,6 @@ span.no-complete{
   margin: 0px;
   vertical-align: top;
 }
-.left-options label:after{
-  content: '/';
-  padding-left: 4px;
-}
-.left-options label:last-child:after{
-  content: '';
-  position: absolute;
-}
 .right-options{
   float: right;
 }
@@ -296,7 +378,23 @@ span.no-complete{
   display: inline-block;
   height: 100%;
 }
+.right-options button{
+  font-family: 'Roboto Condensed';
+  font-weight: 100;
+  font-size: 165%;
+  text-transform: uppercase;
+  padding: 15px 15px 15px 0px;
+  margin: 0px;
+  vertical-align: top;
+  border: none;
+  outline: none;
+  -webkit-transition: all 0.1s
+  transition: all 0.1s;
+}
 
+.bigger{
+  font-size: 240% !important;
+}
 /*FJ*/
 .right-options .span-total {
   color: white;
@@ -309,6 +407,9 @@ span.no-complete{
 
 .right-options .li-total {
   padding-top: 9px;
+}
+.nav-tabs{
+  border:none;
 }
 /*FJ*/
 

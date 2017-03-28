@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<script type="text/javascript" src="../js/plugins/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/plugins/bootstrap.min.js"></script>
+
+
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link href="../css/animate.css" rel="stylesheet">
+
+	<script>
+		$(document).ready(function(){
+			$('.imageloading').on('load', function(){
+			// hide/remove the loading image
+				$('.loader').hide();
+				$('.timetoload').removeClass('hide');
+				$(this).fadeIn(500).removeClass('hide');
+			});
+			
+		});		
+		var startTime = new Date().getTime();
+		function doneLoading() {
+		    var loadtime = new Date().getTime() - startTime;
+		    $('.timetoload').html("image took " + loadtime + "ms to load");
+		}
+
+		function myFunction(){
+			console.log("Seca todo");
+		}    
+	</script>	
+
+</head>
+<body>
+	<div class="loader">loading... XD</div>
+	<span class="timetoload hide"></span>
+	<img src="http://lorempixel.com/g/100/100" alt="" class="imageloading hide" onload="doneLoading()" onerror="myFunction()">
+	<img src="http://lorempixel.com/g/100/200" alt="" class="imageloading hide" onload="doneLoading()" onerror="myFunction()">
+	<img src="http://lorempixel.com/g/100/300" alt="" class="imageloading hide" onload="doneLoading()" onerror="myFunction()">
+</body>
+</html>
