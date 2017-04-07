@@ -49,12 +49,12 @@ $(document).ready(function(){
     $(".btn-cart").click(function(){
         if(localStorage.countProductCartItem==null ||  localStorage.countProductCartItem==0){
             swal({
-              title: localStorage.caption_modalProductDetailTitle,
-              text: localStorage.caption_modalProductDetailText,
-              type: "info",
-              confirmButtonColor: "#8fbf75",
-              confirmButtonText: localStorage.caption_txtConfirmButton,                 
-              closeOnConfirm: true
+                title: localStorage.caption_modalProductDetailTitle,
+                text: localStorage.caption_modalProductDetailText,
+                type: "info",
+                confirmButtonColor: "#8fbf75",
+                confirmButtonText: localStorage.caption_txtConfirmButton,                 
+                closeOnConfirm: true
             });
         }else{
             window.location = "cart-items.html";
@@ -150,8 +150,8 @@ $(window).on("load", function() {
     if(localStorage.kioskProductList != undefined) {
         showProductFilter(localStorage.kioskOrderResults);
         resizeElement($('.swiper-wrapper'));     
-       showPageElement(".loader",false);
-       showPageElement(".loader-results",false);   
+        showPageElement(".loader",false);
+        showPageElement(".loader-results",false);   
     }  
 
     if(localStorage.kioskCountProductFiltered == undefined ||
@@ -163,9 +163,9 @@ $(window).on("load", function() {
     if (localStorage.swiperActiveIndex != undefined || localStorage.swiperActiveIndex == 0) {
         swiper.slideTo(localStorage.swiperActiveIndex, 1000, false);
     }    
-   if(localStorage.kioskCountProductFiltered == undefined)
+    if(localStorage.kioskCountProductFiltered == undefined)
         $(".filters-marked").addClass("hide");
-   if(localStorage.kioskCountProductFiltered==0 || localStorage.kioskCountProductFiltered == undefined)
+    if(localStorage.kioskCountProductFiltered==0 || localStorage.kioskCountProductFiltered == undefined)
         $(".results").addClass("hide");
 });
 
@@ -227,14 +227,14 @@ function getProductFilterFromServer(){
 
                 $.each(data, function (index, value) {
                     var product = '{'+
-                                    '"brandCode": "' + value.brandCode + '",' +     
-                                    '"brandName": "' + value.brandName + '",' +
-                                    '"colorCode": "' + value.colorCode + '",' +
-                                    '"imageFile": "' + value.imageFile.replace(/\\/g,"\\\\") + '",' +
-                                    '"price": "' + value.price + '",' +
-                                    '"originalPrice": "' + (value.productPrice).toFixed(2) + '",' +
-                                    '"styleCode": "' + value.styleCode + '",' +
-                                    '"styleName": "' + value.styleName + '"' +
+                                        '"brandCode": "' + value.brandCode + '",' +     
+                                        '"brandName": "' + value.brandName + '",' +
+                                        '"colorCode": "' + value.colorCode + '",' +
+                                        '"imageFile": "' + value.imageFile.replace(/\\/g,"\\\\") + '",' +
+                                        '"price": "' + value.price + '",' +
+                                        '"originalPrice": "' + (value.productPrice).toFixed(2) + '",' +
+                                        '"styleCode": "' + value.styleCode + '",' +
+                                        '"styleName": "' + value.styleName + '"' +
                                     '},';                               
                     productList = productList + product;  
                 });                    
@@ -419,9 +419,9 @@ function getFiltersFromServer(){
 
                 $.each(data, function (index, value) {
                     var brandFilter = '{'+
-                                    '"codfFilter": "' + value.codfFilter + '",' +     
-                                    '"nameFilter": "' + value.nameFilter + '"' +
-                                    '},';                               
+                                            '"codfFilter": "' + value.codfFilter + '",' +     
+                                            '"nameFilter": "' + value.nameFilter + '"' +
+                                        '},';                               
                     brandList = brandList + brandFilter;  
                 });                    
                 brandList = brandList.substring(0, brandList.length - 1);
@@ -435,9 +435,9 @@ function getFiltersFromServer(){
 
                 $.each(data, function (index, value) {
                     var sizeFilter = '{'+
-                                    '"codfFilter": "' + value.codfFilter + '",' +     
-                                    '"nameFilter": "' + value.nameFilter + '"' +
-                                    '},';                               
+                                            '"codfFilter": "' + value.codfFilter + '",' +     
+                                            '"nameFilter": "' + value.nameFilter + '"' +
+                                        '},';                               
                     sizeList = sizeList + sizeFilter;  
                 });                    
                 sizeList = sizeList.substring(0, sizeList.length - 1);
@@ -451,9 +451,9 @@ function getFiltersFromServer(){
 
                 $.each(data, function (index, value) {
                     var genderFilter = '{'+
-                                    '"codfFilter": "' + value.codfFilter + '",' +     
-                                    '"nameFilter": "' + value.nameFilter + '"' +
-                                    '},';                               
+                                            '"codfFilter": "' + value.codfFilter + '",' +     
+                                            '"nameFilter": "' + value.nameFilter + '"' +
+                                        '},';                               
                     genderList = genderList + genderFilter;  
                 });                    
                 genderList = genderList.substring(0, genderList.length - 1);
@@ -467,9 +467,9 @@ function getFiltersFromServer(){
 
                 $.each(data, function (index, value) {
                     var classFilter = '{'+
-                                    '"codfFilter": "' + value.codfFilter + '",' +     
-                                    '"nameFilter": "' + value.nameFilter + '"' +
-                                    '},';                               
+                                            '"codfFilter": "' + value.codfFilter + '",' +     
+                                            '"nameFilter": "' + value.nameFilter + '"' +
+                                        '},';                               
                     classList = classList + classFilter;  
                 });                    
                 classList = classList.substring(0, classList.length - 1);
@@ -709,14 +709,14 @@ function getFeaturedProductFilterFromServer(){
 
                 $.each(data, function (index, value) {
                     var product = '{'+
-                                    '"brandCode": "' + value.brandCode + '",' +     
-                                    '"brandName": "' + value.brandName + '",' +
-                                    '"colorCode": "' + value.colorCode + '",' +
-                                    '"imageFile": "' + value.imageFile.replace(/\\/g,"\\\\") + '",' +
-                                    '"price": "' + value.price + '",' +
-                                    '"originalPrice": "' + (value.productPrice).toFixed(2) + '",' +
-                                    '"styleCode": "' + value.styleCode + '",' +
-                                    '"styleName": "' + value.styleName + '"' +
+                                        '"brandCode": "' + value.brandCode + '",' +     
+                                        '"brandName": "' + value.brandName + '",' +
+                                        '"colorCode": "' + value.colorCode + '",' +
+                                        '"imageFile": "' + value.imageFile.replace(/\\/g,"\\\\") + '",' +
+                                        '"price": "' + value.price + '",' +
+                                        '"originalPrice": "' + (value.productPrice).toFixed(2) + '",' +
+                                        '"styleCode": "' + value.styleCode + '",' +
+                                        '"styleName": "' + value.styleName + '"' +
                                     '},';                               
                     productList = productList + product;  
                 });                    

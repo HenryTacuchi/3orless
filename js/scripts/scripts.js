@@ -61,14 +61,11 @@ $(document).ready(function(){
 		// actions when you click a filter in filter section
 		var data = $(this).attr('data-value');
 		$('.menu-item').each(function() {  
-	    if ( $(this).attr('data-value') == data ) {
+		    if ( $(this).attr('data-value') == data ) {
 	    		$(this).click();
-	    }
-	  });
-
-	});	
-	
-
+		    }
+	  	});
+	});		
 });
 
 $(window).load(function(){
@@ -91,10 +88,10 @@ function addFilter( element ){
 
 function removeFilter(element){
 	$('.filter').each(function() {  
-    if ( element.attr('data-value') == $(this).attr('data-value') ) {
+	    if ( element.attr('data-value') == $(this).attr('data-value') ) {
     		$(this).remove();
-    }
-  });
+	    }
+  	});	
 }
 
 /* Redondea un Decimal a dos cifras */
@@ -166,19 +163,19 @@ function addProductCartItem(){
 	                    '"size": "' + $(".size-dropdown").text() + '",' +
 	                    '"styleCode": "' + $(".txtStyleCode").text() + '",' +
 	                    '"styleName": "' + $(".txtStyle").text() + '"' +
-	                    '}}';             
+                    '}}';             
 	    localStorage["cartItemProduct"+localStorage.countProductCartItem] = product; 
 	    return true;
 	}
 	else{
 		swal({
-				title: localStorage.caption_modalProductAlreadyInsertedTitle,
-				text:  localStorage.caption_modalProductAlreadyInsertedText,
-				type: "warning",
-				confirmButtonColor: "#DD6B55",
-				confirmButtonText: localStorage.caption_txtConfirmButton
-			});
-		}
+			title: localStorage.caption_modalProductAlreadyInsertedTitle,
+			text:  localStorage.caption_modalProductAlreadyInsertedText,
+			type: "warning",
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: localStorage.caption_txtConfirmButton
+		});
+	}
 	return false;
 }
 

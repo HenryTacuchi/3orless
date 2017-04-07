@@ -7,6 +7,9 @@ var page = '';
 $(document).ready(function(){
 	setCaptions();
 
+	//Set time to show
+	moment.locale(localStorage.current_lang); 
+	
 	if(localStorage.currentFirstNameClient != undefined && localStorage.currentFirstNameClient != "")
 		$(".txtFirstName").val(localStorage.currentFirstNameClient);
 
@@ -318,25 +321,14 @@ $(document).ready(function(){
 });
 
 function loadPrint(){
-	var currentdate = new Date(); 
-	var year = currentdate.getFullYear();
-	var month = (1 + currentdate.getMonth()).toString();
-	month = month.length > 1 ? month : '0' + month;
-	var day = currentdate.getDate().toString();
-	day = day.length > 1 ? day : '0' + day;
-	var hours = currentdate.getHours().toString();
-	hours = hours.length > 1 ? hours : '0' + hours;
-	var minutes = currentdate.getMinutes().toString();
-	minutes = minutes.length > 1 ? minutes : '0' + minutes;
-	var seconds = currentdate.getSeconds().toString();
-	seconds = seconds.length > 1 ? seconds : '0' + seconds;
-	var datetime = day + "/" + month + "/" + year + " " + hours + ":" + minutes + ":" + seconds;
+	
+	var datetime = moment().format('L') + ' ' + moment().format('hh:mm:ss a');
 	page = "{center}{b}{h}NICEKICKS{/h}{/b}{br}{br}"+
-						'{center}Ticket No: ' + localStorage.orderNumber+'{br}'+
-						'{b}' + localStorage.currentFirstNameClient +'{/b}{br}'+
-						datetime+'{br}{br}'+
-						'--------------------------------{br}'+
-						'Cart Items{br}{br}';
+				'{center}Ticket No: ' + localStorage.orderNumber+'{br}'+
+				'{b}' + localStorage.currentFirstNameClient +'{/b}{br}'+
+				datetime+'{br}{br}'+
+				'--------------------------------{br}'+
+				'Cart Items{br}{br}';
 	page = page + "{left}";						
 
 	var totalMont=0;
@@ -425,7 +417,7 @@ function clearSearchPage(){
 	localStorage.removeItem("indexProductSelected");
 	localStorage.removeItem("resultsProductColorCodeSelected");
 	localStorage.removeItem("resultsProductStyleCodeSelected");
-	localStorage.removeItem("currentFirstNameClient");
+	localStorage.currentFirstNameClient = "";
 
 	for (var i = 1; i <= localStorage.countProductCartItem; i++) {
 		localStorage.removeItem("cartItemProduct" + (i));

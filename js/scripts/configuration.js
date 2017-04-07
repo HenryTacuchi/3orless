@@ -5,19 +5,36 @@ $(document).ready(function(){
 	document.addEventListener("deviceready", onDeviceReady, false);
 
     function onDeviceReady() {
-    	
-    	cordova.plugins.diagnostic.setBluetoothState(function(){
-        	cordova.plugins.diagnostic.registerBluetoothStateChangeHandler(function(state){
+
+    	cordova.plugins.diagnostic.getBluetoothState(
+    		function(state){
 			   if(state === cordova.plugins.diagnostic.bluetoothState.POWERED_ON){
-			       console.log("Bluetooth is able to connect");
 			       loadCboPrinters();
 			   }
-			});
-		}, function(error){
-			alert(error);
-		    console.error("The following error occurred: "+error);
-		},
-		true);
+			   else{
+	   				cordova.plugins.diagnostic.setBluetoothState(
+	   					function(){
+				        	cordova.plugins.diagnostic.registerBluetoothStateChangeHandler(
+				        		function(state){
+									if(state === cordova.plugins.diagnostic.bluetoothState.POWERED_ON){
+										console.log("Bluetooth is able to connect");
+										loadCboPrinters();
+									}
+								}
+							);
+						}, 
+						function(error){
+							alert(error);
+						    console.error("The following error occurred: "+error);
+						},
+						true
+					);
+				}
+			}, 
+			function(error){
+			    console.error("The following error occurred: "+error);
+			}
+		);    	
     }
 
 	if (localStorage.serverId == undefined || localStorage.serverId == ""){
@@ -27,34 +44,34 @@ $(document).ready(function(){
 	}
      
     $('.storeNo').bind('keypress', function(event) {
-    if(event.which == 13||event.which == 10) {
-      $(".serverId").focus();
-    }
+	    if(event.which == 13||event.which == 10) {
+			$(".serverId").focus();
+	    }
     });
 
     $('.emailUser').bind('keypress', function(event) {
-    if(event.which == 13||event.which == 10) {
-    	if (typeof localStorage.password == "undefined" || localStorage.password == "null") $(".passUser").focus();
-    	else $(".oldPass").focus();
-    }
+	    if(event.which == 13||event.which == 10) {
+	    	if (typeof localStorage.password == "undefined" || localStorage.password == "null") $(".passUser").focus();
+	    	else $(".oldPass").focus();
+	    }
     });
 
     $('.oldPass').bind('keypress', function(event) {
-    if(event.which == 13||event.which == 10) {
-      $(".passUser").focus();
-    }
+	    if(event.which == 13||event.which == 10) {
+			$(".passUser").focus();
+	    }
     });
 
     $('.passUser').bind('keypress', function(event) {
-    if(event.which == 13||event.which == 10) {
-      $(".confirmPassUser").focus();
-    }
+	    if(event.which == 13||event.which == 10) {
+			$(".confirmPassUser").focus();
+	    }
     });
 
     $('.confirmPassUser').bind('keypress', function(event) {
-    if(event.which == 13||event.which == 10) {
-      $(".btnFinish").click();
-    }
+	    if(event.which == 13||event.which == 10) {
+			$(".btnFinish").click();
+	    }
     });
 
     $('.btn-exit').click(function(){
@@ -157,9 +174,11 @@ $(document).ready(function(){
 
 			$(".txtMessage").text(localStorage.caption_msgVerifyFields);
 
-			$(".validations").delay(delay).queue(function(){
-			    $(this).addClass("animated fadeOutLeft").dequeue();
-			});
+			$(".validations").delay(delay).queue(
+				function(){
+			    	$(this).addClass("animated fadeOutLeft").dequeue();
+				}
+			);
 		}
 		
     });
@@ -424,9 +443,11 @@ function saveConfiguration(storeNo, serverId) {
 	}
 	$(".txtMessage").text(localStorage.caption_msgConfigurationSuccess);
 
-    $(".validations").removeClass("show").delay(delay).queue(function(){
-	    $(this).addClass("animated fadeOutLeft").dequeue();
-	});	    
+    $(".validations").removeClass("show").delay(delay).queue(
+    	function(){
+	    	$(this).addClass("animated fadeOutLeft").dequeue();
+		}
+	);	    
 }
 
 //check if exists old password
@@ -483,7 +504,12 @@ function savePassword(password,emailUser){
 		$(".noConfirmPassUser").removeClass("show").addClass("hide");
 	if($(".noOldPassword").hasClass("show"))
 		$(".noOldPassword").removeClass("show").addClass("hide");
-	setTimeout(function(){ window.location = "index.html"; }, delay);
+	setTimeout(
+		function(){ 
+			window.location = "index.html"; 
+		}, 
+		delay
+	);
 }
 
 //load saved data in local storage
@@ -567,9 +593,9 @@ function clearSearchPage(){
 	localStorage.removeItem("resultsProductColorCodeSelected");
 	localStorage.removeItem("resultsProductStyleCodeSelected");	
 
-	localStorage.removeItem("currentFirstNameClient");
-	localStorage.removeItem("currentLastNameClient");
-	localStorage.removeItem("currentEmailClient");
+	localStorage.currentFirstNameClient = ""
+    localStorage.currentLastNameClient = "";
+    localStorage.currentEmailClient = "";
 
 	for (var i = 1; i <= localStorage.countProductCartItem; i++) {
 		localStorage.removeItem("cartItemProduct" + (i));

@@ -240,15 +240,15 @@
 }
 
 .scrollbar-pos > .scroll-element.scroll-y.scroll-element_arrows_visible .scroll-element_outer { 
-    top: 17px; 
+    top: 46px; 
     /*top: -17px; */
 }
 .scrollbar-pos > .scroll-element.scroll-y.scroll-element_arrows_visible .scroll-element_inner { 
-    top: -34px; 
-    top: -17px; 
+    top: -46px; 
+    /*top: -17px; */
 }
 .scrollbar-pos > .scroll-element.scroll-y.scroll-element_arrows_visible .scroll-element_size { 
-    top: -17px; 
+    top: -92px; 
     /*top: -17px; */
 }
 

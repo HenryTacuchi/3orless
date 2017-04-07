@@ -19,37 +19,46 @@ $(window).load(function(){
 });
 
 function beforeScan(){
-    cordova.plugins.barcodeScanner.scan(function(result){
-        localStorage.SKUCodeScan=result.text;
-        window.location.href = "pos.html";
-    },function(error){
-        console.log(JSON.stringify(error));
-        window.location.href = "pos.html";
-    });
+    cordova.plugins.barcodeScanner.scan(
+        function(result){
+            localStorage.SKUCodeScan=result.text;
+            window.location.href = "pos.html";
+        },
+        function(error){
+            console.log(JSON.stringify(error));
+            window.location.href = "pos.html";
+        }
+    );
 }
 
 function getCameraAuthorizationStatus(){
-    cordova.plugins.diagnostic.getCameraAuthorizationStatus(function(status){
-        if(status === cordova.plugins.diagnostic.permissionStatus.GRANTED){
-            console.log("Camera use is authorized");
-            beforeScan();
-        }else{
-            requestCameraAuthorization();        
+    cordova.plugins.diagnostic.getCameraAuthorizationStatus(
+        function(status){
+            if(status === cordova.plugins.diagnostic.permissionStatus.GRANTED){
+                console.log("Camera use is authorized");
+                beforeScan();
+            }else{
+                requestCameraAuthorization();        
+            }
+        }, 
+        function(error){
+            console.error("The following error occurred: "+error);
         }
-    }, function(error){
-        console.error("The following error occurred: "+error);
-    });
+    );
 }
 
 function requestCameraAuthorization(){
-    cordova.plugins.diagnostic.requestCameraAuthorization(function(status){
-        console.log("Authorization request for camera use was " + (status == cordova.plugins.diagnostic.permissionStatus.GRANTED ? "granted" : "denied"));
-        if (status == cordova.plugins.diagnostic.permissionStatus.GRANTED){
-            beforeScan();
-        }else if(status == cordova.plugins.diagnostic.permissionStatus.DENIED){
-            window.location.href = "pos.html";
+    cordova.plugins.diagnostic.requestCameraAuthorization(
+        function(status){
+            console.log("Authorization request for camera use was " + (status == cordova.plugins.diagnostic.permissionStatus.GRANTED ? "granted" : "denied"));
+            if (status == cordova.plugins.diagnostic.permissionStatus.GRANTED){
+                beforeScan();
+            }else if(status == cordova.plugins.diagnostic.permissionStatus.DENIED){
+                window.location.href = "pos.html";
+            }
+        }, 
+        function(error){
+            console.error(error);
         }
-    }, function(error){
-        console.error(error);
-    });
+    );
 }

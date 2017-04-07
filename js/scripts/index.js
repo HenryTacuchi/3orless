@@ -142,9 +142,9 @@ function clearSearchPage(){
 	localStorage.removeItem("resultsProductColorCodeSelected");
 	localStorage.removeItem("resultsProductStyleCodeSelected");
 
-	localStorage.removeItem("currentFirstNameClient");
-	localStorage.removeItem("currentLastNameClient");
-	localStorage.removeItem("currentEmailClient");
+	localStorage.currentFirstNameClient = ""
+    localStorage.currentLastNameClient = "";
+    localStorage.currentEmailClient = "";
 
 	for (var i = 1; i <= localStorage.countProductCartItem; i++) {
 		localStorage.removeItem("cartItemProduct" + (i));

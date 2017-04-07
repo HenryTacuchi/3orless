@@ -4,6 +4,15 @@
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<title>Scan Items</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link href="../css/sweetalert.css" rel="stylesheet">
+	<link href="../css/scrollbar.css" rel="stylesheet">
+	<link href="../css/core-style.css" rel="stylesheet">
+	<link href="../css/colors.css" rel="stylesheet">
+	<link href="../css/animate.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="../css/pos.css">
+
 	<script src="../cordova.js"></script>
 	<script type="text/javascript" src="../js/plugins/jquery.min.js"></script>
 	<script type="text/javascript" src="../js/plugins/jquery.email-autocomplete.min.js"></script>
@@ -12,20 +21,13 @@
 	<script type="text/javascript" src="../js/plugins/underscore.min.js"></script>
 	<script type="text/javascript" src="../js/plugins/sweetalert.min.js" ></script>
 	<script type="text/javascript" src="../js/plugins/jquery.scrollbar.js" ></script>
+	<script type="text/javascript" src="../js/plugins/moment.js" ></script>
+	<script type="text/javascript" src="../js/plugins/moment/locale/es.js" ></script>
 	<script type="text/javascript" src="../js/scripts/scripts.js"></script>
 	<script type="text/javascript" src="../js/plugins/jquery.email-autocomplete.min.js"></script>
 	<script type="text/javascript" src="../js/scripts/pos.js"></script>
 	<!-- <script type="text/javascript" src="../js/scripts/captions.js"></script> -->
 	<script type="text/javascript" src="../js/scripts/colorApp.js"></script>
-
-	<link href="../css/bootstrap.min.css" rel="stylesheet">
-	<link href="../css/sweetalert.css" rel="stylesheet">
-	<link href="../css/scrollbar.css" rel="stylesheet">
-	<link href="../css/core-style.css" rel="stylesheet">
-	<link href="../css/colors.css" rel="stylesheet">
-	<link href="../css/animate.css" rel="stylesheet">	
-
-	<link rel="stylesheet" type="text/css" href="../css/pos.css">
 
 </head>
 
@@ -39,8 +41,11 @@
 			<div class="info-pos">
 				<div class="row">
 					<label class="icon-systemdate systemDate">
-						03/02/17 10:54
+						<!-- 03/02/17 -->
 					</label>	
+					<label class="icon-systemhour systemHour">
+						<!-- 10:54 -->
+					</label>
 					<label class="icon-workstation workStation">
 						WS1
 					</label>	
@@ -102,11 +107,14 @@
 						<label class="lblEmail">E-mail<span>*</span></label>		
 						<input type="email" value="" class="form-control txtEmail" placeholder="your@email.com" value="gustavo@realcs.com">								
 						<span class="no-complete noEmail hide">Please fill the required field</span> -->
-
 						<ul class="customer-nav nav nav-tabs">
-							<li class="active"><a data-toggle="tab" href="#billto" class="btn-flex btn-billto lblBillTo">Bill to</a></li>
-							<li><a data-toggle="tab" href="#shipto" class="btn-flex btn-shipto lblShipTo">Ship to</a></li>
-							<li><div class="dropdown justique drop-left">
+							<li class="input-search-customer">
+								<div class="form-group has-feedback">
+									<input type="text" class="form-control searchCustomer" placeholder="Customer Search...">
+									<span class="icon-search form-control-feedback" aria-hidden="true"></span>
+								</div>								
+							</li>
+							<li class="dropdown-customer"><div class="dropdown justique drop-left">
 									<div class="btn dropdown-toggle sort-dropdown " data-toggle="dropdown">Customer</div>
 									<ul class="dropdown-menu">
 										<li class="item"><button class="btn icon-search btnSearchcustomer">Search</button></li>
@@ -117,6 +125,10 @@
 									</ul>
 								</div>
 							</li>
+						</ul>
+						<ul class="customer-nav nav nav-tabs">
+							<li class="active"><a data-toggle="tab" href="#billto" class="btn-flex btn-billto lblBillTo">Bill to</a></li>
+							<li><a data-toggle="tab" href="#shipto" class="btn-flex btn-shipto lblShipTo">Ship to</a></li>
 						</ul>
 						<div class="flex-central tab-content">
 							<div id="billto" class="tab-pane fade in billto active">
@@ -162,8 +174,7 @@
 									</div>
 								</div>
 							</div>		
-						</div>							
-
+						</div>		
 					</div>
 				<!-- </div>					 -->
 			</article>
@@ -224,7 +235,9 @@
 						</div> -->
 		      	<script type="text/template" id="productCartItemTemplate">
 	                <div class="row product <%=Class%>">
-		  				
+	  					<div class="col-xs-2  center-text">
+		  					<div class="icon btn-trash" data-style="<%=styleCode%>" data-color="<%=colorCode%>" data-size="<%=sizeCode%>" data-sku="<%=sku%>">&#xe6CB;</div>	
+		  				</div>
 						<div class="col-xs-2 center-text">
 							<div class="img-product">
 				      			<img src="<%=path%>" onerror="handleError(this)">
@@ -241,10 +254,7 @@
 			      		</div>
 		    			<div class="col-xs-3  center-text">
 		    				<div class="price"><%=price%></div>
-		    			</div>
-		    			<div class="col-xs-2  center-text">
-		  					<div class="icon btn-trash" data-style="<%=styleCode%>" data-color="<%=colorCode%>" data-size="<%=sizeCode%>" data-sku="<%=sku%>">&#xe6CB;</div>	
-		  				</div>
+		    			</div>		    			
 					</div>
 	            </script>
 			</article>	
@@ -285,7 +295,6 @@
 					</div>
 					<div id="transaction" class="tab-pane fade">
 						<ul class="nav nav-tabs">
-							<li><button class="btn-clear-cart">Void</button></li>
 							<li><button>Return Receipt</button></li>
 							<li><button>Tax</button></li>
 							<li><button>Hold</button></li>
@@ -303,27 +312,29 @@
 					</div>-->
 				</div>
 				<div class="flex-lower">
-					<div class="form-group input-group">
-						<input type="text" id="" name="" class="form-control txtScan focus" maxlength="7" disabled>
-						<span class="input-group-btn">
-							<button class="btn btn-scanner ico-keyboard setBaColor">&#xe640;</button>
-						</span>
-					</div>
-					<ul class="nav nav-tabs">
-						<li class="btn-number"><button class="btn-tecla" valor="7">7</button></li>
-						<li class="btn-number"><button class="btn-tecla" valor="8">8</button></li>
-						<li class="btn-number"><button class="btn-tecla" valor="9">9</button></li>
-						<li class="btn-bkspc-clr"><button class="btn-tecla" valor="bkspc">Bkspc</button></li>
-						<li class="btn-number"><button class="btn-tecla" valor="4">4</button></li>
-						<li class="btn-number"><button class="btn-tecla" valor="5">5</button></li>
-						<li class="btn-number"><button class="btn-tecla" valor="6">6</button></li>
-						<li class="btn-bkspc-clr"><button class="btn-tecla" valor="clr">Clear</button></li>
-						<li class="btn-number"><button class="btn-tecla" valor="1">1</button></li>
-						<li class="btn-number"><button class="btn-tecla" valor="2">2</button></li>
-						<li class="btn-number"><button class="btn-tecla" valor="3">3</button></li>
-						<li class="btn-bkspc-clr btn-enter"><button class="btn-tecla" valor="enter">Enter</button></li>
-						<li class="btn-cero"><button class="btn-tecla" valor="0">0</button></li>
-					</ul>
+					<div class="area-keypad">
+						<div class="form-group input-group">
+							<input type="text" id="" name="" class="form-control txtScan focus" maxlength="7" disabled>
+							<span class="input-group-btn">
+								<button class="btn btn-scanner ico-keyboard setBaColor">&#xe640;</button>
+							</span>
+						</div>
+						<ul class="nav nav-tabs">
+							<li class="btn-number"><button class="btn-key-pos" value="7">7</button></li>
+							<li class="btn-number"><button class="btn-key-pos" value="8">8</button></li>
+							<li class="btn-number"><button class="btn-key-pos" value="9">9</button></li>
+							<li class="btn-bkspc-clr"><button class="btn-key-pos" value="bkspc">Bkspc</button></li>
+							<li class="btn-number"><button class="btn-key-pos" value="4">4</button></li>
+							<li class="btn-number"><button class="btn-key-pos" value="5">5</button></li>
+							<li class="btn-number"><button class="btn-key-pos" value="6">6</button></li>
+							<li class="btn-bkspc-clr"><button class="btn-key-pos" value="clr">Clear</button></li>
+							<li class="btn-number"><button class="btn-key-pos" value="1">1</button></li>
+							<li class="btn-number"><button class="btn-key-pos" value="2">2</button></li>
+							<li class="btn-number"><button class="btn-key-pos" value="3">3</button></li>
+							<li class="btn-bkspc-clr btn-enter"><button class="btn-key-pos" value="enter">Enter</button></li>
+							<li class="btn-cero"><button class="btn-key-pos" value="0">0</button></li>
+						</ul>
+					</div>	
 				</div>
 			</article>
 		</section>
@@ -373,19 +384,19 @@
 							<input type="text" id="" name="" class="form-control txtSelectPayment focus" disabled placeholder="Select Payment Type">
 						</div>
 						<ul class="nav nav-tabs">
-							<li class="btn-number"><button class="btn-tecla" valor="7">7</button></li>
-							<li class="btn-number"><button class="btn-tecla" valor="8">8</button></li>
-							<li class="btn-number"><button class="btn-tecla" valor="9">9</button></li>
-							<li class="btn-bkspc-clr"><button class="btn-tecla" valor="bkspc">Bkspc</button></li>
-							<li class="btn-number"><button class="btn-tecla" valor="4">4</button></li>
-							<li class="btn-number"><button class="btn-tecla" valor="5">5</button></li>
-							<li class="btn-number"><button class="btn-tecla" valor="6">6</button></li>
-							<li class="btn-bkspc-clr"><button class="btn-tecla" valor="clr">Clear</button></li>
-							<li class="btn-number"><button class="btn-tecla" valor="1">1</button></li>
-							<li class="btn-number"><button class="btn-tecla" valor="2">2</button></li>
-							<li class="btn-number"><button class="btn-tecla" valor="3">3</button></li>
-							<li class="btn-bkspc-clr btn-enter"><button class="btn-tecla" valor="enter">Enter</button></li>
-							<li class="btn-cero"><button class="btn-tecla" valor="0">0</button></li>
+							<li class="btn-number"><button class="btn-key-pay" value="7">7</button></li>
+							<li class="btn-number"><button class="btn-key-pay" value="8">8</button></li>
+							<li class="btn-number"><button class="btn-key-pay" value="9">9</button></li>
+							<li class="btn-bkspc-clr"><button class="btn-key-pay" value="bkspc">Bkspc</button></li>
+							<li class="btn-number"><button class="btn-key-pay" value="4">4</button></li>
+							<li class="btn-number"><button class="btn-key-pay" value="5">5</button></li>
+							<li class="btn-number"><button class="btn-key-pay" value="6">6</button></li>
+							<li class="btn-bkspc-clr"><button class="btn-key-pay" value="clr">Clear</button></li>
+							<li class="btn-number"><button class="btn-key-pay" value="1">1</button></li>
+							<li class="btn-number"><button class="btn-key-pay" value="2">2</button></li>
+							<li class="btn-number"><button class="btn-key-pay" value="3">3</button></li>
+							<li class="btn-bkspc-clr btn-enter"><button class="btn-key-pay" value="enter">Enter</button></li>
+							<li class="btn-cero"><button class="btn-key-pay" value="0">0</button></li>
 						</ul>
 					</section>
 				</div>

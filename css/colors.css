@@ -272,10 +272,14 @@ footer{
 }
 .section-form-user,
 .section-cart-items{
+	background-color: #e7ebef;
+}
+.flex-central,
+.flex-lower{
 	background-color: #ffffff;
 }
 .form-user{
-	background-color: #f1f5f8;
+	background-color: #ffffff;
 
 	/*FJ*/
 	border-color: #d2dae1;
@@ -283,6 +287,9 @@ footer{
     border-radius: 4px;
     padding: 15px 0px;
     /*FJ*/
+}
+.form-control-feedback{
+	color: #ccc;
 }
 
 
@@ -362,8 +369,21 @@ del{
 	color: #ffffff !important;
 }
 /*registration*/
+.modal-body{
+	background-color: #e7ebef;
+}
 .modal-content{
 	background-color: #f1f5f8;
+	box-shadow: none;
+	border: none;
+}
+.modal-backdrop.in {
+    opacity: .3;
+    filter: alpha(opacity=30);
+}
+.flex-sections .actions .actions-body, .flex-sections .totalBalance .totalBalance-body,
+.keypad ul{
+	background-color: #ffffff;
 }
 .placeholder {
 	color: #999;
@@ -391,6 +411,13 @@ del{
 	border-color: #e78d0e !important;
 	color: white !important;
 }
+.btn-promotions,.btn-promotions:focus, .btn-promotions:active,
+#promotions button{
+	background-color: #ee4e4e !important;
+	border-color: #ee4e4e !important;
+	color: white !important;
+}
+
 .payment-section button,
 .payment-method-buttons button{
 	background-color: #2d434e ;

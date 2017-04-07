@@ -43,10 +43,10 @@ $(document).ready(function(){
         || localStorage.threeOrLessListGenderFilter != undefined
         || localStorage.threeOrLessListClassFilter != undefined) {
         showFilters();
-    }
-    else{
+    }else{
         getFiltersFromServer();
     }
+
     setFilterSelected();    
 
     checkFiltersMarked();
@@ -59,12 +59,12 @@ $(document).ready(function(){
     $(".btn-star").click(function(){
         if(localStorage.countProductCartItem==null ||  localStorage.countProductCartItem==0){
             swal({
-              title: localStorage.caption_modalProductDetailTitle,
-              text: localStorage.caption_modalProductDetailText,
-              type: "info",
-              confirmButtonColor: "#8fbf75",
-              confirmButtonText: localStorage.caption_txtConfirmButton,                 
-              closeOnConfirm: true
+                title: localStorage.caption_modalProductDetailTitle,
+                text: localStorage.caption_modalProductDetailText,
+                type: "info",
+                confirmButtonColor: "#8fbf75",
+                confirmButtonText: localStorage.caption_txtConfirmButton,                 
+                closeOnConfirm: true
             });
         }else{
             window.location = "cart-items.html";
@@ -128,11 +128,11 @@ $(document).ready(function(){
     $(".btn-recovery").click(function(){
         if(localStorage.countProductLastCartItem==null ||  localStorage.countProductLastCartItem==0){
             swal({
-              title: localStorage.caption_modalProductRecoverBagTitle,
-              type: "info",
-              confirmButtonColor: "#8fbf75",
-              confirmButtonText: localStorage.caption_txtConfirmButton,                 
-              closeOnConfirm: true
+                title: localStorage.caption_modalProductRecoverBagTitle,
+                type: "info",
+                confirmButtonColor: "#8fbf75",
+                confirmButtonText: localStorage.caption_txtConfirmButton,                 
+                closeOnConfirm: true
             });
         }else{        
             for (var i = 1; i <= localStorage.countProductLastCartItem ; i++) {
@@ -225,14 +225,14 @@ $(document).ready(function(){
 //when page is loaded hide loaders
 $(window).on("load", function() {
 
-   showPageElement(".loader-results",true);
+    showPageElement(".loader-results",true);
     initializeSwiper();
     //if there are products filtered in local storage
     if(localStorage.threeOrLessProductList != undefined) {
         showProductFilter(localStorage.threeOrLessOrderResults);
         resizeElement($('.swiper-wrapper'));      
-       showPageElement(".loader",false);
-       showPageElement(".loader-results",false);  
+        showPageElement(".loader",false);
+        showPageElement(".loader-results",false);  
     }  
 
     if(localStorage.threeOrLessCountProductFiltered == undefined ||
@@ -300,14 +300,14 @@ function getFeaturedProductFilterFromServer(){
 
                 $.each(data, function (index, value) {
                     var product = '{'+
-                                    '"brandCode": "' + value.brandCode + '",' +     
-                                    '"brandName": "' + value.brandName + '",' +
-                                    '"colorCode": "' + value.colorCode + '",' +
-                                    '"imageFile": "' + value.imageFile.replace(/\\/g,"\\\\") + '",' +
-                                    '"price": "' + value.price + '",' +
-                                    '"originalPrice": "' + (value.productPrice).toFixed(2) + '",' +
-                                    '"styleCode": "' + value.styleCode + '",' +
-                                    '"styleName": "' + value.styleName + '"' +
+                                        '"brandCode": "' + value.brandCode + '",' +     
+                                        '"brandName": "' + value.brandName + '",' +
+                                        '"colorCode": "' + value.colorCode + '",' +
+                                        '"imageFile": "' + value.imageFile.replace(/\\/g,"\\\\") + '",' +
+                                        '"price": "' + value.price + '",' +
+                                        '"originalPrice": "' + (value.productPrice).toFixed(2) + '",' +
+                                        '"styleCode": "' + value.styleCode + '",' +
+                                        '"styleName": "' + value.styleName + '"' +
                                     '},';                               
                     productList = productList + product;  
                 });                    
@@ -361,14 +361,14 @@ function getProductFilterFromServer(){
 
                 $.each(data, function (index, value) {
                     var product = '{'+
-                                    '"brandCode": "' + value.brandCode + '",' +     
-                                    '"brandName": "' + value.brandName + '",' +
-                                    '"colorCode": "' + value.colorCode + '",' +
-                                    '"imageFile": "' + value.imageFile.replace(/\\/g,"\\\\") + '",' +
-                                    '"price": "' + value.price + '",' +
-                                    '"originalPrice": "' + (value.productPrice).toFixed(2) + '",' +
-                                    '"styleCode": "' + value.styleCode + '",' +
-                                    '"styleName": "' + value.styleName + '"' +
+                                        '"brandCode": "' + value.brandCode + '",' +     
+                                        '"brandName": "' + value.brandName + '",' +
+                                        '"colorCode": "' + value.colorCode + '",' +
+                                        '"imageFile": "' + value.imageFile.replace(/\\/g,"\\\\") + '",' +
+                                        '"price": "' + value.price + '",' +
+                                        '"originalPrice": "' + (value.productPrice).toFixed(2) + '",' +
+                                        '"styleCode": "' + value.styleCode + '",' +
+                                        '"styleName": "' + value.styleName + '"' +
                                     '},';                               
                     productList = productList + product;  
                 });                    
@@ -552,9 +552,9 @@ function getFiltersFromServer(){
 
                 $.each(data, function (index, value) {
                     var brandFilter = '{'+
-                                    '"codfFilter": "' + value.codfFilter + '",' +     
-                                    '"nameFilter": "' + value.nameFilter + '"' +
-                                    '},';                               
+                                            '"codfFilter": "' + value.codfFilter + '",' +     
+                                            '"nameFilter": "' + value.nameFilter + '"' +
+                                        '},';                               
                     brandList = brandList + brandFilter;  
                 });                    
                 brandList = brandList.substring(0, brandList.length - 1);
@@ -568,9 +568,9 @@ function getFiltersFromServer(){
 
                 $.each(data, function (index, value) {
                     var sizeFilter = '{'+
-                                    '"codfFilter": "' + value.codfFilter + '",' +     
-                                    '"nameFilter": "' + value.nameFilter + '"' +
-                                    '},';                               
+                                            '"codfFilter": "' + value.codfFilter + '",' +     
+                                            '"nameFilter": "' + value.nameFilter + '"' +
+                                        '},';                               
                     sizeList = sizeList + sizeFilter;  
                 });                    
                 sizeList = sizeList.substring(0, sizeList.length - 1);
@@ -584,9 +584,9 @@ function getFiltersFromServer(){
 
                 $.each(data, function (index, value) {
                     var genderFilter = '{'+
-                                    '"codfFilter": "' + value.codfFilter + '",' +     
-                                    '"nameFilter": "' + value.nameFilter + '"' +
-                                    '},';                               
+                                            '"codfFilter": "' + value.codfFilter + '",' +     
+                                            '"nameFilter": "' + value.nameFilter + '"' +
+                                        '},';                               
                     genderList = genderList + genderFilter;  
                 });                    
                 genderList = genderList.substring(0, genderList.length - 1);
@@ -600,9 +600,9 @@ function getFiltersFromServer(){
 
                 $.each(data, function (index, value) {
                     var classFilter = '{'+
-                                    '"codfFilter": "' + value.codfFilter + '",' +     
-                                    '"nameFilter": "' + value.nameFilter + '"' +
-                                    '},';                               
+                                            '"codfFilter": "' + value.codfFilter + '",' +     
+                                            '"nameFilter": "' + value.nameFilter + '"' +
+                                        '},';                               
                     classList = classList + classFilter;  
                 });                    
                 classList = classList.substring(0, classList.length - 1);

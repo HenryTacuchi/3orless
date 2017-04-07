@@ -34,12 +34,12 @@ $(document).ready(function(){
     $(".btn-star").click(function(){
         if(localStorage.countProductCartItem==null ||  localStorage.countProductCartItem==0){
             swal({
-              title: "El carrito está vacío",
-              text: "Aún no tiene productos en el carrito de compra.",
-              type: "info",
-              confirmButtonColor: "#8fbf75",
-              confirmButtonText: "Entendido",                 
-              closeOnConfirm: true
+                title: "El carrito está vacío",
+                text: "Aún no tiene productos en el carrito de compra.",
+                type: "info",
+                confirmButtonColor: "#8fbf75",
+                confirmButtonText: "Entendido",                 
+                closeOnConfirm: true
             });
         }else{
             window.location = "cart-items.html";
@@ -116,28 +116,28 @@ $(document).ready(function(){
                         phone = data.checkProductStockInOtherStoresResult[i].Phone1;
                         stockQty = data.checkProductStockInOtherStoresResult[i].OnHandQty;
                         textStores += "<li class='row store'>"+
-                        "<div class='col-xs-9 center-text'>"+
-                            "<div class='text-left'><span class='txtStoreName storeName'>"+storeName+"</span></div>"+
-                            "<div class='text-left'><span class='lblAddress'>"+lblAddress+"</span><span class='txtAddress'> "+address+"</span></div>"+
-                            "<div class='text-left'><span class='lblPhone'>"+lblPhone+"</span><span class='txtPhone'> "+phone+"</span></div>"+
-                          "</div>"+
-                          "<div class='col-xs-3 center-text'>"+
-                            "<div class='text-right'>"+
-                              "<span class='txtStockOtherStore'>"+localStorage.caption_lblOnHand+":</span>"+
-                              "<span class='lblStockOtherStore'>"+stockQty+"</span>"+
-                            "</div>"+
-                          "</div>"+
-                          "</li>";
+                            "<div class='col-xs-9 center-text'>"+
+                                "<div class='text-left'><span class='txtStoreName storeName'>"+storeName+"</span></div>"+
+                                "<div class='text-left'><span class='lblAddress'>"+lblAddress+"</span><span class='txtAddress'> "+address+"</span></div>"+
+                                "<div class='text-left'><span class='lblPhone'>"+lblPhone+"</span><span class='txtPhone'> "+phone+"</span></div>"+
+                              "</div>"+
+                              "<div class='col-xs-3 center-text'>"+
+                                "<div class='text-right'>"+
+                                  "<span class='txtStockOtherStore'>"+localStorage.caption_lblOnHand+":</span>"+
+                                  "<span class='lblStockOtherStore'>"+stockQty+"</span>"+
+                                "</div>"+
+                              "</div>"+
+                              "</li>";
                     }
 
                     textStores += "</ul>",
                     swal({
-                      title: title,
-                      text: textStores,
-                      confirmButtonColor: "#8fbf75",
-                      confirmButtonText: confirmButtonText,          
-                      html: true,        
-                      closeOnConfirm: true
+                        title: title,
+                        text: textStores,
+                        confirmButtonColor: "#8fbf75",
+                        confirmButtonText: confirmButtonText,          
+                        html: true,        
+                        closeOnConfirm: true
                     });
                 }              
 
@@ -239,11 +239,11 @@ $(document).ready(function(){
                     for (var i = 0; i < data.listSize.length; i++) {
                 		var template = _.template($("#listItemTemplate").html());
 	                    var html = template({
-	                       ItemText:data.listSize[i],
-	                      // sizeCode:data.listSize[i]
-                          sizeCode: i
-                    });
-                    $(".listSize").append(html);
+                            ItemText:data.listSize[i],
+                            // sizeCode:data.listSize[i]
+                            sizeCode: i
+                        });
+                        $(".listSize").append(html);
                 	}
 
                     //suggested Product
@@ -253,25 +253,24 @@ $(document).ready(function(){
                         showMessage(true);
                     }
 
-                	 var countProductItem = 0;
+                	var countProductItem = 0;
                 	for (var i = 0; i < data.suggestedProduct.length; i++) {
                 		var template = _.template($("#productItemTemplate").html());
 	                    var html = template({
-	                   	Class: "product-" + (countProductItem+1),
-			            path: data.suggestedProduct[i].imageFile,
-		                styleCode: data.suggestedProduct[i].styleCode,
-		                colorCode: data.suggestedProduct[i].colorCode,
-		                styleName: data.suggestedProduct[i].styleName,
-		                brandCode: data.suggestedProduct[i].brandCode,
-		                brandName: data.suggestedProduct[i].brandName,
-		                price: data.suggestedProduct[i].price,
-                        productPrice: (data.suggestedProduct[i].productPrice).toFixed(2),
-
-                    });
-	                    countProductItem++;
-                        
-                    $(".related-products").append(html);
-                	}
+    	                   	Class: "product-" + (countProductItem+1),
+    			            path: data.suggestedProduct[i].imageFile,
+    		                styleCode: data.suggestedProduct[i].styleCode,
+    		                colorCode: data.suggestedProduct[i].colorCode,
+    		                styleName: data.suggestedProduct[i].styleName,
+    		                brandCode: data.suggestedProduct[i].brandCode,
+    		                brandName: data.suggestedProduct[i].brandName,
+    		                price: data.suggestedProduct[i].price,
+                            productPrice: (data.suggestedProduct[i].productPrice).toFixed(2),
+                        });
+                    
+                        countProductItem++;                        
+                        $(".related-products").append(html);
+            	    }
 
                     $(".related-products").addClass("items-"+ countProductItem);
                     localStorage.removeItem("resultsProductSKUSelected");
@@ -307,28 +306,26 @@ $(document).ready(function(){
         setSizeImages();
     });
 
-$(".size-item").click(function(){
-	//  $(".sort-dropdown").text($(this).attr("data-value"));
-    $(".size-dropdown").text($(this).text());
-    $(".txtOnHand").text(data.listStock[$(this).attr("data-value")]);
-});
-
-
-$(".btn-CheckStores").click(function(){
-    $("#modalOtherStores").modal("show");
-});
-
-
-//save index of product selected and redirect to product detail screen
-$(document).on("click",".product",function(){
-	showLoading(true);
-	var className = this.className;
-	localStorage.resultsProductColorCodeSelected = $(this).find(".colorCode").attr("data-value");
-	localStorage.resultsProductStyleCodeSelected = $(this).find(".styleName").attr("data-value");
-	window.location = "product-detail.html"; 
+    $(".size-item").click(function(){
+    	//  $(".sort-dropdown").text($(this).attr("data-value"));
+        $(".size-dropdown").text($(this).text());
+        $(".txtOnHand").text(data.listStock[$(this).attr("data-value")]);
     });
 
 
+    $(".btn-CheckStores").click(function(){
+        $("#modalOtherStores").modal("show");
+    });
+
+
+    //save index of product selected and redirect to product detail screen
+    $(document).on("click",".product",function(){
+    	showLoading(true);
+    	var className = this.className;
+    	localStorage.resultsProductColorCodeSelected = $(this).find(".colorCode").attr("data-value");
+    	localStorage.resultsProductStyleCodeSelected = $(this).find(".styleName").attr("data-value");
+    	window.location = "product-detail.html"; 
+    });
 });
 
 function setSizeImages(){

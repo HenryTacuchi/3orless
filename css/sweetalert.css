@@ -190,7 +190,7 @@ body.stop-scrolling {
     .sweet-alert button:active {
       background-color: #5dc2f1; }
     .sweet-alert button.cancel {
-      background-color: #C1C1C1; }
+      background-color: #2d434e; }
       .sweet-alert button.cancel:hover {
         background-color: #b9b9b9; }
       .sweet-alert button.cancel:active {
@@ -934,7 +934,16 @@ body.stop-scrolling {
 
 
 
-.sweet-alert button:before{
+.sweet-alert .cancel:before{
+  content: '\e796';
+  font-family: 'Scalia User Icons';
+  font-weight: normal;
+  float: left;
+  margin-left: -1.4em;
+  font-size: 93.6%;
+  vertical-align: middle;
+}
+.sweet-alert .confirm:before{
   content: '\e6e0';
   font-family: 'Scalia User Icons';
   font-weight: normal;

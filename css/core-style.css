@@ -54,12 +54,15 @@
 h1,h2,h3,h4{
 	font-family: 'Roboto Condensed';
 }
+h4, h5, h6{
+  margin-bottom: 5px;
+}
 body,html{
 	height: 100%;
   font-size: 12px;
 }
 p,span,label,.ancestor,.dropdown-menu li{
-	font-size: 19px;
+	font-size: 16px;
 }
 del{
   font-weight: 300;
@@ -98,7 +101,7 @@ nav li label{
 .btn:active,.btn:focus{
   box-shadow: none !important;
   outline: none !important;
-  border: none;
+  border-width: 1px;
 }
 .btn:active:after,.btn:focus:after{
   content: '';
@@ -203,10 +206,21 @@ input.form-control{
     font-weight: 100;
     font-size: 22px;
 }
+.form-group.has-feedback .form-control{
+  padding-right: 38px;
+}
 .form-color{
   display: inline;
   width: 100px;
   margin-top: -5%;
+}
+.form-control-feedback {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0;
+    padding: 9px;
+    font-size: 160%;
 }
 .container{
   height: 100%;
@@ -334,6 +348,10 @@ button.icon:before {
   content: '\e6ef' !important;
   font-family: 'Scalia User Icons';
 }
+.icon-systemhour:before{
+  content: '\e75b' !important;
+  font-family: 'Scalia User Icons';
+}
 .icon-workstation:before{
   content: '\e685' !important;
   font-family: 'Scalia User Icons';
@@ -393,7 +411,7 @@ button.icon:before {
 }
 
 .bigger{
-  font-size: 240% !important;
+  font-size: 230% !important;
 }
 /*FJ*/
 .right-options .span-total {
@@ -581,7 +599,18 @@ footer {
   margin-top: -20px;
 }
 
-    
+
+/*modal*/
+.modal.fade .modal-dialog {
+  -webkit-transform: scale(.7);
+  transform: scale(.7);
+  -webkit-transition: -webkit-transform .3s ease;
+  transition: transform .3s ease;
+}
+.modal.in .modal-dialog {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}    
 
 /*Loader*/
 .loader-principal,.loader-section {
@@ -841,5 +870,8 @@ footer {
     .ico-keyboard{
       right: 35px;
       font-size: 113%;
+    }
+    .form-control-feedback{
+      padding: 7px;
     }
 }
