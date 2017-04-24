@@ -284,13 +284,13 @@
 				<div class="flex-central tab-content">
 					<div id="items" class="tab-pane fade in active">
 						<ul class="nav nav-tabs">
-							<li><button>Price</button></li>
+							<li><button class="btn-discount">Discount %</button></li>
 							<li><button>Sales Person</button></li>
 							<li><button>Redeem Reward</button></li>
+							<li><button class="btn-amount-off">$ Amount Off</button></li>
 							<li><button>Lookup</button></li>
 							<li><button>&nbsp;</button></li>
-							<li><button>&nbsp;</button></li>
-							<li><button>&nbsp;</button></li>
+							<li><button class="btn-price-overwrite">Price Overwrite</button></li>
 						</ul>
 					</div>
 					<div id="transaction" class="tab-pane fade">
@@ -314,10 +314,13 @@
 				<div class="flex-lower">
 					<div class="area-keypad">
 						<div class="form-group input-group">
+							<h4 class="message-actions-title">Enter Discount %</h4>
 							<input type="text" id="" name="" class="form-control txtScan focus" maxlength="7" disabled>
 							<span class="input-group-btn">
 								<button class="btn btn-scanner ico-keyboard setBaColor">&#xe640;</button>
 							</span>
+							<!-- add class 'hideElement' to hide element with animation -->
+							<span class="no-complete message-txtScan hide">Please fill the required field</span>
 						</div>
 						<ul class="nav nav-tabs">
 							<li class="btn-number"><button class="btn-key-pos" value="7">7</button></li>

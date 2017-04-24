@@ -189,7 +189,7 @@ form{
 
 .section-cart-items .cart-opciones .flex-lower ul,
 .keypad ul {
-    margin: 10px 0px;
+    margin: 22px 0px 10px;
     border: 1px solid #d2dae1;
     border-radius: 5px;
 }
@@ -264,6 +264,24 @@ form{
 	height: 24px;
 }
 
+
+.btn-items,.btn-items:focus, .btn-items:active,
+#items button{
+	outline: none;
+}
+#items button.active{
+	font-weight: 500;
+}
+#items button.active:before{
+	content: '';
+	position: absolute;
+	z-index: 999;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(255,255,255,0.2);
+}
 
 /* FIN FJ*/
 
@@ -359,6 +377,7 @@ form{
 .ico-keyboard{
 	font-family: 'Scalia User Icons';
 	padding: 4px 10px 3px;
+    border-radius: 0px 4px 4px 0px;
 }
 
 .form-group.scan{
@@ -495,6 +514,21 @@ form{
   text-align: left;
   vertical-align: middle;
 }
+.message-actions-title {
+	display: none;
+    position: absolute;
+    top: -95%;
+    left: 0;
+}
+span.message-txtScan {
+    bottom: -46%;
+    animation: fadeOut 1s both;
+    -webkit-animation: fadeOut 1s both;
+}
+.showElement{
+	animation: fadeIn 1s both !important;
+	-webkit-animation: fadeIn 1s both !important;
+}
 
 @media screen and (min-width: 1024px) and (orientation: landscape){
 	.modal-dialog {
@@ -518,6 +552,13 @@ form{
 	}
 }
 @media only screen and (min-width: 1360px) {
+	.ico-keyboard{
+	    padding: 6px 10px 5px;
+	}
+	.section-cart-items .cart-opciones .flex-higher li .btn-flex, 
+	.payment-section button{
+		font-size:  22px !important;
+	}
     .info-pos label{
       font-size: 120%;
     }

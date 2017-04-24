@@ -48,15 +48,6 @@ $(document).ready(function(){
 	// 	$(".section-cart-items").show();
 	// });
 
- //    $(".section-cart-items input").focus(function(){
-	// 	$(".section-form-user").hide();
-	// 	setSizeCart();
-	// });
-
-	// $(".section-cart-items input").blur(function(){
-	// 	$(".section-form-user").show();
-	// 	setSizeCart();
-	// });
 	
 	if(localStorage.SKUCodeScan=="" || localStorage.SKUCodeScan == undefined){
     	$('#txtScan').focus();
@@ -199,20 +190,20 @@ $(document).ready(function(){
     				searchProduct($('.txtScan').val());
     			} else {
     				// alert('Codigo incorrecto');
-    				if($(".txtMessage").hasClass("success")){
-						$(".txtMessage").removeClass("success").addClass("danger");
-						$(".btn-mini-img").removeClass("success").addClass("danger").find('span').empty().html('&#xe645');
-					}
-					else{
-						$(".txtMessage").addClass("danger");
-						$(".btn-mini-img").addClass("danger").find('span').empty().html('&#xe645');
-					}
+    	// 			if($(".txtMessage").hasClass("success")){
+					// 	$(".txtMessage").removeClass("success").addClass("danger");
+					// 	$(".btn-mini-img").removeClass("success").addClass("danger").find('span').empty().html('&#xe645');
+					// }
+					// else{
+					// 	$(".txtMessage").addClass("danger");
+					// 	$(".btn-mini-img").addClass("danger").find('span').empty().html('&#xe645');
+					// }
 
-					$(".validations").removeClass("hide").addClass("animated fadeInLeft");
+					// $(".validations").removeClass("hide").addClass("animated fadeInLeft");
 
-					$(".txtMessage").html(localStorage.caption_notfound);
-					$(".validations").delay(delay).queue(function(){
-					    $(this).addClass("animated fadeOutLeft").dequeue();
+					$(".message-txtScan").removeClass("hide");
+					$(".message-txtScan").addClass("showElement").delay(1000).queue(function(){
+					    $(this).removeClass("showElement").dequeue();
 					});
     			}
     			break;
@@ -268,8 +259,37 @@ $(document).ready(function(){
     });
     // END keyboard payment modal
 
+    // BUTTON PAYMENT
     $('.btn-payment').click(function(){
     	$('#modalPayment').modal('show');
+    });
+
+    // BUTTONS ITEMS
+    $('.nav-tabs li button').click(function(){
+    	if($(this).hasClass('active'))
+			$(this).removeClass('active');
+		else{
+			$('.nav-tabs li button').removeClass('active');
+			$(this).addClass('active');
+		}
+    });
+    $('.btn-discount').click(function(){
+    	if($(this).hasClass('active')){
+    		$(".txtScan").attr('placeholder','e.g. 10%');
+    		$(".message-actions-title").text('Enter Discount').fadeIn();
+    	}else{
+    		$(".txtScan").attr('placeholder',localStorage.caption_lblScanProduct);
+    		$(".message-actions-title").fadeOut();
+    	}
+    });
+    $('.btn-amount-off').click(function(){
+    	if($(this).hasClass('active')){
+    		$(".txtScan").attr('placeholder','');
+    		$(".message-actions-title").fadeIn();
+    	}else{
+    		$(".txtScan").attr('placeholder',localStorage.caption_lblScanProduct);
+    		$(".message-actions-title").fadeOut();
+    	}
     });
 
 
@@ -291,7 +311,6 @@ $(document).ready(function(){
 });
 
 $(window).load(function(){
-    setSizeCart();
     setColorApp();
 });
 
@@ -537,16 +556,6 @@ function showLoading(option){
 	}
 }
 
-function setSizeCart(){
-	// $('.items').height(0);
-	setTimeout(function() {
-        // $(".items").animate({
-        //     height: $('.cart-items').height(),
-        //     'padding-bottom':$('.tfooter').outerHeight()
-        // }, 500);
-    }, 100 );
-	// setTimeout(function(){ $('.items').height($('.cart-items').height() - 50); }, 100);	
-}
 
 //if exists path image error, show no image
 function handleError(image){

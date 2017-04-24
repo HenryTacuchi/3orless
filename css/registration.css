@@ -111,3 +111,16 @@ span{
     display: block;
     float: left;
 }
+
+@media screen and (min-width: 1024px) and (orientation: landscape){
+
+}
+
+@media screen and (min-width: 1280px) and (orientation: landscape){
+
+}
+@media only screen and (min-width: 1360px) {
+	form{
+		max-width: 952px;
+	}
+}

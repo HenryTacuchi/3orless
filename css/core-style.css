@@ -247,6 +247,7 @@ input.form-control{
 span.no-complete{
 	position: absolute;
 	bottom: -28%;
+  left: 0;
 	font-size: 98%;
 }
 
@@ -834,7 +835,7 @@ footer {
         font-size: 15px;
     }
     button, .btn, .menu-item{
-      font-size: 22px;
+      font-size: 22px !important;
     }
     button.btn:before{
       font-size: 104%;
